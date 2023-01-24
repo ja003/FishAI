@@ -31,6 +31,8 @@ protected: // AI
 
 	virtual void OnPikePerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus){}
 
+	virtual void OnEdibleFishPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus) {}
+
 	UPROPERTY()
 	UBlackboardComponent* blackboard;
 	

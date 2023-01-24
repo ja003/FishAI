@@ -14,6 +14,8 @@ class AFishPike : public AFishBase, public IStimuliSource
 	
 protected: // AI
 
+	virtual void OnEdibleFishPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus) override;
+	
 public:
 
 	virtual EStimuliObject GetStimuliType() override { return  Pike; }

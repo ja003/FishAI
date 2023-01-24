@@ -4,13 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "FishBase.h"
+#include "FishAi/StimuliObject.h"
 #include "FishCarp.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class FISHAI_API AFishCarp : public AFishBase
+class FISHAI_API AFishCarp : public AFishBase, public  IStimuliSource
 {
 	GENERATED_BODY()
 
@@ -28,5 +29,7 @@ protected: // AI
 	virtual void OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus) override;
 
 	virtual void OnPikePerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus) override;
+
+	virtual EStimuliObject GetStimuliType() override { return EdibleFish; }
 	
 };

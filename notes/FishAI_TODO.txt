@@ -1,0 +1,7 @@
+2 navigable areas
+- player, fish
+
+pike 
+- follow edible fish
+-- only for X seconds
+-- dont spot it for X seconds after hunt

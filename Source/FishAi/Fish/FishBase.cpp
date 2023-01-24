@@ -45,6 +45,10 @@ void AFishBase::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 		case Pike:
 			OnPikePerceptionUpdated(Actor, Stimulus);
 			return;
+
+		case EdibleFish:
+			OnEdibleFishPerceptionUpdated(Actor, Stimulus);
+			return;
 		}
 	}
 }

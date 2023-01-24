@@ -7,5 +7,5 @@ void AFishCarp::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
 	Super::OnTargetPerceptionUpdated(Actor, Stimulus);
 
-	UE_LOG(LogTemp, Log, TEXT("xxx OnTargetPerceptionUpdated = %s"), *Actor->GetName());
+	UE_LOG(LogTemp, Log, TEXT("xxx AFishCarp::OnTargetPerceptionUpdated = %s"), *Actor->GetName());
 }

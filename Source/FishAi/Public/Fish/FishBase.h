@@ -31,7 +31,7 @@ public:
 protected: // AI
 
 	UFUNCTION()
-	virtual void OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus) {}
+	virtual void OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
 
 protected: // Components
 

@@ -18,7 +18,9 @@ AFishBase::AFishBase()
 
 	AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>("PerceptionComponent");
 
+	
 	AIPerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AFishBase::OnTargetPerceptionUpdated);
+	//AIPerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AFishBase::OnTargetPerceptionUpdated);
 	//AIPerceptionComponent->OnPerceptionUpdated.AddDynamic(this, &AFishBase::SenseStuff);
 
 }
@@ -28,6 +30,7 @@ void AFishBase::BeginPlay()
 {
 	Super::BeginPlay();
 	
+
 }
 
 // Called every frame
@@ -42,5 +45,10 @@ void AFishBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void AFishBase::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
+{
+	UE_LOG(LogTemp, Log, TEXT("xxx OnTargetPerceptionUpdated = %s"), *Actor->GetName());
 }
 

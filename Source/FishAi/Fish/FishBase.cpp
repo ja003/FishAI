@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Fish/FishBase.h"
+#include "FishBase.h"
 
 #include "FishAi/StimuliObject.h"
 #include "Perception/AIPerceptionComponent.h"

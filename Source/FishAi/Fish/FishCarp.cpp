@@ -3,21 +3,34 @@
 
 #include "FishCarp.h"
 
-#include "Blueprint/AIBlueprintHelperLibrary.h"
+#include "EFishState.h"
+#include "FishAi/Constants.h"
 
 
 void AFishCarp::OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
 {
 	UE_LOG(LogTemp, Log, TEXT("xxx OnBaitPerceptionUpdated"));
 
-	blackboard->SetValueAsObject("Bait", Actor);
-	blackboard->SetValueAsEnum("State", 1);
+	blackboard->SetValueAsEnum(FishBB_State, (int)EFishState::Bait);
+	blackboard->SetValueAsObject(FishBB_Bait, Actor);
 
 }
 
 void AFishCarp::OnPikePerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
 {
 	UE_LOG(LogTemp, Log, TEXT("xxx OnPikePerceptionUpdated"));
+
+	blackboard->SetValueAsEnum(FishBB_State, (int)EFishState::Danger);
+
+	DrawDebugSphere(GWorld, GetActorLocation(), 5, 10, FColor::Red, false, 5);
+	DrawDebugSphere(GWorld, Actor->GetActorLocation(), 5, 10, FColor::Red, false, 5);
+
+	FVector dirAway = (GetActorLocation() - Actor->GetActorLocation());
+	dirAway.Normalize();
+	FVector runawayTarget = GetActorLocation() + dirAway * 200;
+	DrawDebugSphere(GWorld, runawayTarget, 5, 10, FColor::Blue, false, 5);
+	
+	blackboard->SetValueAsVector(FishBB_Target, runawayTarget);
 }
 
 

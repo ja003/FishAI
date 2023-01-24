@@ -14,6 +14,13 @@ class FISHAI_API AFishCarp : public AFishBase
 {
 	GENERATED_BODY()
 
+private:
+
+	UFUNCTION()
+	void OnComponentBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg,
+		const FHitResult& HitResult);
+
+	virtual void BeginPlay() override;
 	
 protected: // AI
 

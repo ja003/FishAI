@@ -6,5 +6,6 @@
 
 void ABait::OnEaten()
 {
+	UE_LOG(LogTemp, Log, TEXT("xxx ABait::OnEaten"));
 	Destroy();
 }

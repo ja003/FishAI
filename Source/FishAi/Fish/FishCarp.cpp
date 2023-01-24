@@ -4,7 +4,27 @@
 #include "FishCarp.h"
 
 #include "EFishState.h"
+#include "Components/CapsuleComponent.h"
 #include "FishAi/Constants.h"
+#include "FishAi/PlayerObjects/Bait.h"
+
+
+void AFishCarp::BeginPlay()
+{
+	Super::BeginPlay();
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AFishCarp::OnComponentBeginOverlap);
+
+}
+
+void AFishCarp::OnComponentBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,	UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult)
+{
+	UE_LOG(LogTemp, Log, TEXT("xxx OnComponentBeginOverlap"));
+
+	if(Cast<ABait>(Actor))
+	{
+		Cast<ABait>(Actor)->OnEaten();
+	}
+}
 
 
 void AFishCarp::OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)

@@ -15,6 +15,17 @@ class AFishPike : public AFishBase, public IStimuliSource
 protected: // AI
 
 	virtual void OnEdibleFishPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus) override;
+
+private:
+	
+	int64 lastHuntTime;
+	
+	bool IsReadyForHunt();
+
+public:
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	int minHuntCooldown;
 	
 public:
 

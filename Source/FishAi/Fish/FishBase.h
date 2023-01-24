@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "BehaviorTree/BlackboardComponent.h"
 #include "GameFramework/Character.h"
 #include "Perception/AIPerceptionTypes.h"
 #include "FishBase.generated.h"
@@ -36,6 +37,8 @@ protected: // AI
 	virtual void OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus){}
 
 	virtual void OnPikePerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus){}
+
+	UBlackboardComponent* blackboard;
 	
 protected: // Components
 

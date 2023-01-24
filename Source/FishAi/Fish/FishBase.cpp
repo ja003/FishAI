@@ -3,6 +3,7 @@
 
 #include "FishBase.h"
 
+#include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "FishAi/StimuliObject.h"
 #include "Perception/AIPerceptionComponent.h"
 
@@ -26,8 +27,8 @@ AFishBase::AFishBase()
 void AFishBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
 
+	blackboard = UAIBlueprintHelperLibrary::GetBlackboard(this);
 }
 
 // Called every frame

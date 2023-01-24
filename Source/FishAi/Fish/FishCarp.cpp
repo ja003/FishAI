@@ -3,10 +3,15 @@
 
 #include "FishCarp.h"
 
+#include "Blueprint/AIBlueprintHelperLibrary.h"
+
 
 void AFishCarp::OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
 {
 	UE_LOG(LogTemp, Log, TEXT("xxx OnBaitPerceptionUpdated"));
+
+	blackboard->SetValueAsObject("Bait", Actor);
+	blackboard->SetValueAsEnum("State", 1);
 
 }
 

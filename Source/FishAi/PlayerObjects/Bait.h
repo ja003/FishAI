@@ -3,23 +3,19 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "FishAi/StimuliObject.h"
 #include "GameFramework/Actor.h"
 #include "Bait.generated.h"
 
 UCLASS()
-class FISHAI_API ABait : public AActor
+class FISHAI_API ABait : public AActor, public IStimuliSource
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this actor's properties
-	ABait();
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	void OnEaten();
 
-public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	virtual EStimuliObject GetStimuliType() override { return Bait; }
+	
 };

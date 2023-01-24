@@ -3,6 +3,7 @@
 
 #include "Fish/FishBase.h"
 
+#include "FishAi/StimuliObject.h"
 #include "Perception/AIPerceptionComponent.h"
 
 // Sets default values
@@ -16,12 +17,8 @@ AFishBase::AFishBase()
 	bodyMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	bodyMesh->SetCanEverAffectNavigation(false);
 
-	AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>("PerceptionComponent");
-
-	
+	AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>("PerceptionComponent");	
 	AIPerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AFishBase::OnTargetPerceptionUpdated);
-	//AIPerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AFishBase::OnTargetPerceptionUpdated);
-	//AIPerceptionComponent->OnPerceptionUpdated.AddDynamic(this, &AFishBase::SenseStuff);
 
 }
 
@@ -50,5 +47,18 @@ void AFishBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void AFishBase::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
 	UE_LOG(LogTemp, Log, TEXT("xxx OnTargetPerceptionUpdated = %s"), *Actor->GetName());
+
+	if(Actor->GetClass()->ImplementsInterface(UStimuliSource::StaticClass()))
+	{
+		switch(Cast<IStimuliSource>(Actor)->GetStimuliType())
+		{
+		case Bait:
+			OnBaitPerceptionUpdated(Actor, Stimulus);
+			return;
+		case Pike:
+			OnPikePerceptionUpdated(Actor, Stimulus);
+			return;
+		}
+	}
 }
 

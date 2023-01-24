@@ -17,6 +17,9 @@ class FISHAI_API AFishCarp : public AFishBase
 	
 protected: // AI
 
-	virtual void OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus) override;
+
+	virtual void OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus) override;
+
+	virtual void OnPikePerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus) override;
 	
 };

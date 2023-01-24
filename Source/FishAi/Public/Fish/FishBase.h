@@ -33,6 +33,10 @@ protected: // AI
 	UFUNCTION()
 	virtual void OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
 
+	virtual void OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus){}
+
+	virtual void OnPikePerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus){}
+	
 protected: // Components
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Mesh)
@@ -40,5 +44,8 @@ protected: // Components
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = AI)
 	class UAIPerceptionComponent* AIPerceptionComponent ;
+
+public: // Variables
+
 
 };

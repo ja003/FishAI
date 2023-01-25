@@ -14,7 +14,26 @@ class FISHAI_API ARock : public AThrowableObject
 	GENERATED_BODY()
 
 public:
+	
+	ARock();
+	void OnHitWater();
 
 	virtual EStimuliObject GetStimuliType() override { return Rock; }
+
+
+private:
+
+	UFUNCTION()
+	void OnComponentBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg,
+		const FHitResult& HitResult);
+
+	UFUNCTION()
+	void OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, FVector Normal, const FHitResult& HitResult);
+
+
+public:
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category=Sound)
+	USoundBase* Sound_HitWater;
 
 };

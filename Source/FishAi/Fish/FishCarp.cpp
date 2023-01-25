@@ -18,7 +18,7 @@ void AFishCarp::BeginPlay()
 
 void AFishCarp::OnComponentBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,	UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult)
 {
-	UE_LOG(LogTemp, Log, TEXT("xxx OnComponentBeginOverlap"));
+	//UE_LOG(LogTemp, Log, TEXT("xxx OnComponentBeginOverlap"));
 
 	if(Cast<ABait>(Actor))
 	{
@@ -29,7 +29,7 @@ void AFishCarp::OnComponentBeginOverlap(UPrimitiveComponent* PrimitiveComponent,
 
 void AFishCarp::OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
 {
-	UE_LOG(LogTemp, Log, TEXT("xxx OnBaitPerceptionUpdated"));
+	//UE_LOG(LogTemp, Log, TEXT("xxx OnBaitPerceptionUpdated"));
 
 	blackboard->SetValueAsEnum(FishBB_State, (int)EFishState::Bait);
 	blackboard->SetValueAsObject(FishBB_Bait, Actor);

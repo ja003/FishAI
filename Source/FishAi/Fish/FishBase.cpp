@@ -4,6 +4,7 @@
 #include "FishBase.h"
 
 #include "Blueprint/AIBlueprintHelperLibrary.h"
+#include "FishAi/Constants.h"
 #include "FishAi/StimuliObject.h"
 #include "Perception/AIPerceptionComponent.h"
 
@@ -49,7 +50,23 @@ void AFishBase::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 		case EdibleFish:
 			OnEdibleFishPerceptionUpdated(Actor, Stimulus);
 			return;
+
+		case Rock:
+			OnRockPerceptionUpdated(Actor, Stimulus);
+			return;
 		}
 	}
+
+	if (Stimulus.Tag == Tag_Rock)
+	{
+		OnRockPerceptionUpdated(Actor, Stimulus);
+		return;
+	}
+}
+
+void AFishBase::OnRockPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
+{
+	UE_LOG(LogTemp, Log, TEXT("xxx OnRockPerceptionUpdated = %s"), *Actor->GetName());
+
 }
 

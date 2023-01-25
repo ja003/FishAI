@@ -22,6 +22,7 @@ AThrowableObject::AThrowableObject()
 	SphereCollider->SetCollisionObjectType(COLLISION_THROWABLE_OBJECT);
 	SphereCollider->SetCollisionResponseToAllChannels(ECR_Block);
 	SphereCollider->SetCollisionResponseToChannel(COLLISION_FISH, ECR_Overlap);
+	SphereCollider->SetCollisionResponseToChannel(COLLISION_WATER, ECR_Overlap);
 	SphereCollider->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	SphereCollider->SetGenerateOverlapEvents(true);
 

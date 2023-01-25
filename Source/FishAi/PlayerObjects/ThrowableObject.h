@@ -19,15 +19,22 @@ public:
 	
 	AThrowableObject();
 
-	virtual EStimuliObject GetStimuliType() override { return None; }
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = AI)
-	UAIPerceptionStimuliSourceComponent* StimuliSource;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Mesh)
 	UStaticMeshComponent* Mesh;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Mesh)
 	USphereComponent* SphereCollider;
+
+	
+public:		// Senses
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Senses")
+	void ReportNoise();	
+	
+	virtual EStimuliObject GetStimuliType() override { return None; }
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = AI)
+	UAIPerceptionStimuliSourceComponent* StimuliSource;
 
 };

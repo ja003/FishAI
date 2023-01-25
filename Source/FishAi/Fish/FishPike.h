@@ -29,6 +29,6 @@ public:
 	
 public:
 
-	virtual EStimuliObject GetStimuliType() override { return  Pike; }
+	virtual EStimuliObject GetStimuliType() override { return Pike; }
 	
 };

@@ -1,0 +1,33 @@
+﻿// Fill out your copyright notice in the Description page of Project Settings.
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "FishAi/StimuliObject.h"
+#include "GameFramework/Actor.h"
+#include "Perception/AIPerceptionStimuliSourceComponent.h"
+#include "ThrowableObject.generated.h"
+
+class USphereComponent;
+
+UCLASS()
+class FISHAI_API AThrowableObject : public AActor, public IStimuliSource
+{
+	GENERATED_BODY()
+
+public:
+	
+	AThrowableObject();
+
+	virtual EStimuliObject GetStimuliType() override { return None; }
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = AI)
+	UAIPerceptionStimuliSourceComponent* StimuliSource;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Mesh)
+	UStaticMeshComponent* Mesh;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Mesh)
+	USphereComponent* SphereCollider;
+
+};

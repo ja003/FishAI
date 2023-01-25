@@ -18,7 +18,7 @@ AThrowableObject::AThrowableObject()
 	
 	SphereCollider = CreateDefaultSubobject<USphereComponent>(TEXT("collider"));
 	RootComponent = SphereCollider;
-	SphereCollider->SetSimulatePhysics(true);
+	SphereCollider->SetSimulatePhysics(false);
 	SphereCollider->SetCollisionObjectType(COLLISION_THROWABLE_OBJECT);
 	SphereCollider->SetCollisionResponseToAllChannels(ECR_Block);
 	SphereCollider->SetCollisionResponseToChannel(COLLISION_FISH, ECR_Overlap);
@@ -31,13 +31,18 @@ AThrowableObject::AThrowableObject()
 	Mesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
-	//static ConstructorHelpers::FObjectFinder<UStaticMesh> CylinderAsset(TEXT("/Game/StarterContent/Shapes/Shape_Cylinder.Shape_Cylinder"));
-
-	
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>MeshAsset(TEXT("/Game/StarterContent/Shapes/Shape_Torus.Shape_Torus"));
 	if (MeshAsset.Succeeded())
 	{
 		Mesh->SetStaticMesh(MeshAsset.Object);
 	}
+
+	ProjectileMovement =  CreateDefaultSubobject<UProjectileMovementComponent>("ProjectileMovementComponent");
+}
+
+void AThrowableObject::SetVelocity(FVector Velocity)
+{
+	UE_LOG(LogTemp, Log, TEXT("xxx Velocity = %s"), *Velocity.ToString());
+	ProjectileMovement->Velocity = Velocity;
 }
 

@@ -3,6 +3,7 @@
 
 #include "FishBase.h"
 
+#include "EFishState.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "FishAi/Constants.h"
 #include "FishAi/StimuliObject.h"
@@ -67,6 +68,19 @@ void AFishBase::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 void AFishBase::OnRockPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
 {
 	UE_LOG(LogTemp, Log, TEXT("xxx OnRockPerceptionUpdated = %s"), *Actor->GetName());
+
+	// Actor is player character, not the rock!
+
+	blackboard->SetValueAsEnum(FishBB_State, (int)EFishState::Rock);
+
+	DrawDebugSphere(GWorld, GetActorLocation(), 5, 10, FColor::Red, false, 5);
+
+	FVector dirAway = (GetActorLocation() - Stimulus.StimulusLocation);
+	dirAway.Normalize();
+	FVector runawayTarget = GetActorLocation() + dirAway * 200;
+	DrawDebugSphere(GWorld, runawayTarget, 5, 10, FColor::Blue, false, 5);
+	
+	blackboard->SetValueAsVector(FishBB_Target, runawayTarget);
 
 }
 

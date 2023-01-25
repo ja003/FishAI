@@ -27,9 +27,13 @@ private:
 	void OnComponentBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg,
 		const FHitResult& HitResult);
 
+
+	bool bHasHitGround;
+
 	UFUNCTION()
 	void OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, FVector Normal, const FHitResult& HitResult);
 
+	void DestroyRock();
 
 public:
 	

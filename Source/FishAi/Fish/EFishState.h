@@ -7,4 +7,5 @@ enum class EFishState : uint8
 	Bait     UMETA(DisplayName = "Bait"),
 	Danger   UMETA(DisplayName = "Danger"),	
 	Hunt   UMETA(DisplayName = "Hunt"),	
+	Rock   UMETA(DisplayName = "Rock"),	
 };

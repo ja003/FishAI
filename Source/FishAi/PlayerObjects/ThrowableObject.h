@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "FishAi/StimuliObject.h"
 #include "GameFramework/Actor.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "ThrowableObject.generated.h"
 
@@ -19,13 +20,17 @@ public:
 	
 	AThrowableObject();
 
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Mesh)
 	UStaticMeshComponent* Mesh;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Mesh)
 	USphereComponent* SphereCollider;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Mesh)
+	UProjectileMovementComponent* ProjectileMovement;
+
+	UFUNCTION(BlueprintCallable)
+	void SetVelocity(FVector Velocity);
 	
 public:		// Senses
 

@@ -24,7 +24,7 @@ ARock::ARock()
 
 void ARock::OnHitWater()
 {
-	UGameplayStatics::PlaySoundAtLocation(GetWorld(), Sound_HitWater, GetActorLocation());
+	//UGameplayStatics::PlaySoundAtLocation(GetWorld(), Sound_HitWater, GetActorLocation());
 	
 	// todo: this doesnt work
 	ACharacter* noiseInstigator = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
@@ -36,29 +36,31 @@ void ARock::OnHitWater()
 
 void ARock::OnComponentBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,
 	UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult)
-{
-	
+{	
 	if(Actor->ActorHasTag(Tag_Water))
 	{
 		UE_LOG(LogTemp, Log, TEXT("xxx Water!"));
-
-		
-
 		OnHitWater();
 	}
-	// if(Cast<ABait>(Actor))
-	// {
-	// 	Cast<ABait>(Actor)->OnEaten();
-	// }
 }
 
 void ARock::OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,
 	UPrimitiveComponent* PrimitiveComponent1, FVector Normal, const FHitResult& HitResult)
 {
+	if (bHasHitGround) return;
 
 	if(Actor->ActorHasTag(Tag_Ground))
 	{
-		//UE_LOG(LogTemp, Log, TEXT("xxx Ground!"));
+		UE_LOG(LogTemp, Log, TEXT("xxx Ground!"));
+		bHasHitGround = true;
+
+		FTimerHandle UnusedHandle;
+		GetWorld()->GetTimerManager().SetTimer(UnusedHandle, this, &ARock::DestroyRock, 1, false);
 	}
+}
+
+void ARock::DestroyRock()
+{
+	Destroy();
 }
 

@@ -1,5 +1,6 @@
 2 navigable areas
 - player, fish
 
-pike 
-
+throwables
+- throw
+-- show trajectory

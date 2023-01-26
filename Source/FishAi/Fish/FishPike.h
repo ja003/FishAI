@@ -18,6 +18,8 @@ protected: // AI
 
 private:
 	
+	virtual void OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, FVector Normal, const FHitResult& HitResult) override;
+	
 	int64 lastHuntTime;
 	
 	bool IsReadyForHunt();

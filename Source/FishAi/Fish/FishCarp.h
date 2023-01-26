@@ -17,9 +17,7 @@ class FISHAI_API AFishCarp : public AFishBase, public  IStimuliSource
 
 private:
 
-	UFUNCTION()
-	void OnComponentBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg,
-		const FHitResult& HitResult);
+	virtual void OnComponentBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult) override;
 
 	virtual void BeginPlay() override;
 	

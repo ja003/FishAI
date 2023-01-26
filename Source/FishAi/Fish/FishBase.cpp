@@ -5,6 +5,7 @@
 
 #include "EFishState.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
+#include "Components/CapsuleComponent.h"
 #include "FishAi/Constants.h"
 #include "FishAi/StimuliObject.h"
 #include "Perception/AIPerceptionComponent.h"
@@ -12,13 +13,17 @@
 // Sets default values
 AFishBase::AFishBase()
 {
-	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	// BP equivalent of "simulation generates hit events"
+	// ..not rly sure if necessary, hit event is triggered even without it
+	GetCapsuleComponent()->SetNotifyRigidBodyCollision(true);
 	
 	bodyMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("body"));
 	bodyMesh->AddLocalRotation(FRotator(0,-90,0));
 	bodyMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	bodyMesh->SetCanEverAffectNavigation(false);
+	bodyMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>("PerceptionComponent");	
 	AIPerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AFishBase::OnTargetPerceptionUpdated);
@@ -31,11 +36,20 @@ void AFishBase::BeginPlay()
 	Super::BeginPlay();
 
 	blackboard = UAIBlueprintHelperLibrary::GetBlackboard(this);
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AFishBase::OnComponentBeginOverlap);
+
+	GetCapsuleComponent()->OnComponentHit.AddDynamic(this, &AFishBase::OnComponentHit);
+
+}
+
+void AFishBase::Die()
+{
+	Destroy();
 }
 
 void AFishBase::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
-	UE_LOG(LogTemp, Log, TEXT("xxx OnTargetPerceptionUpdated = %s"), *Actor->GetName());
+	//UE_LOG(LogTemp, Log, TEXT("xxx OnTargetPerceptionUpdated = %s"), *Actor->GetName());
 
 	if(Actor->GetClass()->ImplementsInterface(UStimuliSource::StaticClass()))
 	{

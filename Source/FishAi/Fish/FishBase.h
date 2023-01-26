@@ -19,8 +19,22 @@ public:
 	AFishBase();
 
 protected:
+	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+protected:
+
+	UFUNCTION()
+	virtual void OnComponentBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg,
+		const FHitResult& HitResult) {}
+
+	UFUNCTION()
+	virtual void OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, FVector Normal, const FHitResult& HitResult) {}
+
+public:
+
+	void Die();
 
 protected: // AI
 

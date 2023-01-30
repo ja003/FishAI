@@ -40,6 +40,7 @@ void AFishBase::BeginPlay()
 
 	GetCapsuleComponent()->OnComponentHit.AddDynamic(this, &AFishBase::OnComponentHit);
 
+	Target = GetWorld()->SpawnActor<ATargetObject>();
 }
 
 void AFishBase::Die()

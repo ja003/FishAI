@@ -15,6 +15,7 @@ ATargetObject::ATargetObject()
 	USphereComponent* sphere = CreateDefaultSubobject<USphereComponent>("body");
 	sphere->SetSimulatePhysics(false);
 	sphere->SetGenerateOverlapEvents(true);
+	sphere->SetCollisionResponseToAllChannels(ECR_Overlap);
 
 	RootComponent = sphere;
 }

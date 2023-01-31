@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "BehaviorTree/BlackboardComponent.h"
-#include "FishAi/TargetObject.h"
 #include "GameFramework/Character.h"
 #include "Perception/AIPerceptionTypes.h"
 #include "FishBase.generated.h"
@@ -23,11 +22,6 @@ protected:
 	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-public:
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	ATargetObject* Target; 
 	
 protected:
 

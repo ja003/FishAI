@@ -3,6 +3,9 @@
 
 #include "PlayerCharacter.h"
 
+#include "Camera/CameraComponent.h"
+#include "GameFramework/SpringArmComponent.h"
+
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -11,7 +14,16 @@ APlayerCharacter::APlayerCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 
 	BallsCollider = CreateDefaultSubobject<USphereComponent>("balls");
-	BallsCollider->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	//BallsCollider->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	BallsCollider->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform);
+	BallsCollider->SetSphereRadius(15);
+	BallsCollider->SetRelativeLocation(FVector(0,0,90));
+
+	USpringArmComponent* springArm = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
+	springArm->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	//UCameraComponent* camera = CreateDefaultSubobject<UCameraComponent>("");
+	//camera->AttachToComponent(springArm, FAttachmentTransformRules::KeepRelativeTransform);
+
 }
 
 // Called when the game starts or when spawned

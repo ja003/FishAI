@@ -19,8 +19,8 @@ APlayerCharacter::APlayerCharacter()
 	BallsCollider->SetSphereRadius(15);
 	BallsCollider->SetRelativeLocation(FVector(0,0,90));
 
-	USpringArmComponent* springArm = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
-	springArm->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	//USpringArmComponent* springArm = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
+	//springArm->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	//UCameraComponent* camera = CreateDefaultSubobject<UCameraComponent>("");
 	//camera->AttachToComponent(springArm, FAttachmentTransformRules::KeepRelativeTransform);
 

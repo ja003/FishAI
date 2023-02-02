@@ -19,7 +19,8 @@ public:
 	UThrowing();
 
 	USkeletalMeshComponent* SkeletalMesh;
-	
+	USceneComponent* ThrowStart;
+
 	const FName RightHand_SocketName = "RightHand";
 
 protected:
@@ -29,6 +30,9 @@ protected:
 	//TList<UEThrowableObject> ObjectsToThrow;
 
 	public:
+
+	UFUNCTION(BlueprintCallable)
+	void Throw();
 
 	UFUNCTION(BlueprintCallable)
 	void SetActiveObject(int Index);
@@ -42,6 +46,10 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	TArray<TSubclassOf<AThrowableObject>> ThrowableObjects;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	AThrowableObject* SpawnedObject;
+
+	UPROPERTY(BlueprintReadWrite)
+	float ThrowPower = 1000;
 
 };

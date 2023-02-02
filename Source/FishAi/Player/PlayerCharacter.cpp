@@ -34,8 +34,14 @@ APlayerCharacter::APlayerCharacter()
 	//UCameraComponent* camera = CreateDefaultSubobject<UCameraComponent>("");
 	//camera->AttachToComponent(springArm, FAttachmentTransformRules::KeepRelativeTransform);
 
-	Throwing = CreateDefaultSubobject<UThrowing>("Throwing");
-	Throwing->SkeletalMesh = GetMesh();
+	Throwing1 = CreateDefaultSubobject<UThrowing>("Throwing1");
+	Throwing1->SkeletalMesh = GetMesh();
+
+	ThrowStart1 = CreateDefaultSubobject<USceneComponent>("ThrowStart1");
+	ThrowStart1->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform);
+
+	Throwing1->ThrowStart = ThrowStart1;
+	
 
 }
 

@@ -37,7 +37,7 @@ public:
 	bool IsInWater;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	UThrowing* Throwing;
+	UThrowing* Throwing1;
 	
 public:
 	// Called every frame
@@ -49,6 +49,8 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	USphereComponent* BallsCollider;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	USceneComponent* ThrowStart1;
 
 
 	

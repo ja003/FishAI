@@ -20,6 +20,17 @@ void UThrowing::BeginPlay()
 	
 }
 
+void UThrowing::Throw()
+{
+	if(SpawnedObject == nullptr)
+	{
+		UE_LOG(LogTemp, Log, TEXT("xxx no spawned object to throw"));
+		return;
+	}
+
+	SpawnedObject->SetVelocity(ThrowStart->GetForwardVector() * ThrowPower);
+}
+
 void UThrowing::SetActiveObject(int Index)
 {
 	UE_LOG(LogTemp, Log, TEXT("xxx SetActiveObject = %d"), Index);

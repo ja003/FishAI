@@ -18,10 +18,30 @@ public:
 	// Sets default values for this component's properties
 	UThrowing();
 
+	USkeletalMeshComponent* SkeletalMesh;
+	
+	const FName RightHand_SocketName = "RightHand";
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
 	//TList<UEThrowableObject> ObjectsToThrow;
+
+	public:
+
+	UFUNCTION(BlueprintCallable)
+	void SetActiveObject(int Index);
+
+	UFUNCTION(BlueprintCallable)
+	void DeselectObjects();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetPredictionEnabled(bool bEnabled);
+
+	UPROPERTY(EditDefaultsOnly)
+	TArray<TSubclassOf<AThrowableObject>> ThrowableObjects;
+
+	AThrowableObject* SpawnedObject;
 
 };

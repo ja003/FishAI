@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Throwing.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/Character.h"
 #include "PlayerCharacter.generated.h"
@@ -35,6 +36,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	bool IsInWater;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UThrowing* Throwing;
+	
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

@@ -34,6 +34,9 @@ APlayerCharacter::APlayerCharacter()
 	//UCameraComponent* camera = CreateDefaultSubobject<UCameraComponent>("");
 	//camera->AttachToComponent(springArm, FAttachmentTransformRules::KeepRelativeTransform);
 
+	Throwing = CreateDefaultSubobject<UThrowing>("Throwing");
+	Throwing->SkeletalMesh = GetMesh();
+
 }
 
 // Called when the game starts or when spawned

@@ -20,6 +20,21 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+
+private: // water
+
+	void SetSwimming(bool IsSwimming);
+	
+	UFUNCTION()
+	void OnBallsBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult);
+	
+	UFUNCTION()
+	void OnBallsEndOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, int I);
+
+public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool IsInWater;
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -27,6 +42,11 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UPROPERTY()
+	UPROPERTY(EditDefaultsOnly)
 	USphereComponent* BallsCollider;
+
+
+
+	
+	
 };

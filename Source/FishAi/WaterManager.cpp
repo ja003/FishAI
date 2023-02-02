@@ -39,7 +39,7 @@ bool AWaterManager::IsPointInWater(FVector point) const
 	bool result = FGeomTools2D::IsPointInPolygon(FVector2D(point), WaterBounds);
 	log += result ? "TRUE" : "FALSE";
 
-	UE_LOG(LogTemp, Log, TEXT("xxx %s"), *log);
+	//UE_LOG(LogTemp, Log, TEXT("xxx %s"), *log);
 
 	return result;
 }

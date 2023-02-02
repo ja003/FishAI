@@ -21,9 +21,16 @@ AThrowableObject::AThrowableObject()
 	SphereCollider->SetSimulatePhysics(false);
 	SphereCollider->SetCollisionObjectType(COLLISION_THROWABLE_OBJECT);
 	SphereCollider->SetCollisionResponseToAllChannels(ECR_Block);
-	SphereCollider->SetCollisionResponseToChannel(COLLISION_FISH, ECR_Overlap);
-	SphereCollider->SetCollisionResponseToChannel(COLLISION_WATER, ECR_Overlap);
-	SphereCollider->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	SphereCollider->SetCollisionResponseToChannel(
+		ECC_Pawn
+		//COLLISION_PLAYER
+		, ECR_Ignore);
+	SphereCollider->SetCollisionResponseToChannel(
+		COLLISION_FISH, ECR_Overlap);
+	SphereCollider->SetCollisionResponseToChannel(
+		COLLISION_WATER, ECR_Overlap);
+	//disable at start, enable when thrown
+	SphereCollider->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	SphereCollider->SetGenerateOverlapEvents(true);
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("mesh"));
@@ -38,11 +45,17 @@ AThrowableObject::AThrowableObject()
 	}
 
 	ProjectileMovement =  CreateDefaultSubobject<UProjectileMovementComponent>("ProjectileMovementComponent");
+	ProjectileMovement->bSimulationEnabled = false;
 }
 
 void AThrowableObject::SetVelocity(FVector Velocity)
 {
+	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+	
+	ProjectileMovement->bSimulationEnabled = true;
+	SphereCollider->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	UE_LOG(LogTemp, Log, TEXT("xxx Velocity = %s"), *Velocity.ToString());
 	ProjectileMovement->Velocity = Velocity;
+
 }
 

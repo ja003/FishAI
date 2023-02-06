@@ -34,13 +34,13 @@ APlayerCharacter::APlayerCharacter()
 	//UCameraComponent* camera = CreateDefaultSubobject<UCameraComponent>("");
 	//camera->AttachToComponent(springArm, FAttachmentTransformRules::KeepRelativeTransform);
 
-	Throwing1 = CreateDefaultSubobject<UThrowing>("Throwing1");
-	Throwing1->SkeletalMesh = GetMesh();
+	Throwing = CreateDefaultSubobject<UThrowing>("Throwing");
+	Throwing->SkeletalMesh = GetMesh();
 
-	ThrowStart1 = CreateDefaultSubobject<USceneComponent>("ThrowStart1");
-	ThrowStart1->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform);
+	ThrowStart = CreateDefaultSubobject<USceneComponent>("ThrowStart");
+	ThrowStart->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform);
 
-	Throwing1->ThrowStart = ThrowStart1;
+	Throwing->ThrowStart = ThrowStart;
 	
 
 }
@@ -57,6 +57,11 @@ void APlayerCharacter::SetSwimming(bool IsSwimming)
 	IsInWater = IsSwimming;
 	GetCharacterMovement()->GetPhysicsVolume()->bWaterVolume = IsSwimming;
 	GetCharacterMovement()->SetMovementMode(IsSwimming ? MOVE_Swimming : MOVE_Walking);
+
+	if(IsSwimming)
+	{
+		Throwing->DeselectObjects();
+	}
 }
 
 void APlayerCharacter::OnBallsBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,

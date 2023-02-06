@@ -13,13 +13,12 @@
 UCLASS()
 class FISHAI_API AFishCarp : public AFishBase, public  IStimuliSource
 {
+
 	GENERATED_BODY()
 
 private:
 
 	virtual void OnComponentBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult) override;
-
-	virtual void BeginPlay() override;
 	
 protected: // AI
 

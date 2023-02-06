@@ -9,13 +9,6 @@
 #include "FishAi/PlayerObjects/Bait.h"
 
 
-void AFishCarp::BeginPlay()
-{
-	Super::BeginPlay();
-	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AFishCarp::OnComponentBeginOverlap);
-
-}
-
 void AFishCarp::OnComponentBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,	UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult)
 {
 	//UE_LOG(LogTemp, Log, TEXT("xxx OnComponentBeginOverlap"));
@@ -29,7 +22,7 @@ void AFishCarp::OnComponentBeginOverlap(UPrimitiveComponent* PrimitiveComponent,
 
 void AFishCarp::OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
 {
-	//UE_LOG(LogTemp, Log, TEXT("xxx OnBaitPerceptionUpdated"));
+	UE_LOG(LogTemp, Log, TEXT("xxx OnBaitPerceptionUpdated"));
 
 	blackboard->SetValueAsEnum(FishBB_State, (int)EFishState::Bait);
 	blackboard->SetValueAsObject(FishBB_Bait, Actor);
@@ -38,7 +31,7 @@ void AFishCarp::OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimul
 
 void AFishCarp::OnPikePerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
 {
-	//UE_LOG(LogTemp, Log, TEXT("xxx OnPikePerceptionUpdated"));
+	UE_LOG(LogTemp, Log, TEXT("xxx OnPikePerceptionUpdated"));
 
 	blackboard->SetValueAsEnum(FishBB_State, (int)EFishState::Danger);
 

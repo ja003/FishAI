@@ -53,7 +53,7 @@ void UThrowing::SetActiveObject(int Index)
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	FTransform spawnTransform = SkeletalMesh->GetSocketTransform(RightHand_SocketName);
 
-	AActor* spawnActor = GetWorld()->SpawnActor<AActor>(ThrowableObjects[0], spawnTransform, SpawnParams);
+	AActor* spawnActor = GetWorld()->SpawnActor<AActor>(ThrowableObjects[Index], spawnTransform, SpawnParams);
 	SpawnedObject = Cast<AThrowableObject>(spawnActor);
 
 	SpawnedObject->AttachToComponent(SkeletalMesh, FAttachmentTransformRules::SnapToTargetIncludingScale, RightHand_SocketName);

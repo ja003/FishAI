@@ -3,6 +3,7 @@
 
 #include "Rock.h"
 
+#include "WaterBodyActor.h"
 #include "Components/SphereComponent.h"
 #include "FishAi/Constants.h"
 #include "Kismet/GameplayStatics.h"
@@ -24,6 +25,7 @@ ARock::ARock()
 
 void ARock::OnHitWater()
 {
+	UE_LOG(LogTemp, Log, TEXT("xxx OnHitWater"));
 	//UGameplayStatics::PlaySoundAtLocation(GetWorld(), Sound_HitWater, GetActorLocation());
 	
 	// todo: this doesnt work
@@ -36,12 +38,22 @@ void ARock::OnHitWater()
 
 void ARock::OnComponentBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,
 	UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult)
-{	
-	if(Actor->ActorHasTag(Tag_Water))
+{
+	if(Actor->GetClass()->IsChildOf(AWaterBody::StaticClass()))
 	{
 		UE_LOG(LogTemp, Log, TEXT("xxx Water!"));
 		OnHitWater();
 	}
+	// if(PrimitiveComponent->ComponentHasTag(Tag_Water))
+	// {
+	// 	UE_LOG(LogTemp, Log, TEXT("xxx Water!"));
+	// 	OnHitWater();
+	// }
+	// if(Actor->ActorHasTag(Tag_Water))
+	// {
+	// 	UE_LOG(LogTemp, Log, TEXT("xxx Water!"));
+	// 	OnHitWater();
+	// }
 }
 
 void ARock::OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,

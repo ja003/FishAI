@@ -28,6 +28,10 @@ AFishBase::AFishBase()
 	AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>("PerceptionComponent");	
 	AIPerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AFishBase::OnTargetPerceptionUpdated);
 
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AFishBase::OnComponentBeginOverlap);
+
+	GetCapsuleComponent()->OnComponentHit.AddDynamic(this, &AFishBase::OnComponentHit);
+
 }
 
 // Called when the game starts or when spawned
@@ -36,9 +40,7 @@ void AFishBase::BeginPlay()
 	Super::BeginPlay();
 
 	blackboard = UAIBlueprintHelperLibrary::GetBlackboard(this);
-	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AFishBase::OnComponentBeginOverlap);
-
-	GetCapsuleComponent()->OnComponentHit.AddDynamic(this, &AFishBase::OnComponentHit);
+	
 
 	//Target = GetWorld()->SpawnActor<ATargetObject>();
 }

@@ -56,6 +56,7 @@ void UThrowing::SetActiveObject(int Index)
 	AActor* spawnActor = GetWorld()->SpawnActor<AActor>(ThrowableObjects[Index], spawnTransform, SpawnParams);
 	SpawnedObject = Cast<AThrowableObject>(spawnActor);
 
+	SpawnedObject->ProjectileMovement->bSimulationEnabled = false;
 	SpawnedObject->AttachToComponent(SkeletalMesh, FAttachmentTransformRules::SnapToTargetIncludingScale, RightHand_SocketName);
 
 	Prediction->SetEnabled(true);

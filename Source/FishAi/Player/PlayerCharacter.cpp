@@ -49,7 +49,9 @@ APlayerCharacter::APlayerCharacter()
 void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	//todo: why tf I have to do this?
+	SetSwimming(false);
 }
 
 void APlayerCharacter::SetSwimming(bool IsSwimming)

@@ -29,6 +29,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Mesh)
 	UProjectileMovementComponent* ProjectileMovement;
 
+	//todo: how to include this???
+	//UBuoyancyComponent Buoyancy;
+
 	UFUNCTION(BlueprintCallable)
 	void SetVelocity(FVector Velocity);
 	

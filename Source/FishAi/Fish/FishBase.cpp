@@ -8,11 +8,15 @@
 #include "Components/CapsuleComponent.h"
 #include "FishAi/Constants.h"
 #include "FishAi/StimuliObject.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/PhysicsVolume.h"
 #include "Perception/AIPerceptionComponent.h"
 
 // Sets default values
 AFishBase::AFishBase()
 {
+	PrimaryActorTick.bCanEverTick = true;
+	
 	// BP equivalent of "simulation generates hit events"
 	// ..not rly sure if necessary, hit event is triggered even without it
 	GetCapsuleComponent()->SetNotifyRigidBodyCollision(true);
@@ -40,9 +44,18 @@ void AFishBase::BeginPlay()
 	Super::BeginPlay();
 
 	blackboard = UAIBlueprintHelperLibrary::GetBlackboard(this);
-	
+
+	GetCharacterMovement()->GetPhysicsVolume()->bWaterVolume = true;
+	GetCharacterMovement()->SetMovementMode(MOVE_Swimming);
 
 	//Target = GetWorld()->SpawnActor<ATargetObject>();
+}
+
+void AFishBase::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	bodyMesh->SetRelativeLocation(FVector(0,0, -GetActorLocation().Z));
 }
 
 void AFishBase::Die()

@@ -59,7 +59,7 @@ bool AThrowPrediction::CalculateSplinePath()
 	params.bTraceWithCollision = true; //important
 	
 	params.SimFrequency = 15;
-	params.MaxSimTime = 2;
+	params.MaxSimTime = 5;
 	
 	FPredictProjectilePathResult predictResult;
 	bool bHit = UGameplayStatics::PredictProjectilePath(GetWorld(), params, predictResult);

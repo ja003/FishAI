@@ -11,30 +11,39 @@ class USplineComponent;
 UCLASS()
 class FISHAI_API AThrowPrediction : public AActor
 {
+private:
 	GENERATED_BODY()
 
 public:
+	
+	AThrowPrediction();
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-private:
-
-	void CreateSpline();
-
-	void DestroySpline();
-
-	void DestroyMeshes();
-
-	void DrawSpline();
+	virtual void BeginPlay() override;
 
 	void SetEnabled(bool bEnabled);
 
-	void UpdateValues();
+	void UpdateValues(FVector InStart, FVector InVelocity, TArray<AActor*> InIgnoredActors);
+	
+private:
+
+	void DestroyMeshes();
+	bool CalculateSplinePath();
+
+	void DrawSpline();
 
 	UPROPERTY(VisibleAnywhere, Category = "Spline")
 	USplineComponent* SplineComponent;
 
 public:
+
+	UPROPERTY(EditDefaultsOnly)
+	UMaterialInterface* SplinePartMaterial;
+
+	UPROPERTY(EditDefaultsOnly)
+	UStaticMesh* SplinePartMesh;
 	
 	TArray<USplineMeshComponent*> SplineMeshes;
 

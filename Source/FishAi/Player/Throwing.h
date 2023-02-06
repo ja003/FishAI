@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "FishAi/PlayerObjects/ThrowableObject.h"
+#include "FishAi/PlayerObjects/ThrowPrediction.h"
 #include "Throwing.generated.h"
 
 
@@ -15,10 +16,16 @@ class FISHAI_API UThrowing : public UActorComponent
 	GENERATED_BODY()
 
 public:
+
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	
 	// Sets default values for this component's properties
 	UThrowing();
 
+	UPROPERTY()
 	USkeletalMeshComponent* SkeletalMesh;
+	
+	UPROPERTY()
 	USceneComponent* ThrowStart;
 
 	const FName RightHand_SocketName = "RightHand";
@@ -27,7 +34,7 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	//TList<UEThrowableObject> ObjectsToThrow;
+	AThrowPrediction* Prediction;
 
 	public:
 
@@ -39,9 +46,6 @@ protected:
 
 	UFUNCTION(BlueprintCallable)
 	void DeselectObjects();
-
-	UFUNCTION(BlueprintImplementableEvent)
-	void SetPredictionEnabled(bool bEnabled);
 
 	UPROPERTY(EditDefaultsOnly)
 	TArray<TSubclassOf<AThrowableObject>> ThrowableObjects;

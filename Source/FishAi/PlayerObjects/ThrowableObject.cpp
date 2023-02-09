@@ -70,6 +70,9 @@ void AThrowableObject::OnEnteredWater()
 	UE_LOG(LogTemp, Log, TEXT("xxx OnEnteredWater"));
 	//UGameplayStatics::PlaySoundAtLocation(GetWorld(), Sound_HitWater, GetActorLocation());
 
+	ProjectileMovement->bSimulationEnabled = false;
+	ProjectileMovement->Velocity = FVector::ZeroVector;
+
 	SphereCollider->SetSimulatePhysics(true);
 	SphereCollider->SetEnableGravity(true);
 }

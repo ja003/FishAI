@@ -9,9 +9,9 @@
 #include "FishAi/PlayerObjects/Bait.h"
 
 
-void AFishCarp::OnComponentBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,	UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult)
+void AFishCarp::OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,	UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult)
 {
-	//UE_LOG(LogTemp, Log, TEXT("xxx OnComponentBeginOverlap"));
+	UE_LOG(LogTemp, Log, TEXT("xxx OnMouthBeginOverlap"));
 
 	if(Cast<ABait>(Actor))
 	{

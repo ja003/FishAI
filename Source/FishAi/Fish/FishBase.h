@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Components/SphereComponent.h"
 #include "GameFramework/Character.h"
 #include "Perception/AIPerceptionTypes.h"
 #include "FishBase.generated.h"
@@ -14,7 +15,7 @@ class FISHAI_API AFishBase : public ACharacter
 	GENERATED_BODY()
 
 public:
-
+	
 	// Sets default values for this character's properties
 	AFishBase();
 
@@ -33,6 +34,9 @@ protected:
 
 	UFUNCTION()
 	virtual void OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, FVector Normal, const FHitResult& HitResult) {}
+
+	UFUNCTION()
+	virtual void OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult) {}
 
 public:
 
@@ -61,6 +65,9 @@ protected: // Components
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = AI)
 	class UAIPerceptionComponent* AIPerceptionComponent ;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Collision)
+	USphereComponent* MouthCollider;
 
 public: // Variables
 

@@ -36,6 +36,11 @@ AFishBase::AFishBase()
 
 	GetCapsuleComponent()->OnComponentHit.AddDynamic(this, &AFishBase::OnComponentHit);
 
+	MouthCollider = CreateDefaultSubobject<USphereComponent>(TEXT("Mouth"));
+	MouthCollider->AttachToComponent(bodyMesh, FAttachmentTransformRules::KeepRelativeTransform);
+
+	MouthCollider->OnComponentBeginOverlap.AddDynamic(this, &AFishBase::OnMouthBeginOverlap);
+
 }
 
 // Called when the game starts or when spawned

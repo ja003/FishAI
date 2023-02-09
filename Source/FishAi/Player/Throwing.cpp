@@ -2,7 +2,6 @@
 
 
 #include "Throwing.h"
-
 #include "Kismet/GameplayStatics.h"
 
 
@@ -47,6 +46,12 @@ void UThrowing::Throw()
 void UThrowing::SetActiveObject(int Index)
 {
 	UE_LOG(LogTemp, Log, TEXT("xxx SetActiveObject = %d"), Index);
+
+	if(ThrowableObjects.Num() <= Index)
+	{
+		UE_LOG(LogTemp, Log, TEXT("xxx ThrowableObject not defined"));
+		return;
+	}
 
 	
 	FActorSpawnParameters SpawnParams;

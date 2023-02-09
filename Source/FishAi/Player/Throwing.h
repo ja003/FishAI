@@ -53,7 +53,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	AThrowableObject* SpawnedObject;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
 	float ThrowPower = 1000;
 
 };

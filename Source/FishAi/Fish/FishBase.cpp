@@ -55,11 +55,13 @@ void AFishBase::BeginPlay()
 
 	//Target = GetWorld()->SpawnActor<ATargetObject>();
 
+	// fish actor has to be placed at the water bottom (where navmesh is generated)
+	// otherwise it wont mmove 
 	FHitResult hit;
 	if(GetWorld()->LineTraceSingleByObjectType(hit, GetActorLocation(), GetActorLocation() + FVector::DownVector * 1000, COLLISION_GROUND))
 	{
 		SetActorLocation(hit.Location);
-		UE_LOG(LogTemp, Log, TEXT("xxx ne fish location = %s"), *hit.Location.ToString());
+		//UE_LOG(LogTemp, Log, TEXT("xxx new fish location = %s"), *hit.Location.ToString());
 	}
 	else
 	{
@@ -81,7 +83,7 @@ void AFishBase::Die()
 
 void AFishBase::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
-	UE_LOG(LogTemp, Log, TEXT("xxx OnTargetPerceptionUpdated = %s"), *Actor->GetName());
+	//UE_LOG(LogTemp, Log, TEXT("xxx OnTargetPerceptionUpdated = %s"), *Actor->GetName());
 
 	if(Actor->GetClass()->ImplementsInterface(UStimuliSource::StaticClass()))
 	{

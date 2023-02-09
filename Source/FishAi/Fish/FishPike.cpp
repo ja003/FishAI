@@ -5,14 +5,16 @@
 
 void AFishPike::OnEdibleFishPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
 {
-	UE_LOG(LogTemp, Log, TEXT("xxx OnEdibleFishPerceptionUpdated"));
+	//UE_LOG(LogTemp, Log, TEXT("xxx OnEdibleFishPerceptionUpdated"));
 
 	Super::OnEdibleFishPerceptionUpdated(Actor, Stimulus);
 
-	UE_LOG(LogTemp, Log, TEXT("xxx IsReadyForHunt = %s"), IsReadyForHunt() ? TEXT("true"):TEXT("false"));
+	//UE_LOG(LogTemp, Log, TEXT("xxx IsReadyForHunt = %s"), IsReadyForHunt() ? TEXT("true"):TEXT("false"));
 	
 	if(IsReadyForHunt())
 	{
+		UE_LOG(LogTemp, Log, TEXT("xxx go hunt"));
+		
 		blackboard->SetValueAsEnum(FishBB_State, (int)EFishState::Hunt);
 		blackboard->SetValueAsObject(FishBB_Prey, Actor);
 

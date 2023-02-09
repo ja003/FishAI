@@ -11,6 +11,9 @@
 
 class USphereComponent;
 
+// required:
+//	add Buoyancy component to new object in BP and call OnEnteredWater from
+//	the event
 UCLASS()
 class FISHAI_API AThrowableObject : public AActor, public IStimuliSource
 {
@@ -34,6 +37,10 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetVelocity(FVector Velocity);
+
+	// this has to be called from Buoyancy component event in BP 
+	UFUNCTION(BlueprintCallable)
+	virtual void OnEnteredWater();
 	
 public:		// Senses
 

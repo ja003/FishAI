@@ -19,6 +19,7 @@ AThrowableObject::AThrowableObject()
 	SphereCollider = CreateDefaultSubobject<USphereComponent>(TEXT("collider"));
 	RootComponent = SphereCollider;
 	SphereCollider->SetSimulatePhysics(false);
+	SphereCollider->SetEnableGravity(false);
 	SphereCollider->SetCollisionObjectType(COLLISION_THROWABLE_OBJECT);
 	SphereCollider->SetCollisionResponseToAllChannels(ECR_Block);
 	SphereCollider->SetCollisionResponseToChannel(
@@ -53,9 +54,23 @@ void AThrowableObject::SetVelocity(FVector Velocity)
 	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
 	
 	ProjectileMovement->bSimulationEnabled = true;
+	
 	SphereCollider->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+
+	//SphereCollider->SetSimulatePhysics(true);
+	//SphereCollider->SetEnableGravity(true);
+
 	UE_LOG(LogTemp, Log, TEXT("xxx Velocity = %s"), *Velocity.ToString());
 	ProjectileMovement->Velocity = Velocity;
 
+}
+
+void AThrowableObject::OnEnteredWater()
+{
+	UE_LOG(LogTemp, Log, TEXT("xxx OnEnteredWater"));
+	//UGameplayStatics::PlaySoundAtLocation(GetWorld(), Sound_HitWater, GetActorLocation());
+
+	SphereCollider->SetSimulatePhysics(true);
+	SphereCollider->SetEnableGravity(true);
 }
 

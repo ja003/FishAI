@@ -16,17 +16,12 @@ class FISHAI_API ARock : public AThrowableObject
 public:
 	
 	ARock();
-	void OnHitWater();
 
 	virtual EStimuliObject GetStimuliType() override { return Rock; }
 
-
+	virtual void OnEnteredWater() override;
+	
 private:
-
-	UFUNCTION()
-	void OnComponentBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg,
-		const FHitResult& HitResult);
-
 
 	bool bHasHitGround;
 

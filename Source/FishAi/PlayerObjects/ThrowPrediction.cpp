@@ -117,6 +117,7 @@ void AThrowPrediction::DrawSpline()
 		SplineMesh->SetForwardAxis(ESplineMeshAxis::Z);
 		SplineMesh->SetMaterial(0, SplinePartMaterial);
 
+		//SplineMesh->SetCollisionObjectType(ECollisionChannel::ECC_Pawn);
 		SplineMesh->SetCollisionEnabled(ECollisionEnabled::Type::NoCollision);
 		SplineMesh->SetCastShadow(false);
 

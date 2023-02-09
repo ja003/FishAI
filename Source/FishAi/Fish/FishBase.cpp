@@ -54,6 +54,17 @@ void AFishBase::BeginPlay()
 	GetCharacterMovement()->SetMovementMode(MOVE_Swimming);
 
 	//Target = GetWorld()->SpawnActor<ATargetObject>();
+
+	FHitResult hit;
+	if(GetWorld()->LineTraceSingleByObjectType(hit, GetActorLocation(), GetActorLocation() + FVector::DownVector * 1000, COLLISION_GROUND))
+	{
+		SetActorLocation(hit.Location);
+		UE_LOG(LogTemp, Log, TEXT("xxx ne fish location = %s"), *hit.Location.ToString());
+	}
+	else
+	{
+		UE_LOG(LogTemp, Log, TEXT("xxx ERROR: fish not placed in water"));
+	}	
 }
 
 void AFishBase::Tick(float DeltaSeconds)
@@ -70,7 +81,7 @@ void AFishBase::Die()
 
 void AFishBase::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
-	//UE_LOG(LogTemp, Log, TEXT("xxx OnTargetPerceptionUpdated = %s"), *Actor->GetName());
+	UE_LOG(LogTemp, Log, TEXT("xxx OnTargetPerceptionUpdated = %s"), *Actor->GetName());
 
 	if(Actor->GetClass()->ImplementsInterface(UStimuliSource::StaticClass()))
 	{

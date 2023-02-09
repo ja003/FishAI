@@ -31,7 +31,7 @@ void AFishCarp::OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimul
 
 void AFishCarp::OnPikePerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
 {
-	UE_LOG(LogTemp, Log, TEXT("xxx OnPikePerceptionUpdated"));
+	//UE_LOG(LogTemp, Log, TEXT("xxx OnPikePerceptionUpdated"));
 
 	blackboard->SetValueAsEnum(FishBB_State, (int)EFishState::Danger);
 

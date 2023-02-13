@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Explosion.h"
 #include "ThrowableObject.h"
 #include "UObject/Object.h"
 #include "Grenade.generated.h"
@@ -18,4 +19,7 @@ class FISHAI_API AGrenade : public AThrowableObject
 public:
 	
 	virtual void OnEnteredWater() override;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AExplosion> ExplosionBP = AExplosion::StaticClass();
 };

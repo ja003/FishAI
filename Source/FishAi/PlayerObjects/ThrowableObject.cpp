@@ -30,6 +30,8 @@ AThrowableObject::AThrowableObject()
 		COLLISION_FISH, ECR_Overlap);
 	SphereCollider->SetCollisionResponseToChannel(
 		COLLISION_WATER, ECR_Overlap);
+	SphereCollider->SetCollisionResponseToChannel(
+		COLLISION_EXPLOSION, ECR_Block);
 	//disable at start, enable when thrown
 	SphereCollider->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	SphereCollider->SetGenerateOverlapEvents(true);

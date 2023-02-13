@@ -14,3 +14,4 @@ const FName Tag_Rock = "Rock";
 #define COLLISION_THROWABLE_OBJECT ECC_GameTraceChannel2
 #define COLLISION_WATER ECC_GameTraceChannel3
 #define COLLISION_GROUND ECC_GameTraceChannel4
+#define COLLISION_EXPLOSION ECC_GameTraceChannel5

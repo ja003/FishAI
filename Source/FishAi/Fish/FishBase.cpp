@@ -40,6 +40,11 @@ AFishBase::AFishBase()
 	MouthCollider->AttachToComponent(bodyMesh, FAttachmentTransformRules::KeepRelativeTransform);
 
 	MouthCollider->OnComponentBeginOverlap.AddDynamic(this, &AFishBase::OnMouthBeginOverlap);
+	MouthCollider->SetCollisionObjectType(COLLISION_FISH);
+	MouthCollider->SetCollisionResponseToAllChannels(ECR_Ignore);
+	MouthCollider->SetCollisionResponseToChannel(COLLISION_FISH, ECR_Overlap);
+	MouthCollider->SetCollisionResponseToChannel(COLLISION_THROWABLE_OBJECT, ECR_Overlap);
+	MouthCollider->SetCollisionResponseToChannel(COLLISION_EXPLOSION, ECR_Block);
 
 }
 
@@ -74,6 +79,13 @@ void AFishBase::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 
 	bodyMesh->SetRelativeLocation(FVector(0,0, -GetActorLocation().Z));
+}
+
+void AFishBase::OnKilledByPlayer()
+{
+	UE_LOG(LogTemp, Log, TEXT("xxx OnKilledByPlayer"));
+
+	Die();
 }
 
 void AFishBase::Die()

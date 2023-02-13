@@ -40,6 +40,8 @@ protected:
 
 public:
 
+	void OnKilledByPlayer();
+
 	void Die();
 
 protected: // AI

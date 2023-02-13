@@ -17,8 +17,9 @@ class FISHAI_API AGrenade : public AThrowableObject
 	GENERATED_BODY()
 
 public:
-	
 	virtual void OnEnteredWater() override;
+
+	void Explode();
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AExplosion> ExplosionBP = AExplosion::StaticClass();

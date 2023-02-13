@@ -16,11 +16,7 @@
 AFishBase::AFishBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
-	
-	// BP equivalent of "simulation generates hit events"
-	// ..not rly sure if necessary, hit event is triggered even without it
-	GetCapsuleComponent()->SetNotifyRigidBodyCollision(true);
-	
+		
 	bodyMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("body"));
 	bodyMesh->AddLocalRotation(FRotator(0,-90,0));
 	bodyMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
@@ -35,6 +31,7 @@ AFishBase::AFishBase()
 	// GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AFishBase::OnComponentBeginOverlap);
 	//
 	// GetCapsuleComponent()->OnComponentHit.AddDynamic(this, &AFishBase::OnComponentHit);
+	GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
 
 	MouthCollider = CreateDefaultSubobject<USphereComponent>(TEXT("Mouth"));
 	MouthCollider->AttachToComponent(bodyMesh, FAttachmentTransformRules::KeepRelativeTransform);
@@ -71,7 +68,7 @@ void AFishBase::BeginPlay()
 	else
 	{
 		UE_LOG(LogTemp, Log, TEXT("xxx ERROR: fish not placed in water"));
-	}	
+	}
 }
 
 void AFishBase::Tick(float DeltaSeconds)
@@ -95,7 +92,7 @@ void AFishBase::Die()
 
 void AFishBase::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
-	//UE_LOG(LogTemp, Log, TEXT("xxx OnTargetPerceptionUpdated = %s"), *Actor->GetName());
+	UE_LOG(LogTemp, Log, TEXT("xxx OnTargetPerceptionUpdated = %s"), *Actor->GetName());
 
 	if(Actor->GetClass()->ImplementsInterface(UStimuliSource::StaticClass()))
 	{

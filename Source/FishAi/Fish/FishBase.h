@@ -66,7 +66,7 @@ protected: // Components
 	UStaticMeshComponent* bodyMesh;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = AI)
-	class UAIPerceptionComponent* AIPerceptionComponent ;
+	class UAIPerceptionComponent* AIPerceptionComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Collision)
 	USphereComponent* MouthCollider;

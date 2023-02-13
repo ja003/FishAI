@@ -2,14 +2,15 @@
 
 #include "EFishState.h"
 #include "FishAi/Constants.h"
+#include "Kismet/GameplayStatics.h"
 
 void AFishPike::OnEdibleFishPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
 {
-	//UE_LOG(LogTemp, Log, TEXT("xxx OnEdibleFishPerceptionUpdated"));
+	UE_LOG(LogTemp, Log, TEXT("xxx OnEdibleFishPerceptionUpdated"));
 
 	Super::OnEdibleFishPerceptionUpdated(Actor, Stimulus);
 
-	//UE_LOG(LogTemp, Log, TEXT("xxx IsReadyForHunt = %s"), IsReadyForHunt() ? TEXT("true"):TEXT("false"));
+	UE_LOG(LogTemp, Log, TEXT("xxx IsReadyForHunt = %s"), IsReadyForHunt() ? TEXT("true"):TEXT("false"));
 	
 	if(IsReadyForHunt())
 	{
@@ -20,6 +21,13 @@ void AFishPike::OnEdibleFishPerceptionUpdated(AActor* Actor, const FAIStimulus& 
 
 		lastHuntTime = FDateTime::Now().ToUnixTimestamp();
 	}
+}
+
+void AFishPike::BeginPlay()
+{
+	Super::BeginPlay();
+
+	Water = Cast<AWaterManager>(UGameplayStatics::GetActorOfClass(GetWorld(), AWaterManager::StaticClass()));
 }
 
 void AFishPike::OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,
@@ -39,6 +47,19 @@ void AFishPike::OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* 
 bool AFishPike::IsReadyForHunt()
 {
 	return FDateTime::Now().ToUnixTimestamp() - lastHuntTime > minHuntCooldown;
+}
+
+void AFishPike::OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,
+	UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult)
+{
+	Super::OnMouthBeginOverlap(PrimitiveComponent, Actor, PrimitiveComponent1, I, Arg, HitResult);
+
+	UE_LOG(LogTemp, Log, TEXT("xxx AFishPike::OnMouthBeginOverlap"));
+
+	if(Cast<AFishBase>(Actor))
+	{
+		Cast<AFishBase>(Actor)->Die();
+	}
 }
 
 FVector AFishPike::GetNextPatrolPoint()

@@ -25,6 +25,8 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void SetWaterBounds();
 
+	void SetPatrolPath();
+	
 public:
 
 	UFUNCTION(BlueprintCallable)
@@ -35,7 +37,11 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TArray<FVector2D> WaterBounds;
 
+	TArray<FVector> PatrolPath;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	AWaterBody* WaterBody;
-	
+
+	UPROPERTY(EditAnywhere)
+	int PatrolPathShoreOffset;
 };

@@ -27,7 +27,7 @@ void AFishPike::OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* 
 {
 	Super::OnComponentHit(PrimitiveComponent, Actor, PrimitiveComponent1, Normal, HitResult);
 
-	UE_LOG(LogTemp, Log, TEXT("xxx OnComponentHit"));
+	//UE_LOG(LogTemp, Log, TEXT("xxx OnComponentHit"));
 
 	if(Cast<AFishBase>(Actor))
 	{
@@ -39,4 +39,15 @@ void AFishPike::OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* 
 bool AFishPike::IsReadyForHunt()
 {
 	return FDateTime::Now().ToUnixTimestamp() - lastHuntTime > minHuntCooldown;
+}
+
+FVector AFishPike::GetNextPatrolPoint()
+{
+	if (Water == nullptr || Water->PatrolPath.Num() == 0)
+	{
+		return GetActorLocation();
+	}
+	
+	currentPatrolPathIndex++;
+	return  Water->PatrolPath[(currentPatrolPathIndex - 1) % Water->PatrolPath.Num()];
 }

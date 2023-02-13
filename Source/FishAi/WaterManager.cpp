@@ -19,10 +19,39 @@ void AWaterManager::BeginPlay()
 
 	SetWaterBounds();
 
+	SetPatrolPath();
+
 	// todo: WaterSpline is incomplete type
 	// FVector Location;
 	// FVector Tangent;
 	// WaterBody->GetWaterSpline()->GetLocationAndTangentAtSplinePoint(0, &Location, &Tangent, ESplineCoordinateSpace::World);
+}
+
+void AWaterManager::SetPatrolPath()
+{
+	FVector center = FVector::ZeroVector;
+	for (int i = 0; i < WaterBounds.Num(); i++)
+	{
+		PatrolPath.Add(FVector(WaterBounds[i].X, WaterBounds[i].Y, 0));
+		center += PatrolPath[i];		
+	}
+	center /= PatrolPath.Num();
+
+	//DrawDebugSphere(GWorld, center, 50, 10, FColor::Blue, true, 5);
+
+	for (int i = PatrolPath.Num() - 1; i >= 0; i--)
+	{
+		//DrawDebugSphere(GWorld, PatrolPath[i], 50, 10, FColor::Red, true, 5);
+		
+		FVector dirToCenter = center - PatrolPath[i];
+		dirToCenter.Normalize();
+		PatrolPath[i] = PatrolPath[i] + dirToCenter * PatrolPathShoreOffset;
+	}
+
+	// for (int i = 0; i < PatrolPath.Num(); i++)
+	// {
+	// 	DrawDebugSphere(GWorld, PatrolPath[i], 50, 10, FColor::Blue, true, 5);
+	// }
 }
 
 bool AWaterManager::IsPointInWater(FVector point) const

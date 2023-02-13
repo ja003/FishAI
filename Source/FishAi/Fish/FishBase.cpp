@@ -32,9 +32,9 @@ AFishBase::AFishBase()
 	AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>("PerceptionComponent");	
 	AIPerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AFishBase::OnTargetPerceptionUpdated);
 
-	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AFishBase::OnComponentBeginOverlap);
-
-	GetCapsuleComponent()->OnComponentHit.AddDynamic(this, &AFishBase::OnComponentHit);
+	// GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AFishBase::OnComponentBeginOverlap);
+	//
+	// GetCapsuleComponent()->OnComponentHit.AddDynamic(this, &AFishBase::OnComponentHit);
 
 	MouthCollider = CreateDefaultSubobject<USphereComponent>(TEXT("Mouth"));
 	MouthCollider->AttachToComponent(bodyMesh, FAttachmentTransformRules::KeepRelativeTransform);
@@ -138,7 +138,7 @@ void AFishBase::OnRockPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimul
 	FVector dirAway = (GetActorLocation() - Stimulus.StimulusLocation);
 	dirAway.Normalize();
 	FVector runawayTarget = GetActorLocation() + dirAway * 200;
-	DrawDebugSphere(GWorld, runawayTarget, 5, 10, FColor::Blue, false, 5);
+	DrawDebugSphere(GWorld, runawayTarget, 50, 10, FColor::Blue, true, 5);
 	
 	blackboard->SetValueAsVector(FishBB_Target, runawayTarget);
 

@@ -31,7 +31,7 @@ void AFishCarp::OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimul
 
 void AFishCarp::OnPikePerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
 {
-	//UE_LOG(LogTemp, Log, TEXT("xxx OnPikePerceptionUpdated"));
+	UE_LOG(LogTemp, Log, TEXT("xxx OnPikePerceptionUpdated"));
 
 	blackboard->SetValueAsEnum(FishBB_State, (int)EFishState::Danger);
 
@@ -40,7 +40,7 @@ void AFishCarp::OnPikePerceptionUpdated(AActor* Actor, const FAIStimulus& Stimul
 
 	FVector dirAway = (GetActorLocation() - Actor->GetActorLocation());
 	dirAway.Normalize();
-	FVector runawayTarget = GetActorLocation() + dirAway * 200;
+	FVector runawayTarget = GetActorLocation() + dirAway * 400;
 	DrawDebugSphere(GWorld, runawayTarget, 5, 10, FColor::Blue, false, 5);
 	
 	blackboard->SetValueAsVector(FishBB_Target, runawayTarget);

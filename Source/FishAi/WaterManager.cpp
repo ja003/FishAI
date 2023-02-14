@@ -79,16 +79,20 @@ void AWaterManager::GenerateFishes()
 	{
 		FVector randomPoint = GetRandomPointInWater();
 		AFishPike* pike = Cast<AFishPike>(FishSpawner->SpawnFish(EFish::Pike, randomPoint));
-		check(pike)
-		pike->Water = this;
+		if (ensureMsgf(pike, TEXT("Pike not spawned")))
+		{
+			pike->Water = this;
+		}
 	}
 
 	for (int i = 0; i < CarpCount; ++i)
 	{
 		FVector randomPoint = GetRandomPointInWater();
 		AFishCarp* carp = Cast<AFishCarp>(FishSpawner->SpawnFish(EFish::Carp, randomPoint));
-		check(carp)
-		carp->Water = this;
+		if (ensureMsgf(carp, TEXT("Carp not spawned")))
+		{
+			carp->Water = this;
+		}
 	}
 }
 

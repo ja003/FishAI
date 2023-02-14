@@ -11,7 +11,7 @@
 
 void AFishCarp::OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,	UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult)
 {
-	UE_LOG(LogTemp, Log, TEXT("xxx OnMouthBeginOverlap"));
+	//UE_LOG(LogTemp, Log, TEXT("xxx OnMouthBeginOverlap"));
 
 	if(Cast<ABait>(Actor))
 	{

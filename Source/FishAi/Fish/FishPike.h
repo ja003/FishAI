@@ -3,7 +3,6 @@
 #include "CoreMinimal.h"
 #include "FishBase.h"
 #include "FishAi/StimuliObject.h"
-#include "FishAi/WaterManager.h"
 #include "FishPike.generated.h"
 
 
@@ -34,8 +33,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	int minHuntCooldown;
 
-	UPROPERTY(EditAnywhere)
-	AWaterManager* Water;
+	
 
 	UFUNCTION(BlueprintCallable)
 	FVector GetNextPatrolPoint();

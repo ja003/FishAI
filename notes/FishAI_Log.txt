@@ -1,0 +1,18 @@
+24.1.
+Don't forget to add an AI module to build.cs
+
+enums defined in C++ can be used in Blackboard by manually pasting the enum name into the EnumName field:
+https://forums.unrealengine.com/t/can-i-use-the-c-enum-in-ai-bt-blackboard/339672/2
+
+13.2.
+
+to make things float in water I used a Buoyancy component, following this tutorial
+https://www.youtube.com/watch?v=5MR04Cg9RJk&ab_channel=Klaus
+
+however it seems that the Buoyancy component cant be added through C++ so i have to do that manually in BP
+
+---
+
+to show prediction path of thrown object I followed this tutorial
+https://www.youtube.com/watch?v=88BCSofXKH8&ab_channel=ReidsChannel
+and rewritten it into C++

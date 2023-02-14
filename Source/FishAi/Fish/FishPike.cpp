@@ -2,6 +2,7 @@
 
 #include "EFishState.h"
 #include "FishAi/Constants.h"
+#include "FishAi/WaterManager.h"
 #include "Kismet/GameplayStatics.h"
 
 void AFishPike::OnEdibleFishPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
@@ -27,7 +28,7 @@ void AFishPike::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Water = Cast<AWaterManager>(UGameplayStatics::GetActorOfClass(GetWorld(), AWaterManager::StaticClass()));
+	
 }
 
 void AFishPike::OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,

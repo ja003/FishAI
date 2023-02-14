@@ -9,6 +9,7 @@
 #include "Perception/AIPerceptionTypes.h"
 #include "FishBase.generated.h"
 
+class AWaterManager;
 UCLASS()
 class FISHAI_API AFishBase : public ACharacter
 {
@@ -25,7 +26,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaSeconds) override;
-	
+
 protected:
 
 	UFUNCTION()
@@ -72,6 +73,9 @@ protected: // Components
 	USphereComponent* MouthCollider;
 
 public: // Variables
+
+	UPROPERTY(EditAnywhere)
+	AWaterManager* Water;
 
 
 };

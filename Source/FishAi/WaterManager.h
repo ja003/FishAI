@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "WaterBodyActor.h"
+#include "Fish/FishSpawner.h"
 
 
 #include "WaterManager.generated.h"
@@ -25,7 +26,17 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void SetWaterBounds();
 
+	FVector2D min;
+	FVector2D max;
+	FVector center;
+	
+	void CalculateBoundsInfo();
+
 	void SetPatrolPath();
+
+	void GenerateFishes();
+	
+	FVector GetRandomPointInWater(int Counter = 0);
 	
 public:
 
@@ -44,4 +55,13 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	int PatrolPathShoreOffset;
+
+	UPROPERTY(EditAnywhere)
+	int PikeCount;
+
+	UPROPERTY(EditAnywhere)
+	int CarpCount;
+
+	AFishSpawner* FishSpawner;
+	
 };

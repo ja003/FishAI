@@ -2,9 +2,8 @@
 
 
 #include "WaterManager.h"
-#include "Components/SplineComponent.h"
-
 #include "GeomTools.h"
+#include "Kismet/GameplayStatics.h"
 
 
 // Sets default values
@@ -17,7 +16,11 @@ void AWaterManager::BeginPlay()
 {
 	Super::BeginPlay();
 
+	FishSpawner = Cast<AFishSpawner>(UGameplayStatics::GetActorOfClass(GetWorld(), AFishSpawner::StaticClass()));
+
 	SetWaterBounds();
+
+	CalculateBoundsInfo();
 
 	SetPatrolPath();
 
@@ -25,17 +28,31 @@ void AWaterManager::BeginPlay()
 	// FVector Location;
 	// FVector Tangent;
 	// WaterBody->GetWaterSpline()->GetLocationAndTangentAtSplinePoint(0, &Location, &Tangent, ESplineCoordinateSpace::World);
+
+	GenerateFishes();
 }
 
-void AWaterManager::SetPatrolPath()
+void AWaterManager::CalculateBoundsInfo()
 {
-	FVector center = FVector::ZeroVector;
+	for (int i=0; i < WaterBounds.Num(); i++)
+	{
+		FVector2D point = WaterBounds[i];
+		if (point.X < min.X) min.X = point.X;
+		if (point.Y < min.Y) min.Y = point.Y;
+		if (point.X > max.X) max.X = point.X;
+		if (point.Y > max.Y) max.Y = point.Y;	
+	}
+
 	for (int i = 0; i < WaterBounds.Num(); i++)
 	{
 		PatrolPath.Add(FVector(WaterBounds[i].X, WaterBounds[i].Y, 0));
 		center += PatrolPath[i];		
 	}
 	center /= PatrolPath.Num();
+}
+
+void AWaterManager::SetPatrolPath()
+{
 
 	//DrawDebugSphere(GWorld, center, 50, 10, FColor::Blue, true, 5);
 
@@ -54,6 +71,44 @@ void AWaterManager::SetPatrolPath()
 	// }
 }
 
+void AWaterManager::GenerateFishes()
+{
+	UE_LOG(LogTemp, Log, TEXT("xxx GenerateFishes = %d, %d"), PikeCount, CarpCount);
+	
+	for (int i = 0; i < PikeCount; ++i)
+	{
+		FVector randomPoint = GetRandomPointInWater();
+		AFishPike* pike = Cast<AFishPike>(FishSpawner->SpawnFish(EFish::Pike, randomPoint));
+		check(pike)
+		pike->Water = this;
+	}
+
+	for (int i = 0; i < CarpCount; ++i)
+	{
+		FVector randomPoint = GetRandomPointInWater();
+		AFishCarp* carp = Cast<AFishCarp>(FishSpawner->SpawnFish(EFish::Carp, randomPoint));
+		check(carp)
+		carp->Water = this;
+	}
+}
+
+FVector AWaterManager::GetRandomPointInWater(int Counter)
+{
+	FVector point = FVector(FMath::RandRange(min.X, max.X), FMath::RandRange(min.Y, max.Y), 0);
+	if (IsPointInWater(point))
+	{
+		UE_LOG(LogTemp, Log, TEXT("xxx GetRandomPointInWater success on %d"), Counter);
+		return point;
+	}
+
+	if(Counter > 100)
+	{
+		UE_LOG(LogTemp, Log, TEXT("xxx too many iterations"));
+		return center;
+	}
+	return GetRandomPointInWater(Counter + 1);
+}
+
 bool AWaterManager::IsPointInWater(FVector point) const
 {
 	FString log = point.ToString();
@@ -68,6 +123,7 @@ bool AWaterManager::IsPointInWater(FVector point) const
 	bool result = FGeomTools2D::IsPointInPolygon(FVector2D(point), WaterBounds);
 	log += result ? "TRUE" : "FALSE";
 
+	
 	//UE_LOG(LogTemp, Log, TEXT("xxx %s"), *log);
 
 	return result;

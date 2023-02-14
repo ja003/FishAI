@@ -8,8 +8,10 @@
 #include "Components/CapsuleComponent.h"
 #include "FishAi/Constants.h"
 #include "FishAi/StimuliObject.h"
+#include "FishAi/WaterManager.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PhysicsVolume.h"
+#include "Kismet/GameplayStatics.h"
 #include "Perception/AIPerceptionComponent.h"
 
 // Sets default values
@@ -24,6 +26,10 @@ AFishBase::AFishBase()
 	bodyMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	// needs to be set otherwise AI controller doesnt initiate
+	// when spawned from code
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
 	AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>("PerceptionComponent");	
 	AIPerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AFishBase::OnTargetPerceptionUpdated);
@@ -51,6 +57,7 @@ void AFishBase::BeginPlay()
 	Super::BeginPlay();
 
 	blackboard = UAIBlueprintHelperLibrary::GetBlackboard(this);
+	check(blackboard)
 
 	GetCharacterMovement()->GetPhysicsVolume()->bWaterVolume = true;
 	GetCharacterMovement()->SetMovementMode(MOVE_Swimming);
@@ -69,6 +76,12 @@ void AFishBase::BeginPlay()
 	{
 		UE_LOG(LogTemp, Log, TEXT("xxx ERROR: fish not placed in water"));
 	}
+
+	if (Water == nullptr)
+	{
+		Water = Cast<AWaterManager>(UGameplayStatics::GetActorOfClass(GetWorld(), AWaterManager::StaticClass()));
+	}
+	check(Water)
 }
 
 void AFishBase::Tick(float DeltaSeconds)
@@ -92,7 +105,7 @@ void AFishBase::Die()
 
 void AFishBase::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
-	UE_LOG(LogTemp, Log, TEXT("xxx OnTargetPerceptionUpdated = %s"), *Actor->GetName());
+	//UE_LOG(LogTemp, Log, TEXT("xxx OnTargetPerceptionUpdated = %s"), *Actor->GetName());
 
 	if(Actor->GetClass()->ImplementsInterface(UStimuliSource::StaticClass()))
 	{

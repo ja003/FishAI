@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "FishAi/PlayerObjects/ThrowableObject.h"
+#include "FishAi/PlayerObjects/ThrowablesGenerator.h"
 #include "Inventory.generated.h"
 
 
@@ -22,7 +23,9 @@ public:
 
 	bool HasItem(EThrowableObject ObjectType);
 
-	void OnObjectThrown(EThrowableObject Type);
+	void RemoveItem(EThrowableObject Type);
+
+	void AddItem(EThrowableObject ObjectType);
 
 	UPROPERTY(EditDefaultsOnly)
 	TMap<EThrowableObject, TSubclassOf<AThrowableObject>> ThrowableObjectsBP;

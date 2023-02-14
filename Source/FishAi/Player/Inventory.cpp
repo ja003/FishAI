@@ -17,8 +17,13 @@ bool UInventory::HasItem(EThrowableObject ObjectType)
 	return Items.Contains(ObjectType) && Items[ObjectType] > 0;
 }
 
-void UInventory::OnObjectThrown(EThrowableObject Type)
+void UInventory::RemoveItem(EThrowableObject Type)
 {
 	Items[Type]--;
+}
+
+void UInventory::AddItem(EThrowableObject ObjectType)
+{
+	Items[ObjectType]++;
 }
 

@@ -66,7 +66,7 @@ void UThrowing::Throw()
 	}
 
 	SpawnedObject->SetVelocity(ThrowStart->GetForwardVector() * ThrowPower);
-	Inventory->OnObjectThrown(SpawnedObject->GetType());
+	Inventory->RemoveItem(SpawnedObject->GetType());
 
 	SpawnedObject = nullptr;
 	Prediction->SetEnabled(false);

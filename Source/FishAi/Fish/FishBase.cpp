@@ -96,21 +96,21 @@ void AFishBase::Tick(float DeltaSeconds)
 	}
 }
 
-void AFishBase::OnKilledByGrenade(FVector ExplosionLocation)
+void AFishBase::OnKilledByGrenade(FVector ExplosionForce)
 {
 	UE_LOG(LogTemp, Log, TEXT("xxx OnKilledByPlayer"));
 
  	Cast<AAIController>(GetController())->BrainComponent->StopLogic("Death");
-
-	FVector dir = GetActorLocation() - ExplosionLocation;
-	dir.Normalize();
-	dir.Z += 3;	
-	
-	FVector impulse = dir * 100000;
 	
 	bodyMesh->SetSimulatePhysics(true);
 	bodyMesh->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
-	bodyMesh->AddImpulse(impulse);
+	bodyMesh->AddImpulse(ExplosionForce);
+	int torque_offset = 1000;
+	AfterDeathTorque += FVector(
+		FMath::RandRange(-torque_offset, torque_offset),
+		FMath::RandRange(-torque_offset, torque_offset),
+		FMath::RandRange(-torque_offset, torque_offset));
+	bodyMesh->AddTorqueInDegrees(AfterDeathTorque, NAME_None, true);
 
 	IsDead = true;
 

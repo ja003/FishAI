@@ -21,6 +21,12 @@ public:
 
 	void Explode();
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly, Category=Grenade)
 	TSubclassOf<AExplosion> ExplosionBP = AExplosion::StaticClass();
+
+	UPROPERTY(EditDefaultsOnly, Category=Grenade)
+	int ExplosionStrength = 100000;
+
+	UPROPERTY(EditDefaultsOnly, Category=Grenade)
+	float Radius;
 };

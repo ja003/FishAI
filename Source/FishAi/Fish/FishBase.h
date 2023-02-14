@@ -41,7 +41,7 @@ protected:
 
 public:
 
-	void OnKilledByGrenade(FVector ExplosionLocation);
+	void OnKilledByGrenade(FVector ExplosionForce);
 
 	bool IsDead;
 	
@@ -73,6 +73,10 @@ protected: // Components
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Collision)
 	USphereComponent* MouthCollider;
+
+	// Default value measured by observation
+	UPROPERTY(EditAnywhere)
+	FVector AfterDeathTorque = FVector(3000, 20000, 10000);
 
 public: // Variables
 

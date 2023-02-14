@@ -123,3 +123,8 @@ void UThrowing::DeselectObjects()
 	Prediction->SetEnabled(false);
 }
 
+bool UThrowing::CanStartThrowing()
+{
+	return !bIsThrowing && SpawnedObject != nullptr;
+}
+

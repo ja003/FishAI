@@ -68,7 +68,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void DeselectObjects();
 
-	
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool CanStartThrowing();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	AThrowableObject* SpawnedObject;

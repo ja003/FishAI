@@ -27,3 +27,8 @@ void UInventory::AddItem(EThrowableObject ObjectType)
 	Items[ObjectType]++;
 }
 
+int UInventory::GetItemCount(EThrowableObject ObjectType)
+{
+	return Items[ObjectType];
+}
+

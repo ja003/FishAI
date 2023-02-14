@@ -27,6 +27,9 @@ public:
 
 	void AddItem(EThrowableObject ObjectType);
 
+	UFUNCTION(BlueprintCallable)
+	int GetItemCount(EThrowableObject ObjectType);
+
 	UPROPERTY(EditDefaultsOnly)
 	TMap<EThrowableObject, TSubclassOf<AThrowableObject>> ThrowableObjectsBP;
 };

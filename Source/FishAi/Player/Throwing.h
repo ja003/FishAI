@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Inventory.h"
+#include "Camera/CameraComponent.h"
 #include "Components/ActorComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "FishAi/PlayerObjects/ThrowableObject.h"
 #include "FishAi/PlayerObjects/ThrowPrediction.h"
 #include "Throwing.generated.h"
@@ -43,6 +45,12 @@ protected:
 
 	UInventory* Inventory;
 
+	UCapsuleComponent* Capsule;
+	
+	UCameraComponent* Camera;
+
+	void RotateCharacterToFaceCamera();
+	
 public:
 
 	UFUNCTION(BlueprintCallable)

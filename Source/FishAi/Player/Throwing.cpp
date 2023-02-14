@@ -3,6 +3,7 @@
 
 #include "Throwing.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h"
 
 
 void UThrowing::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -32,6 +33,18 @@ void UThrowing::BeginPlay()
 	Prediction = Cast<AThrowPrediction>(UGameplayStatics::GetActorOfClass(GetWorld(), AThrowPrediction::StaticClass()));
 
 	Inventory = GetOwner()->FindComponentByClass<UInventory>();
+	
+	Capsule = GetOwner()->FindComponentByClass<UCapsuleComponent>();
+	
+	Camera = GetOwner()->FindComponentByClass<UCameraComponent>();	
+}
+
+void UThrowing::RotateCharacterToFaceCamera()
+{
+	FVector playerLoc = GetOwner()->GetActorLocation();
+	float newYaw = UKismetMathLibrary::FindLookAtRotation(playerLoc, playerLoc + Camera->GetForwardVector()).Yaw;
+	Capsule->SetWorldRotation(FRotator(0,newYaw,0));
+	//UE_LOG(LogTemp, Log, TEXT("xxx newYaw = %f"), newYaw);
 }
 
 void UThrowing::SetIsThrowing(bool bValue)
@@ -91,6 +104,8 @@ void UThrowing::SetActiveObject(EThrowableObject ObjectType)
 	SpawnedObject->AttachToComponent(SkeletalMesh, FAttachmentTransformRules::SnapToTargetIncludingScale, RightHand_SocketName);
 
 	Prediction->SetEnabled(true);
+
+	RotateCharacterToFaceCamera();
 }
 
 void UThrowing::DeselectObjects()

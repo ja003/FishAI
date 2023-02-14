@@ -14,7 +14,7 @@ UInventory::UInventory()
 
 bool UInventory::HasItem(EThrowableObject ObjectType)
 {
-	return Items[ObjectType] > 0;
+	return Items.Contains(ObjectType) && Items[ObjectType] > 0;
 }
 
 void UInventory::OnObjectThrown(EThrowableObject Type)

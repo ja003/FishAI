@@ -41,8 +41,10 @@ protected:
 
 public:
 
-	void OnKilledByPlayer();
+	void OnKilledByGrenade(FVector ExplosionLocation);
 
+	bool IsDead;
+	
 	void Die();
 
 protected: // AI

@@ -3,6 +3,8 @@
 
 #include "FishBase.h"
 
+#include "AIController.h"
+#include "BrainComponent.h"
 #include "EFishState.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "Components/CapsuleComponent.h"
@@ -88,18 +90,37 @@ void AFishBase::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
-	bodyMesh->SetRelativeLocation(FVector(0,0, -GetActorLocation().Z));
+	if (!IsDead)
+	{
+		bodyMesh->SetRelativeLocation(FVector(0,0, -GetActorLocation().Z));
+	}
 }
 
-void AFishBase::OnKilledByPlayer()
+void AFishBase::OnKilledByGrenade(FVector ExplosionLocation)
 {
 	UE_LOG(LogTemp, Log, TEXT("xxx OnKilledByPlayer"));
 
-	Die();
+ 	Cast<AAIController>(GetController())->BrainComponent->StopLogic("Death");
+
+	FVector dir = GetActorLocation() - ExplosionLocation;
+	dir.Normalize();
+	dir.Z += 3;	
+	
+	FVector impulse = dir * 100000;
+	
+	bodyMesh->SetSimulatePhysics(true);
+	bodyMesh->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+	bodyMesh->AddImpulse(impulse);
+
+	IsDead = true;
+
+	SetLifeSpan(2);
 }
 
+//todo: death by fish - animation
 void AFishBase::Die()
 {
+	IsDead = true;
 	Destroy();
 }
 

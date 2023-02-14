@@ -20,7 +20,6 @@ void AGrenade::Explode()
 {
 	UE_LOG(LogTemp, Log, TEXT("xxx explode"));
 
-	GetWorld()->SpawnActor<AExplosion>(ExplosionBP, GetActorTransform());
 
 
 	// create a collision sphere
@@ -43,7 +42,7 @@ void AGrenade::Explode()
 		{
 			if (AFishBase* fish = Cast<AFishBase>(Hit.GetActor()))
 			{
-				fish->OnKilledByPlayer();
+				fish->OnKilledByGrenade(GetActorLocation());
 			}
 			
 			if (GEngine && Hit.GetActor() != nullptr) 
@@ -53,11 +52,12 @@ void AGrenade::Explode()
 				// uncommnet to see more info on sweeped actor
 				// GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("All Hit Information: %s"), *Hit.ToString()));
 
-				Hit.GetActor()->Destroy();
+				//Hit.GetActor()->Destroy();
 			}						
 		}
 	}
-	
+
+	GetWorld()->SpawnActor<AExplosion>(ExplosionBP, GetActorTransform());	
 
 	Destroy();
 }

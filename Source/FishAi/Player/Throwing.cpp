@@ -34,6 +34,16 @@ void UThrowing::BeginPlay()
 	Inventory = GetOwner()->FindComponentByClass<UInventory>();
 }
 
+void UThrowing::SetIsThrowing(bool bValue)
+{
+	bIsThrowing = bValue;
+
+	if (!bIsThrowing)
+	{
+		SetActiveObject(LastActiveObject);
+	}
+}
+
 void UThrowing::Throw()
 {
 	if(SpawnedObject == nullptr)
@@ -45,16 +55,20 @@ void UThrowing::Throw()
 	SpawnedObject->SetVelocity(ThrowStart->GetForwardVector() * ThrowPower);
 	Inventory->OnObjectThrown(SpawnedObject->GetType());
 
-	DeselectObjects();
+	SpawnedObject = nullptr;
+	Prediction->SetEnabled(false);
 }
 
-void UThrowing::SetActiveObject(int Index)
+void UThrowing::SetActiveObject(EThrowableObject ObjectType)
 {
-	UE_LOG(LogTemp, Log, TEXT("xxx SetActiveObject = %d"), Index);
+	if(bIsThrowing) return;
+	
+	UE_LOG(LogTemp, Log, TEXT("xxx SetActiveObject = %d"), (int)ObjectType);
 
-	if (!Inventory->HasItem((EThrowableObject)(Index + 1)))
+	if (!Inventory->HasItem(ObjectType))
 	{
-		UE_LOG(LogTemp, Log, TEXT("xxx item %d not in inventory"), Index);
+		UE_LOG(LogTemp, Log, TEXT("xxx item %d not in inventory"), (int)ObjectType);
+		LastActiveObject = EThrowableObject::None;
 		return;
 	}
 
@@ -62,12 +76,15 @@ void UThrowing::SetActiveObject(int Index)
 	{
 		SpawnedObject->Destroy();
 	}
+
+	LastActiveObject = ObjectType;
 		
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	FTransform spawnTransform = SkeletalMesh->GetSocketTransform(RightHand_SocketName);
 
-	AActor* spawnActor = GetWorld()->SpawnActor<AActor>(Inventory->ThrowableObjectsBP[Index], spawnTransform, SpawnParams);
+	check(Inventory->ThrowableObjectsBP[ObjectType])
+	AActor* spawnActor = GetWorld()->SpawnActor<AActor>(Inventory->ThrowableObjectsBP[ObjectType], spawnTransform, SpawnParams);
 	SpawnedObject = Cast<AThrowableObject>(spawnActor);
 
 	SpawnedObject->ProjectileMovement->bSimulationEnabled = false;
@@ -78,6 +95,8 @@ void UThrowing::SetActiveObject(int Index)
 
 void UThrowing::DeselectObjects()
 {
+	if(bIsThrowing) return;
+
 	UE_LOG(LogTemp, Log, TEXT("xxx DeselectObjects"));
 
 	if(SpawnedObject != nullptr)

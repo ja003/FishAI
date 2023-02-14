@@ -25,5 +25,5 @@ public:
 	void OnObjectThrown(EThrowableObject Type);
 
 	UPROPERTY(EditDefaultsOnly)
-	TArray<TSubclassOf<AThrowableObject>> ThrowableObjectsBP;
+	TMap<EThrowableObject, TSubclassOf<AThrowableObject>> ThrowableObjectsBP;
 };

@@ -31,6 +31,10 @@ public:
 
 	const FName RightHand_SocketName = "RightHand";
 
+private:
+	
+	EThrowableObject LastActiveObject;
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -39,13 +43,19 @@ protected:
 
 	UInventory* Inventory;
 
-	public:
+public:
 
+	UFUNCTION(BlueprintCallable)
+	void SetIsThrowing(bool bValue);
+
+	UPROPERTY(BlueprintReadOnly)
+	bool bIsThrowing;
+	
 	UFUNCTION(BlueprintCallable)
 	void Throw();
 
 	UFUNCTION(BlueprintCallable)
-	void SetActiveObject(int Index);
+	void SetActiveObject(EThrowableObject ObjectType);
 
 	UFUNCTION(BlueprintCallable)
 	void DeselectObjects();

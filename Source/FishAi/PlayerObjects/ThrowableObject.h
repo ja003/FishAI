@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "EThrowableObject.h"
+#include "ThrowableObject.h"
 #include "FishAi/StimuliObject.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/ProjectileMovementComponent.h"
@@ -41,6 +43,8 @@ public:
 	// this has to be called from Buoyancy component event in BP 
 	UFUNCTION(BlueprintCallable)
 	virtual void OnEnteredWater();
+
+	virtual EThrowableObject GetType();
 	
 public:		// Senses
 

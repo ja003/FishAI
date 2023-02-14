@@ -19,6 +19,8 @@ class FISHAI_API AGrenade : public AThrowableObject
 public:
 	virtual void OnEnteredWater() override;
 
+	virtual EThrowableObject GetType() override { return EThrowableObject::Grenade; };
+
 	void Explode();
 
 	UPROPERTY(EditDefaultsOnly, Category=Grenade)

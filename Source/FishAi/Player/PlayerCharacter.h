@@ -38,6 +38,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UThrowing* Throwing;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UInventory* Inventory;
 	
 public:
 	// Called every frame

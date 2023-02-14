@@ -30,6 +30,8 @@ void UThrowing::BeginPlay()
 	//Prediction = Cast<AThrowPrediction>(GetWorld()->SpawnActor(AThrowPrediction::StaticClass()));
 	
 	Prediction = Cast<AThrowPrediction>(UGameplayStatics::GetActorOfClass(GetWorld(), AThrowPrediction::StaticClass()));
+
+	Inventory = GetOwner()->FindComponentByClass<UInventory>();
 }
 
 void UThrowing::Throw()
@@ -41,24 +43,31 @@ void UThrowing::Throw()
 	}
 
 	SpawnedObject->SetVelocity(ThrowStart->GetForwardVector() * ThrowPower);
+	Inventory->OnObjectThrown(SpawnedObject->GetType());
+
+	DeselectObjects();
 }
 
 void UThrowing::SetActiveObject(int Index)
 {
 	UE_LOG(LogTemp, Log, TEXT("xxx SetActiveObject = %d"), Index);
 
-	if(ThrowableObjects.Num() <= Index)
+	if (!Inventory->HasItem((EThrowableObject)(Index + 1)))
 	{
-		UE_LOG(LogTemp, Log, TEXT("xxx ThrowableObject not defined"));
+		UE_LOG(LogTemp, Log, TEXT("xxx item %d not in inventory"), Index);
 		return;
 	}
 
-	
+	if (SpawnedObject != nullptr)
+	{
+		SpawnedObject->Destroy();
+	}
+		
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	FTransform spawnTransform = SkeletalMesh->GetSocketTransform(RightHand_SocketName);
 
-	AActor* spawnActor = GetWorld()->SpawnActor<AActor>(ThrowableObjects[Index], spawnTransform, SpawnParams);
+	AActor* spawnActor = GetWorld()->SpawnActor<AActor>(Inventory->ThrowableObjectsBP[Index], spawnTransform, SpawnParams);
 	SpawnedObject = Cast<AThrowableObject>(spawnActor);
 
 	SpawnedObject->ProjectileMovement->bSimulationEnabled = false;

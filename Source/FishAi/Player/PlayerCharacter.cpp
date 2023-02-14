@@ -42,7 +42,7 @@ APlayerCharacter::APlayerCharacter()
 
 	Throwing->ThrowStart = ThrowStart;
 	
-
+	Inventory = CreateDefaultSubobject<UInventory>("Inventory");
 }
 
 // Called when the game starts or when spawned

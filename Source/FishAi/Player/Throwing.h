@@ -3,13 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Inventory.h"
 #include "Components/ActorComponent.h"
 #include "FishAi/PlayerObjects/ThrowableObject.h"
 #include "FishAi/PlayerObjects/ThrowPrediction.h"
 #include "Throwing.generated.h"
 
 
-enum class UEThrowableObject : uint8;
+enum class EThrowableObject : uint8;
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class FISHAI_API UThrowing : public UActorComponent
 {
@@ -36,6 +37,8 @@ protected:
 
 	AThrowPrediction* Prediction;
 
+	UInventory* Inventory;
+
 	public:
 
 	UFUNCTION(BlueprintCallable)
@@ -47,8 +50,7 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void DeselectObjects();
 
-	UPROPERTY(EditDefaultsOnly)
-	TArray<TSubclassOf<AThrowableObject>> ThrowableObjects;
+	
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	AThrowableObject* SpawnedObject;

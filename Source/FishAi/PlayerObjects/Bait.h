@@ -18,5 +18,7 @@ public:
 	void OnEaten();
 
 	virtual EStimuliObject GetStimuliType() override { return Bait; }
+
+	virtual EThrowableObject GetType() override { return EThrowableObject::Bait; };
 	
 };

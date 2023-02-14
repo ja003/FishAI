@@ -3,8 +3,9 @@
 #pragma once
 
 UENUM(BlueprintType)
-enum class UEThrowableObject : uint8 
+enum class EThrowableObject : uint8 
 {
+	None     UMETA(DisplayName = "None"),
 	Rock     UMETA(DisplayName = "Rock"),
 	Bait     UMETA(DisplayName = "Bait"),
 	Grenade   UMETA(DisplayName = "Grenade")

@@ -79,3 +79,9 @@ void AThrowableObject::OnEnteredWater()
 	SphereCollider->SetEnableGravity(true);
 }
 
+EThrowableObject AThrowableObject::GetType()
+{
+	checkNoEntry();
+	return EThrowableObject::None;
+}
+

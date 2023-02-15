@@ -1,10 +1,16 @@
 ﻿#include "FishPike.h"
 
 #include "EFishState.h"
+#include "Components/PawnNoiseEmitterComponent.h"
 #include "FishAi/Constants.h"
 #include "FishAi/WaterManager.h"
 #include "FishAi/Data/DataManager.h"
 #include "Kismet/GameplayStatics.h"
+
+AFishPike::AFishPike()
+{
+	PawnNoiseEmitterComp = CreateDefaultSubobject<UPawnNoiseEmitterComponent>(TEXT("PawnNoiseEmitterComp"));
+}
 
 void AFishPike::OnEdibleFishPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
 {
@@ -33,6 +39,9 @@ void AFishPike::BeginPlay()
 	Super::BeginPlay();
 
 	currentPatrolPathIndex = FMath::RandRange(0, 5);
+
+	GetWorld()->GetTimerManager().SetTimer(RoarHandle, this, &AFishPike::Roar, Data->Fish->RoarCoolDown, true);
+
 }
 
 void AFishPike::OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,
@@ -72,6 +81,25 @@ void AFishPike::EndHunt()
 {
 	UE_LOG(LogTemp, Log, TEXT("xxx end hunt"));
 	blackboard->SetValueAsEnum(FishBB_State, (int)EFishState::Idle);
+}
+
+void AFishPike::Roar()
+{
+	ReportNoise(nullptr, 1);
+	UE_LOG(LogTemp, Log, TEXT("xxx roar"));
+}
+
+void AFishPike::ReportNoise(USoundBase* SoundToPlay, float Volume)
+{
+	//If we have a valid sound to play, play the sound and
+	//report it to our game
+	if (SoundToPlay)
+	{
+		//Play the actual sound
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), SoundToPlay, GetActorLocation(), Volume); 
+	}
+	//Report that we've played a sound with a certain volume in a specific location
+	MakeNoise(Volume, this, GetActorLocation());
 }
 
 FVector AFishPike::GetNextPatrolPoint()

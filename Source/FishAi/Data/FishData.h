@@ -32,5 +32,11 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	int HuntDuration = 3;
+
+	UPROPERTY(EditAnywhere)
+	int RoarCoolDown = 1;
+
+	UPROPERTY(EditAnywhere)
+	int RoarRange = 1500;
 	
 };

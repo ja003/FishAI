@@ -3,22 +3,23 @@
 
 #include "ScoreManager.h"
 
+#include "Data/DataManager.h"
+#include "Kismet/GameplayStatics.h"
+
+
+void AScoreManager::BeginPlay()
+{
+	Super::BeginPlay();
+
+	Data = Cast<ADataManager>(UGameplayStatics::GetActorOfClass(GetWorld(), ADataManager::StaticClass()));
+	check(Data)
+}
 
 void AScoreManager::OnFishKilled(AFishBase* Fish)
 {
 	ARewardText* text = GetWorld()->SpawnActor<ARewardText>(RewardTextBP, Fish->GetActorTransform());
 	
-	int reward = 0;
-	switch (Fish->GetType())
-	{
-	case EFish::Carp: 
-		reward = 3;
-		break;
-	case EFish::Pike: 
-		reward = 1;
-		break;
-	default: ;
-	}
+	int reward = Data->Fish->Reward[Fish->GetType()];
 	
 	text->SetReward(reward);
 	Score += reward;

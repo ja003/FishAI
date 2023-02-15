@@ -16,6 +16,8 @@ class FISHAI_API AScoreManager : public AActor
 
 public:
 
+	virtual void BeginPlay() override;
+
 	void OnFishKilled(AFishBase* Fish);
 
 	UPROPERTY(BlueprintReadOnly)
@@ -23,5 +25,8 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category=Grenade)
 	TSubclassOf<ARewardText> RewardTextBP;
+
+	ADataManager* Data;
+
 	
 };

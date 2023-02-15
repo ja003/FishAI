@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "FishAi/Fish/EFish.h"
 #include "UObject/Object.h"
 #include "FishData.generated.h"
 
@@ -19,4 +20,8 @@ public:
 	
 	UPROPERTY(EditAnywhere)
 	int RockRunawayDistance = 500;
+
+	UPROPERTY(EditAnywhere)
+	TMap<EFish, int> Reward;
+	
 };

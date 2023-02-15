@@ -179,9 +179,12 @@ void AFishBase::OnRockPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimul
 	DrawDebugSphere(GWorld, GetActorLocation(), 5, 10, FColor::Red, false, 5);
 
 	FVector dirAway = (GetActorLocation() - Stimulus.StimulusLocation);
+	dirAway.Z = 0;
 	dirAway.Normalize();
 	FVector runawayTarget = GetActorLocation() + dirAway * Data->Fish->RockRunawayDistance;
-	DrawDebugSphere(GWorld, runawayTarget, 300, 10, FColor::Blue, false, 5);
+	runawayTarget = Water->GetInWaterPoint(runawayTarget);
+	
+	DrawDebugSphere(GWorld, runawayTarget, 100, 10, FColor::Purple, false, 5);
 	
 	blackboard->SetValueAsVector(FishBB_Target, runawayTarget);
 

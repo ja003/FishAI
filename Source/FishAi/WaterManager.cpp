@@ -134,3 +134,23 @@ bool AWaterManager::IsPointInWater(FVector point) const
 	return result;
 }
 
+FVector AWaterManager::GetInWaterPoint(FVector Point)
+{
+	Point.Z = 0;
+	int counter = 0;
+	while(!IsPointInWater(Point))
+	{
+		FVector dirToCenter = center - Point;
+		dirToCenter.Normalize();
+		Point += dirToCenter * 100;
+		counter++;
+		if (counter > 20)
+		{
+			UE_LOG(LogTemp, Log, TEXT("xxx GetInWaterPoint too many iterations"));
+			return center;
+		}
+	}
+
+	return Point;
+}
+

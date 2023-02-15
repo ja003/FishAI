@@ -46,6 +46,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool IsPointInWater(FVector point) const;
 
+	FVector GetInWaterPoint(FVector Point);
+
 public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)

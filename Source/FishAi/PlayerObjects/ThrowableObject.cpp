@@ -80,6 +80,12 @@ void AThrowableObject::SetVelocity(FVector Velocity)
 
 }
 
+FName AThrowableObject::GetTag()
+{
+	checkNoEntry()
+	return FName("");
+}
+
 void AThrowableObject::OnEnteredWater()
 {
 	UE_LOG(LogTemp, Log, TEXT("xxx OnEnteredWater"));
@@ -91,8 +97,8 @@ void AThrowableObject::OnEnteredWater()
 	SphereCollider->SetSimulatePhysics(true);
 	SphereCollider->SetEnableGravity(true);
 
-	//todo: tag
-	NoiseReporter->ReportNoise(nullptr, GetActorLocation(), nullptr, 1, 500, FName("Rock"));
+	//todo: data - range
+	NoiseReporter->ReportNoise(nullptr, GetActorLocation(), nullptr, 1, 500, GetTag());
 }
 
 EThrowableObject AThrowableObject::GetType()

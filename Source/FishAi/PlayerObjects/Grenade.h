@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Explosion.h"
 #include "ThrowableObject.h"
+#include "FishAi/Constants.h"
 #include "UObject/Object.h"
 #include "Grenade.generated.h"
 
@@ -19,7 +20,9 @@ class FISHAI_API AGrenade : public AThrowableObject
 public:
 	virtual void OnEnteredWater() override;
 
-	virtual EThrowableObject GetType() override { return EThrowableObject::Grenade; };
+	virtual EThrowableObject GetType() override { return EThrowableObject::Grenade; }
+	
+	virtual FName GetTag() override { return Tag_Grenade; }
 
 	void Explode();
 

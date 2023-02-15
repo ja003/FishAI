@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "ThrowableObject.h"
+#include "FishAi/Constants.h"
 #include "FishAi/StimuliObject.h"
 #include "GameFramework/Actor.h"
 #include "Bait.generated.h"
@@ -20,5 +21,7 @@ public:
 	virtual EStimuliObject GetStimuliType() override { return Bait; }
 
 	virtual EThrowableObject GetType() override { return EThrowableObject::Bait; };
-	
+
+	virtual FName GetTag() override { return Tag_Bait; }
+
 };

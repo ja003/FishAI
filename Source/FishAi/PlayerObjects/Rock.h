@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "ThrowableObject.h"
+#include "FishAi/Constants.h"
 #include "FishAi/StimuliObject.h"
 #include "GameFramework/Actor.h"
 #include "Rock.generated.h"
@@ -21,6 +22,7 @@ public:
 
 	virtual EThrowableObject GetType() override { return EThrowableObject::Rock; };
 
+	virtual FName GetTag() override { return Tag_Rock; }
 	
 private:
 

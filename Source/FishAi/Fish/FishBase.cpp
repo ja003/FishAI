@@ -172,6 +172,11 @@ void AFishBase::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 		OnRockPerceptionUpdated(Actor, Stimulus);
 		return;
 	}
+	else if (Stimulus.Tag == Tag_Bait)
+	{
+		OnBaitPerceptionUpdated(Actor, Stimulus);
+		return;
+	}
 }
 
 void AFishBase::RunawayFrom(FVector SourceLocation, int MaxDistance, EFishState NewState)

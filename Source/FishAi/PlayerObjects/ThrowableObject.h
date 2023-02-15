@@ -42,6 +42,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetVelocity(FVector Velocity);
+	virtual FName GetTag();
 
 	UPROPERTY(EditAnywhere)
 	bool bDebug_Throw;

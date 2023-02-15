@@ -9,6 +9,8 @@ const FName FishBB_Target = "Target";
 const FName Tag_Ground = "Ground";
 const FName Tag_Water = "Water";
 const FName Tag_Rock = "Rock";
+const FName Tag_Bait = "Bait";
+const FName Tag_Grenade = "Grenade";
 
 #define COLLISION_FISH ECC_GameTraceChannel1
 #define COLLISION_THROWABLE_OBJECT ECC_GameTraceChannel2

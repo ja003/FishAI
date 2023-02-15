@@ -12,6 +12,7 @@
 #include "FishAi/ScoreManager.h"
 #include "FishAi/StimuliObject.h"
 #include "FishAi/WaterManager.h"
+#include "FishAi/Data/DataManager.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PhysicsVolume.h"
 #include "Kismet/GameplayStatics.h"
@@ -88,6 +89,9 @@ void AFishBase::BeginPlay()
 
 	Score = Cast<AScoreManager>(UGameplayStatics::GetActorOfClass(GetWorld(), AScoreManager::StaticClass()));
 	check(Score)
+
+	Data = Cast<ADataManager>(UGameplayStatics::GetActorOfClass(GetWorld(), ADataManager::StaticClass()));
+	check(Data)
 }
 
 void AFishBase::Tick(float DeltaSeconds)
@@ -176,8 +180,8 @@ void AFishBase::OnRockPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimul
 
 	FVector dirAway = (GetActorLocation() - Stimulus.StimulusLocation);
 	dirAway.Normalize();
-	FVector runawayTarget = GetActorLocation() + dirAway * 200;
-	DrawDebugSphere(GWorld, runawayTarget, 50, 10, FColor::Blue, true, 5);
+	FVector runawayTarget = GetActorLocation() + dirAway * Data->Fish->RockRunawayDistance;
+	DrawDebugSphere(GWorld, runawayTarget, 300, 10, FColor::Blue, false, 5);
 	
 	blackboard->SetValueAsVector(FishBB_Target, runawayTarget);
 

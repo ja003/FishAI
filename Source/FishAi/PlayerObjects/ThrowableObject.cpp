@@ -51,6 +51,14 @@ AThrowableObject::AThrowableObject()
 	ProjectileMovement->bSimulationEnabled = false;
 }
 
+void AThrowableObject::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if (bDebug_Throw)
+		SetVelocity(FVector::DownVector);
+}
+
 void AThrowableObject::SetVelocity(FVector Velocity)
 {
 	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);

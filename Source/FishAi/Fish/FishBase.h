@@ -10,6 +10,7 @@
 #include "Perception/AIPerceptionTypes.h"
 #include "FishBase.generated.h"
 
+class ADataManager;
 class AScoreManager;
 class AWaterManager;
 UCLASS()
@@ -89,6 +90,8 @@ public: // Variables
 	AWaterManager* Water;
 
 	AScoreManager* Score;
+
+	ADataManager* Data;
 
 
 };

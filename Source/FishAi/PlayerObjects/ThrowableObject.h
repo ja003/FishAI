@@ -25,6 +25,8 @@ public:
 	
 	AThrowableObject();
 
+	virtual void BeginPlay() override;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Mesh)
 	UStaticMeshComponent* Mesh;
 
@@ -40,6 +42,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetVelocity(FVector Velocity);
 
+	UPROPERTY(EditAnywhere)
+	bool bDebug_Throw;
+	
 	// this has to be called from Buoyancy component event in BP 
 	UFUNCTION(BlueprintCallable)
 	virtual void OnEnteredWater();

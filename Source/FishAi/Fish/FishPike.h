@@ -40,7 +40,7 @@ public:
 
 private:
 
-	int currentPatrolPathIndex = 0;
+	int currentPatrolPathIndex;
 	
 public:
 

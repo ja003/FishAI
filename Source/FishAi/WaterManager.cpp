@@ -29,7 +29,8 @@ void AWaterManager::BeginPlay()
 	// FVector Tangent;
 	// WaterBody->GetWaterSpline()->GetLocationAndTangentAtSplinePoint(0, &Location, &Tangent, ESplineCoordinateSpace::World);
 
-	GenerateFishes();
+	if(!bDebug_DontGenerateFishes)
+		GenerateFishes();
 }
 
 void AWaterManager::CalculateBoundsInfo()

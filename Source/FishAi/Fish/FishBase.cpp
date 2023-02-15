@@ -132,6 +132,8 @@ void AFishBase::Die()
 
 void AFishBase::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
+	if (Actor == this) return;
+	
 	UE_LOG(LogTemp, Log, TEXT("xxx OnTargetPerceptionUpdated = %s"), *Actor->GetName());
 
 	if(Actor->GetClass()->ImplementsInterface(UStimuliSource::StaticClass()))

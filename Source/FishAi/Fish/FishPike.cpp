@@ -28,7 +28,7 @@ void AFishPike::BeginPlay()
 {
 	Super::BeginPlay();
 
-	
+	currentPatrolPathIndex = FMath::RandRange(0, 5);
 }
 
 void AFishPike::OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,
@@ -57,9 +57,10 @@ void AFishPike::OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AAc
 
 	UE_LOG(LogTemp, Log, TEXT("xxx AFishPike::OnMouthBeginOverlap"));
 
-	if(Cast<AFishBase>(Actor))
+	if(AFishBase* fish = Cast<AFishBase>(Actor))
 	{
-		Cast<AFishBase>(Actor)->Die();
+		if (fish->GetType() != EFish::Pike)
+			fish->Die();
 	}
 }
 

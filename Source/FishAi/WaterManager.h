@@ -40,6 +40,9 @@ protected:
 	
 public:
 
+	UPROPERTY(EditAnywhere)
+	bool bDebug_DontGenerateFishes;
+
 	UFUNCTION(BlueprintCallable)
 	bool IsPointInWater(FVector point) const;
 

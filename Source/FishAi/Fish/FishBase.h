@@ -10,6 +10,7 @@
 #include "Perception/AIPerceptionTypes.h"
 #include "FishBase.generated.h"
 
+class ANoiseReporter;
 enum class EFishState : uint8;
 class ADataManager;
 class AScoreManager;
@@ -96,6 +97,9 @@ public: // Variables
 	AScoreManager* Score;
 
 	ADataManager* Data;
+
+	ANoiseReporter* NoiseReporter; 
+
 
 
 };

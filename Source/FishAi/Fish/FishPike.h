@@ -3,11 +3,11 @@
 #include "CoreMinimal.h"
 #include "FishBase.h"
 #include "FishAi/StimuliObject.h"
-#include "Perception/PawnSensingComponent.h"
 
 #include "FishPike.generated.h"
 
 
+class ANoiseReporter;
 UCLASS()
 class AFishPike : public AFishBase, public IStimuliSource
 {
@@ -36,15 +36,6 @@ private:
 
 	FTimerHandle RoarHandle;
 	void Roar();
-
-public:
-	/*The function that is going to play the sound and report it to our game*/
-	UFUNCTION(BlueprintCallable, Category = AI)
-	void ReportNoise(USoundBase* SoundToPlay,float Volume);
- 
-	/*A Pawn Noise Emitter component which is used in order to emit the sounds to nearby AIs*/
-	UPROPERTY(VisibleAnywhere,BlueprintReadWrite)
-	UPawnNoiseEmitterComponent* PawnNoiseEmitterComp;
 
 public:
 	

@@ -13,6 +13,7 @@
 #include "FishAi/StimuliObject.h"
 #include "FishAi/WaterManager.h"
 #include "FishAi/Data/DataManager.h"
+#include "FishAi/Managers/NoiseReporter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PhysicsVolume.h"
 #include "Kismet/GameplayStatics.h"
@@ -93,6 +94,10 @@ void AFishBase::BeginPlay()
 
 	Data = Cast<ADataManager>(UGameplayStatics::GetActorOfClass(GetWorld(), ADataManager::StaticClass()));
 	check(Data)
+
+
+	NoiseReporter = Cast<ANoiseReporter>(UGameplayStatics::GetActorOfClass(GetWorld(), ANoiseReporter::StaticClass()));
+	check(NoiseReporter)
 }
 
 void AFishBase::Tick(float DeltaSeconds)
@@ -139,7 +144,7 @@ void AFishBase::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
 	if (Actor == this) return;
 	
-	//UE_LOG(LogTemp, Log, TEXT("xxx OnTargetPerceptionUpdated = %s"), *Actor->GetName());
+	UE_LOG(LogTemp, Log, TEXT("xxx OnTargetPerceptionUpdated = %s"), *Actor->GetName());
 
 	if(Actor->GetClass()->ImplementsInterface(UStimuliSource::StaticClass()))
 	{

@@ -22,17 +22,6 @@ ARock::ARock()
 	// StimuliSource->bAutoRegister = true;
 }
 
-void ARock::OnEnteredWater()
-{
-	Super::OnEnteredWater();
-
-	// todo: this doesnt work
-	ACharacter* noiseInstigator = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-	MakeNoise(1, noiseInstigator, GetActorLocation());
-	//UAISense_Hearing::ReportNoiseEvent(this, GetActorLocation());
-
-	ReportNoise();
-}
 
 void ARock::OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,
 	UPrimitiveComponent* PrimitiveComponent1, FVector Normal, const FHitResult& HitResult)

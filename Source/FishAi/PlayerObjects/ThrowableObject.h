@@ -11,6 +11,7 @@
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "ThrowableObject.generated.h"
 
+class ANoiseReporter;
 class USphereComponent;
 
 // required:
@@ -60,5 +61,8 @@ public:		// Senses
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = AI)
 	UAIPerceptionStimuliSourceComponent* StimuliSource;
+
+	ANoiseReporter* NoiseReporter; 
+
 
 };

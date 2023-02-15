@@ -19,8 +19,6 @@ public:
 
 	virtual EStimuliObject GetStimuliType() override { return Rock; }
 
-	virtual void OnEnteredWater() override;
-
 	virtual EThrowableObject GetType() override { return EThrowableObject::Rock; };
 
 	

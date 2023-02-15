@@ -27,7 +27,7 @@ public:
 
 	void AddItem(EThrowableObject ObjectType);
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int GetItemCount(EThrowableObject ObjectType);
 
 	UPROPERTY(EditDefaultsOnly)

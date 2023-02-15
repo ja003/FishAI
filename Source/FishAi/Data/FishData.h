@@ -22,6 +22,9 @@ public:
 	int RockRunawayDistance = 500;
 
 	UPROPERTY(EditAnywhere)
+	int PikeRunawayDistance = 800;
+
+	UPROPERTY(EditAnywhere)
 	TMap<EFish, int> Reward;
 	
 };

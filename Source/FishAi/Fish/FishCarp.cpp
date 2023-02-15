@@ -6,6 +6,7 @@
 #include "EFishState.h"
 #include "Components/CapsuleComponent.h"
 #include "FishAi/Constants.h"
+#include "FishAi/Data/DataManager.h"
 #include "FishAi/PlayerObjects/Bait.h"
 
 
@@ -33,17 +34,17 @@ void AFishCarp::OnPikePerceptionUpdated(AActor* Actor, const FAIStimulus& Stimul
 {
 	UE_LOG(LogTemp, Log, TEXT("xxx OnPikePerceptionUpdated"));
 
-	blackboard->SetValueAsEnum(FishBB_State, (int)EFishState::Danger);
+	RunawayFrom(Actor->GetActorLocation(), Data->Fish->PikeRunawayDistance, EFishState::Danger);
 
-	DrawDebugSphere(GWorld, GetActorLocation(), 5, 10, FColor::Red, false, 5);
-	DrawDebugSphere(GWorld, Actor->GetActorLocation(), 5, 10, FColor::Red, false, 5);
-
-	FVector dirAway = (GetActorLocation() - Actor->GetActorLocation());
-	dirAway.Normalize();
-	FVector runawayTarget = GetActorLocation() + dirAway * 400;
-	DrawDebugSphere(GWorld, runawayTarget, 5, 10, FColor::Blue, false, 5);
-	
-	blackboard->SetValueAsVector(FishBB_Target, runawayTarget);
+	// blackboard->SetValueAsEnum(FishBB_State, (int)EFishState::Danger);
+	//
+	//
+	// FVector dirAway = (GetActorLocation() - Actor->GetActorLocation());
+	// dirAway.Normalize();
+	// FVector runawayTarget = GetActorLocation() + dirAway * 400;
+	// DrawDebugSphere(GWorld, runawayTarget, 5, 10, FColor::Blue, false, 5);
+	//
+	// blackboard->SetValueAsVector(FishBB_Target, runawayTarget);
 }
 
 

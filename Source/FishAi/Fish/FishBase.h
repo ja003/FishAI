@@ -10,6 +10,7 @@
 #include "Perception/AIPerceptionTypes.h"
 #include "FishBase.generated.h"
 
+enum class EFishState : uint8;
 class ADataManager;
 class AScoreManager;
 class AWaterManager;
@@ -44,7 +45,8 @@ protected:
 
 public:
 
-	virtual EFish GetType() { checkNoEntry() return EFish::None; };
+	UPROPERTY(EditDefaultsOnly)
+	EFish Type = EFish::None;
 
 	UFUNCTION(BlueprintCallable)
 	void OnKilledByGrenade(FVector ExplosionForce);
@@ -57,6 +59,8 @@ protected: // AI
 
 	UFUNCTION()
 	virtual void OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
+	
+	void RunawayFrom(FVector SourceLocation, int MaxDistance, EFishState NewState);
 
 	virtual void OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus){}
 

@@ -60,6 +60,7 @@ void AFishBase::BeginPlay()
 {
 	Super::BeginPlay();
 
+	UE_LOG(LogTemp, Log, TEXT("xxx AFishBase::BeginPlay"));
 	blackboard = UAIBlueprintHelperLibrary::GetBlackboard(this);
 	check(blackboard)
 
@@ -138,7 +139,7 @@ void AFishBase::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
 	if (Actor == this) return;
 	
-	UE_LOG(LogTemp, Log, TEXT("xxx OnTargetPerceptionUpdated = %s"), *Actor->GetName());
+	//UE_LOG(LogTemp, Log, TEXT("xxx OnTargetPerceptionUpdated = %s"), *Actor->GetName());
 
 	if(Actor->GetClass()->ImplementsInterface(UStimuliSource::StaticClass()))
 	{
@@ -168,25 +169,30 @@ void AFishBase::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 	}
 }
 
+void AFishBase::RunawayFrom(FVector SourceLocation, int MaxDistance, EFishState NewState)
+{
+	blackboard->SetValueAsEnum(FishBB_State, (int)NewState);
+
+	DrawDebugSphere(GWorld, GetActorLocation(), 5, 10, FColor::Red, false, 5);
+
+	FVector dirAway = (GetActorLocation() - SourceLocation);
+	dirAway.Z = 0;
+	dirAway.Normalize();
+	int runawayDistance = FMath::RandRange(MaxDistance / 2, MaxDistance);
+	FVector runawayTarget = GetActorLocation() + dirAway * runawayDistance;
+	runawayTarget = Water->GetClosestPointInWater(runawayTarget);
+	
+	DrawDebugSphere(GWorld, runawayTarget, 100, 10, FColor::Purple, false, 5);
+	
+	blackboard->SetValueAsVector(FishBB_Target, runawayTarget);
+}
+
 void AFishBase::OnRockPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
 {
 	UE_LOG(LogTemp, Log, TEXT("xxx OnRockPerceptionUpdated = %s"), *Actor->GetName());
 
 	// Actor is player character, not the rock!
 
-	blackboard->SetValueAsEnum(FishBB_State, (int)EFishState::Rock);
-
-	DrawDebugSphere(GWorld, GetActorLocation(), 5, 10, FColor::Red, false, 5);
-
-	FVector dirAway = (GetActorLocation() - Stimulus.StimulusLocation);
-	dirAway.Z = 0;
-	dirAway.Normalize();
-	FVector runawayTarget = GetActorLocation() + dirAway * Data->Fish->RockRunawayDistance;
-	runawayTarget = Water->GetInWaterPoint(runawayTarget);
-	
-	DrawDebugSphere(GWorld, runawayTarget, 100, 10, FColor::Purple, false, 5);
-	
-	blackboard->SetValueAsVector(FishBB_Target, runawayTarget);
-
+	RunawayFrom(Stimulus.StimulusLocation, Data->Fish->RockRunawayDistance, EFishState::Rock);
 }
 

@@ -46,7 +46,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool IsPointInWater(FVector point) const;
 
-	FVector GetInWaterPoint(FVector Point);
+	FVector GetClosestPointInWater(FVector Point);
 
 public:
 

@@ -33,8 +33,6 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	int minHuntCooldown;
 
-	virtual EFish GetType() override { return EFish::Pike; };
-
 	UFUNCTION(BlueprintCallable)
 	FVector GetNextPatrolPoint();
 

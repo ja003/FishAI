@@ -11,7 +11,7 @@
  * 
  */
 UCLASS()
-class FISHAI_API AFishCarp : public AFishBase, public  IStimuliSource
+class FISHAI_API AFishCarp : public AFishBase, public IStimuliSource
 {
 
 	GENERATED_BODY()
@@ -20,10 +20,6 @@ private:
 
 	virtual void OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult) override;
 
-public:
-
-	virtual EFish GetType() override { return EFish::Carp; };
-	
 protected: // AI
 
 

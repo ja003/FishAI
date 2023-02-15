@@ -134,7 +134,7 @@ bool AWaterManager::IsPointInWater(FVector point) const
 	return result;
 }
 
-FVector AWaterManager::GetInWaterPoint(FVector Point)
+FVector AWaterManager::GetClosestPointInWater(FVector Point)
 {
 	Point.Z = 0;
 	int counter = 0;

@@ -59,7 +59,7 @@ void AFishPike::OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AAc
 
 	if(AFishBase* fish = Cast<AFishBase>(Actor))
 	{
-		if (fish->GetType() != EFish::Pike)
+		if (fish->Type != EFish::Pike)
 			fish->Die();
 	}
 }

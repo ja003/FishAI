@@ -4,16 +4,23 @@
 #include "ScoreManager.h"
 
 
-void AScoreManager::OnFishKilled(EFish Fish)
+void AScoreManager::OnFishKilled(AFishBase* Fish)
 {
-	switch (Fish)
+	ARewardText* text = GetWorld()->SpawnActor<ARewardText>(RewardTextBP, Fish->GetActorTransform());
+	
+	int reward = 0;
+	switch (Fish->GetType())
 	{
 	case EFish::Carp: 
-		Score += 3;
+		reward = 3;
 		break;
 	case EFish::Pike: 
-		Score += 1;
+		reward = 1;
 		break;
 	default: ;
 	}
+	
+	text->SetReward(reward);
+	Score += reward;
+	
 }

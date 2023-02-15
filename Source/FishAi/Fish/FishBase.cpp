@@ -118,7 +118,8 @@ void AFishBase::OnKilledByGrenade(FVector ExplosionForce)
 
 	IsDead = true;
 
-	Score->OnFishKilled(GetType());
+	Score->OnFishKilled(this);
+	
 	SetLifeSpan(2);
 }
 

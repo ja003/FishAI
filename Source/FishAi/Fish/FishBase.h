@@ -3,12 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "EFish.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/Character.h"
 #include "Perception/AIPerceptionTypes.h"
 #include "FishBase.generated.h"
 
+class AScoreManager;
 class AWaterManager;
 UCLASS()
 class FISHAI_API AFishBase : public ACharacter
@@ -41,6 +43,9 @@ protected:
 
 public:
 
+	virtual EFish GetType() { checkNoEntry() return EFish::None; };
+
+	UFUNCTION(BlueprintCallable)
 	void OnKilledByGrenade(FVector ExplosionForce);
 
 	bool IsDead;
@@ -82,6 +87,8 @@ public: // Variables
 
 	UPROPERTY(EditAnywhere)
 	AWaterManager* Water;
+
+	AScoreManager* Score;
 
 
 };

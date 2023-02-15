@@ -9,6 +9,7 @@
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "Components/CapsuleComponent.h"
 #include "FishAi/Constants.h"
+#include "FishAi/ScoreManager.h"
 #include "FishAi/StimuliObject.h"
 #include "FishAi/WaterManager.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -84,6 +85,9 @@ void AFishBase::BeginPlay()
 		Water = Cast<AWaterManager>(UGameplayStatics::GetActorOfClass(GetWorld(), AWaterManager::StaticClass()));
 	}
 	check(Water)
+
+	Score = Cast<AScoreManager>(UGameplayStatics::GetActorOfClass(GetWorld(), AScoreManager::StaticClass()));
+	check(Score)
 }
 
 void AFishBase::Tick(float DeltaSeconds)
@@ -114,6 +118,7 @@ void AFishBase::OnKilledByGrenade(FVector ExplosionForce)
 
 	IsDead = true;
 
+	Score->OnFishKilled(GetType());
 	SetLifeSpan(2);
 }
 

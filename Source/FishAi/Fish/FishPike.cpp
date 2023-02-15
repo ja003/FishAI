@@ -3,6 +3,7 @@
 #include "EFishState.h"
 #include "FishAi/Constants.h"
 #include "FishAi/WaterManager.h"
+#include "FishAi/Data/DataManager.h"
 #include "Kismet/GameplayStatics.h"
 
 void AFishPike::OnEdibleFishPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
@@ -21,6 +22,9 @@ void AFishPike::OnEdibleFishPerceptionUpdated(AActor* Actor, const FAIStimulus& 
 		blackboard->SetValueAsObject(FishBB_Prey, Actor);
 
 		lastHuntTime = FDateTime::Now().ToUnixTimestamp();
+
+		GetWorld()->GetTimerManager().ClearTimer(EndHuntHandle);
+		GetWorld()->GetTimerManager().SetTimer(EndHuntHandle, this, &AFishPike::EndHunt, Data->Fish->HuntDuration, false);
 	}
 }
 
@@ -47,7 +51,7 @@ void AFishPike::OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* 
 
 bool AFishPike::IsReadyForHunt()
 {
-	return FDateTime::Now().ToUnixTimestamp() - lastHuntTime > minHuntCooldown;
+	return FDateTime::Now().ToUnixTimestamp() - lastHuntTime > Data->Fish->HuntCooldown;
 }
 
 void AFishPike::OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,
@@ -62,6 +66,12 @@ void AFishPike::OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AAc
 		if (fish->Type != EFish::Pike)
 			fish->Die();
 	}
+}
+
+void AFishPike::EndHunt()
+{
+	UE_LOG(LogTemp, Log, TEXT("xxx end hunt"));
+	blackboard->SetValueAsEnum(FishBB_State, (int)EFishState::Idle);
 }
 
 FVector AFishPike::GetNextPatrolPoint()

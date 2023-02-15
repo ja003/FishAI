@@ -26,5 +26,11 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	TMap<EFish, int> Reward;
+
+	UPROPERTY(EditAnywhere)
+	int HuntCooldown = 5;
+
+	UPROPERTY(EditAnywhere)
+	int HuntDuration = 3;
 	
 };

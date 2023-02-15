@@ -32,7 +32,7 @@ void AFishCarp::OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimul
 
 void AFishCarp::OnPikePerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
 {
-	UE_LOG(LogTemp, Log, TEXT("xxx OnPikePerceptionUpdated"));
+	//UE_LOG(LogTemp, Log, TEXT("xxx OnPikePerceptionUpdated"));
 
 	RunawayFrom(Actor->GetActorLocation(), Data->Fish->PikeRunawayDistance, EFishState::Danger);
 

@@ -28,11 +28,12 @@ private:
 
 	virtual void OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult) override;
 
+	FTimerHandle EndHuntHandle;
+
+	void EndHunt();
+
 public:
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
-	int minHuntCooldown;
-
 	UFUNCTION(BlueprintCallable)
 	FVector GetNextPatrolPoint();
 

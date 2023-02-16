@@ -56,12 +56,12 @@ void AWaterManager::ScaleDownWaterBounds()
 {
 	WaterBoundsOrig = WaterBounds;
 	TArray<FVector2D> WaterBoundsCopy = WaterBounds;
-	DrawDebugSphere(GWorld, center, 50, 10, FColor::Yellow, false, 5);
+	//DrawDebugSphere(GWorld, center, 50, 10, FColor::Yellow, false, 5);
 
 	for (int i = 0; i < WaterBoundsCopy.Num(); ++i)
 	{
 		FVector p = FVector(WaterBounds[i].X, WaterBounds[i].Y, 0);
-		DrawDebugSphere(GWorld, p, 50, 10, FColor::Red, true, 5);
+		//DrawDebugSphere(GWorld, p, 50, 10, FColor::Red, true, 5);
 
 		FVector2D prevPoint = WaterBoundsCopy[(WaterBoundsCopy.Num() + i - 1) % WaterBoundsCopy.Num()];
 		FVector2D nextPoint = WaterBoundsCopy[(i + 1) % WaterBoundsCopy.Num()];
@@ -77,7 +77,7 @@ void AWaterManager::ScaleDownWaterBounds()
 		float Ang = FMath::RadiansToDegrees(Ang1 - Ang2);
 		if(Ang > 180.0f) Ang -= 360.0f; else if(Ang < -180.0f) Ang += 360.0f;
 
-		UE_LOG(LogTemp, Log, TEXT("xxx Ang = %f"), Ang);
+		//UE_LOG(LogTemp, Log, TEXT("xxx Ang = %f"), Ang);
 		
 		FVector2D moveDir = FMath::Abs(Ang) < 90 ? dirForward : -dirForward;
 		
@@ -92,7 +92,7 @@ void AWaterManager::ScaleDownWaterBounds()
 	for (int i = 0; i < WaterBounds.Num(); i++)
 	{
 		FVector p = FVector(WaterBounds[i].X, WaterBounds[i].Y, 0);
-		DrawDebugSphere(GWorld, p, 50, 10, FColor::Blue, true, 5);
+		//DrawDebugSphere(GWorld, p, 50, 10, FColor::Blue, true, 5);
 	}
 
 }
@@ -132,7 +132,7 @@ void AWaterManager::SetPatrolPath()
 
 	for (int i = PatrolPath.Num() - 1; i >= 0; i--)
 	{
-		DrawDebugSphere(GWorld, PatrolPath[i], 50, 10, FColor::White, true, 5);
+		//DrawDebugSphere(GWorld, PatrolPath[i], 50, 10, FColor::White, true, 5);
 
 		FVector prevPoint = PatrolPathOrig[(PatrolPathOrig.Num() + i - 1) % PatrolPathOrig.Num()];
 		FVector nextPoint = PatrolPathOrig[(i + 1) % PatrolPathOrig.Num()];
@@ -148,7 +148,7 @@ void AWaterManager::SetPatrolPath()
 		float Ang = FMath::RadiansToDegrees(Ang1 - Ang2);
 		if(Ang > 180.0f) Ang -= 360.0f; else if(Ang < -180.0f) Ang += 360.0f;
 
-		UE_LOG(LogTemp, Log, TEXT("xxx Ang = %f"), Ang);
+		//UE_LOG(LogTemp, Log, TEXT("xxx Ang = %f"), Ang);
 		
 		FVector moveDir = FMath::Abs(Ang) < 90 ? dirForward : -dirForward;
 		//FVector moveDir = dirForward.Dot(dirToCenter) > 0 ? dirForward : -dirForward;
@@ -156,7 +156,7 @@ void AWaterManager::SetPatrolPath()
 		moveDir.Normalize();
 		
 		FVector movedPatrolPoint = PatrolPath[i] + moveDir * PatrolPathShoreOffset;
-		DrawDebugSphere(GWorld, movedPatrolPoint, 50, 10, FColor::Black, true, 5);
+		//DrawDebugSphere(GWorld, movedPatrolPoint, 50, 10, FColor::Black, true, 5);
 
 		UpdateInWaterTarget(movedPatrolPoint);
 
@@ -165,7 +165,7 @@ void AWaterManager::SetPatrolPath()
 
 	for (int i = 0; i < PatrolPath.Num(); i++)
 	{
-		DrawDebugSphere(GWorld, PatrolPath[i], 50, 10, FColor::Purple, true, 5);
+		//DrawDebugSphere(GWorld, PatrolPath[i], 50, 10, FColor::Purple, true, 5);
 	}
 }
 
@@ -213,7 +213,7 @@ FVector AWaterManager::GetRandomPointInWater(int Counter)
 		//dirToCenter.Normalize();
 		//point += dirToCenter * PatrolPathShoreOffset;
 		
-		UE_LOG(LogTemp, Log, TEXT("xxx GetRandomPointInWater success on %d"), Counter);
+		//UE_LOG(LogTemp, Log, TEXT("xxx GetRandomPointInWater success on %d"), Counter);
 		return point;
 	}
 
@@ -273,7 +273,7 @@ bool AWaterManager::UpdateInWaterTarget(FVector& OutTarget)
 	if(!result) return false;
 
 	OutTarget = outHit.Location;
-	DrawDebugSphere(GWorld, OutTarget, 100, 10, FColor::White, false, .5f);
+	//DrawDebugSphere(GWorld, OutTarget, 100, 10, FColor::White, false, .5f);
 	return true;
 }
 

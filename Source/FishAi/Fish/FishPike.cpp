@@ -13,11 +13,11 @@ AFishPike::AFishPike()
 
 void AFishPike::OnEdibleFishPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
 {
-	UE_LOG(LogTemp, Log, TEXT("xxx OnEdibleFishPerceptionUpdated"));
+	//UE_LOG(LogTemp, Log, TEXT("xxx OnEdibleFishPerceptionUpdated"));
 
 	Super::OnEdibleFishPerceptionUpdated(Actor, Stimulus);
 
-	UE_LOG(LogTemp, Log, TEXT("xxx IsReadyForHunt = %s"), IsReadyForHunt() ? TEXT("true"):TEXT("false"));
+	//UE_LOG(LogTemp, Log, TEXT("xxx IsReadyForHunt = %s"), IsReadyForHunt() ? TEXT("true"):TEXT("false"));
 	
 	if(IsReadyForHunt())
 	{
@@ -37,7 +37,7 @@ void AFishPike::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//currentPatrolPathIndex = FMath::RandRange(0, 5);
+	currentPatrolPathIndex = FMath::RandRange(0, Water->PatrolPath.Num() - 1);
 	
 	//dont hunt right away
 	lastHuntTime = FDateTime::Now().ToUnixTimestamp();
@@ -70,7 +70,7 @@ void AFishPike::OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AAc
 {
 	Super::OnMouthBeginOverlap(PrimitiveComponent, Actor, PrimitiveComponent1, I, Arg, HitResult);
 
-	UE_LOG(LogTemp, Log, TEXT("xxx AFishPike::OnMouthBeginOverlap"));
+	//UE_LOG(LogTemp, Log, TEXT("xxx AFishPike::OnMouthBeginOverlap"));
 
 	if(AFishBase* fish = Cast<AFishBase>(Actor))
 	{
@@ -98,9 +98,13 @@ FVector AFishPike::GetNextPatrolPoint()
 		return GetActorLocation();
 	}
 	
-	currentPatrolPathIndex++;
-	FVector result = Water->PatrolPath[(currentPatrolPathIndex - 1) % Water->PatrolPath.Num()];
-	DrawDebugSphere(GWorld, result, 50, 10, FColor::White, false, .1f);
+	// currentPatrolPathIndex++;
+	// FVector result = Water->PatrolPath[(currentPatrolPathIndex - 1) % Water->PatrolPath.Num()];
+	currentPatrolPathIndex = FMath::RandRange(0, Water->PatrolPath.Num() - 1);
+	FVector result = Water->PatrolPath[currentPatrolPathIndex];
+
+	
+	//DrawDebugSphere(GWorld, result, 50, 10, FColor::White, false, .1f);
 	//UE_LOG(LogTemp, Log, TEXT("xxx currentPatrolPathIndex = %d"), currentPatrolPathIndex);
 	return result;
 }

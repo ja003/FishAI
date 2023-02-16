@@ -129,6 +129,10 @@ FVector AWaterManager::GetRandomPointInWater(int Counter)
 	FVector point = FVector(FMath::RandRange(min.X, max.X), FMath::RandRange(min.Y, max.Y), 0);
 	if (IsPointInWater(point))
 	{
+		FVector dirToCenter = center - point;
+		dirToCenter.Normalize();
+		point += dirToCenter * PatrolPathShoreOffset;
+		
 		UE_LOG(LogTemp, Log, TEXT("xxx GetRandomPointInWater success on %d"), Counter);
 		return point;
 	}

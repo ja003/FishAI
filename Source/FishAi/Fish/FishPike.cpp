@@ -38,6 +38,8 @@ void AFishPike::BeginPlay()
 	Super::BeginPlay();
 
 	//currentPatrolPathIndex = FMath::RandRange(0, 5);
+	//dont hunt right away
+	lastHuntTime = FDateTime::Now().ToUnixTimestamp();
 
 	GetWorld()->GetTimerManager().SetTimer(RoarHandle, this, &AFishPike::Roar, Data->Fish->RoarCoolDown, true);
 

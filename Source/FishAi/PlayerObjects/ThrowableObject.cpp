@@ -51,6 +51,8 @@ AThrowableObject::AThrowableObject()
 
 	ProjectileMovement =  CreateDefaultSubobject<UProjectileMovementComponent>("ProjectileMovementComponent");
 	ProjectileMovement->bSimulationEnabled = false;
+
+	//Tags.Add(GetTag());
 }
 
 void AThrowableObject::BeginPlay()
@@ -58,7 +60,7 @@ void AThrowableObject::BeginPlay()
 	Super::BeginPlay();
 
 	if (bDebug_Throw)
-		SetVelocity(FVector::DownVector);
+		SetVelocity(bDebug_Velocity);
 
 	NoiseReporter = Cast<ANoiseReporter>(UGameplayStatics::GetActorOfClass(GetWorld(), ANoiseReporter::StaticClass()));
 	check(NoiseReporter)
@@ -82,7 +84,6 @@ void AThrowableObject::SetVelocity(FVector Velocity)
 
 FName AThrowableObject::GetTag()
 {
-	checkNoEntry()
 	return FName("");
 }
 

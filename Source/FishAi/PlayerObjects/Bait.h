@@ -14,6 +14,8 @@ class FISHAI_API ABait : public AThrowableObject
 {
 	GENERATED_BODY()
 
+	ABait();
+
 public:
 
 	void OnEaten();

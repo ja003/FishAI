@@ -20,8 +20,9 @@ ARock::ARock()
 	// todo: this doesnt work
 	// StimuliSource->RegisterForSense(TSubclassOf<UAISense_Hearing>());
 	// StimuliSource->bAutoRegister = true;
-}
 
+	Tags.Add(Tag_Rock);
+}
 
 void ARock::OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,
 	UPrimitiveComponent* PrimitiveComponent1, FVector Normal, const FHitResult& HitResult)

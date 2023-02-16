@@ -7,6 +7,11 @@
 #include "FishAi/Constants.h"
 #include "FishAi/Fish/FishBase.h"
 
+AGrenade::AGrenade()
+{
+	Tags.Add(Tag_Grenade);
+}
+
 void AGrenade::OnEnteredWater()
 {
 	Super::OnEnteredWater();

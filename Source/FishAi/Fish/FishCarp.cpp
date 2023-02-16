@@ -17,16 +17,30 @@ void AFishCarp::OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AAc
 	if(Cast<ABait>(Actor))
 	{
 		Cast<ABait>(Actor)->OnEaten();
+		blackboard->SetValueAsEnum(FishBB_State, (int)EFishState::Idle);
 	}
 }
 
 
 void AFishCarp::OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
 {
-	UE_LOG(LogTemp, Log, TEXT("xxx OnBaitPerceptionUpdated"));
-
+	UE_LOG(LogTemp, Log, TEXT("xxx OnBaitPerceptionUpdated %s"), *Actor->GetName());
 	blackboard->SetValueAsEnum(FishBB_State, (int)EFishState::Bait);
-	blackboard->SetValueAsObject(FishBB_Bait, Actor);
+
+	// if perceived by sound => Actor is not the Bait => go search to sound location 
+	if(Actor->ActorHasTag(Tag_Bait))
+	{
+		blackboard->SetValueAsObject(FishBB_Bait, Actor);
+		blackboard->SetValueAsBool("BaitVision", true);
+		
+	}
+	else
+	{
+		//blackboard->SetValueAsObject(FishBB_Bait, nullptr);		
+		blackboard->SetValueAsVector(FishBB_Target, Stimulus.StimulusLocation);
+		blackboard->SetValueAsBool("BaitVision", false);
+
+	}
 
 }
 

@@ -17,6 +17,8 @@ class FISHAI_API AGrenade : public AThrowableObject
 {
 	GENERATED_BODY()
 
+	AGrenade();
+
 public:
 	virtual void OnEnteredWater() override;
 

@@ -140,6 +140,12 @@ void AFishBase::Die()
 	Destroy();
 }
 
+void AFishBase::GetActorEyesViewPoint(FVector& OutLocation, FRotator& OutRotation) const
+{
+	OutLocation = GetActorLocation() + bodyMesh->GetRelativeLocation();
+	OutRotation = GetActorRotation();
+}
+
 void AFishBase::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
 	if (Actor == this) return;

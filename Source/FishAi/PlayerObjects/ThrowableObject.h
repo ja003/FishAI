@@ -46,6 +46,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	bool bDebug_Throw;
+
+	UPROPERTY(EditAnywhere)
+	FVector bDebug_Velocity;
 	
 	// this has to be called from Buoyancy component event in BP 
 	UFUNCTION(BlueprintCallable)

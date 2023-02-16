@@ -10,6 +10,7 @@
 
 #include "WaterManager.generated.h"
 
+class ANavModifier;
 UCLASS()
 class FISHAI_API AWaterManager : public AActor
 {
@@ -36,6 +37,11 @@ protected:
 
 	void SetPatrolPath();
 
+	void GenerateNavmeshModifiers();
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ANavModifier> NavModifierBP;
+	
 	void GenerateFishes();
 	
 	FVector GetRandomPointInWater(int Counter = 0);

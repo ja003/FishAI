@@ -37,7 +37,7 @@ void AFishPike::BeginPlay()
 {
 	Super::BeginPlay();
 
-	currentPatrolPathIndex = FMath::RandRange(0, 5);
+	//currentPatrolPathIndex = FMath::RandRange(0, 5);
 
 	GetWorld()->GetTimerManager().SetTimer(RoarHandle, this, &AFishPike::Roar, Data->Fish->RoarCoolDown, true);
 

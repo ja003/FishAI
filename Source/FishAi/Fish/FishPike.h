@@ -42,8 +42,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	FVector GetNextPatrolPoint();
 
-private:
+//private:
 
+	UPROPERTY(EditAnywhere)
 	int currentPatrolPathIndex;
 	
 public:

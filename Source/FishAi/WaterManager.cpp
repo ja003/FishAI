@@ -3,6 +3,8 @@
 
 #include "WaterManager.h"
 #include "GeomTools.h"
+#include "NavModifier.h"
+#include "NavModifierVolume.h"
 #include "Kismet/GameplayStatics.h"
 
 
@@ -29,6 +31,8 @@ void AWaterManager::BeginPlay()
 	// FVector Tangent;
 	// WaterBody->GetWaterSpline()->GetLocationAndTangentAtSplinePoint(0, &Location, &Tangent, ESplineCoordinateSpace::World);
 
+	GenerateNavmeshModifiers();
+	
 	if(!bDebug_DontGenerateFishes)
 		GenerateFishes();
 }
@@ -72,6 +76,27 @@ void AWaterManager::SetPatrolPath()
 	// {
 	// 	DrawDebugSphere(GWorld, PatrolPath[i], 50, 10, FColor::Blue, true, 5);
 	// }
+}
+
+void AWaterManager::GenerateNavmeshModifiers()
+{
+	for (int i = 0; i < WaterBounds.Num(); ++i)
+	{
+		FVector2D partDir = (WaterBounds[(i+1)%WaterBounds.Num()] - WaterBounds[i]);
+		float partLength = partDir.Length();
+		
+		FVector2D boundPartCenter2D = (WaterBounds[i] + WaterBounds[(i+1)%WaterBounds.Num()]) / 2;
+		FVector boundPartCenter = FVector(boundPartCenter2D.X, boundPartCenter2D.Y, 0);
+
+		FVector partDir3 = FVector(partDir.X, partDir.Y, 0);
+		ANavModifier* navMod = GetWorld()->SpawnActor<ANavModifier>(NavModifierBP, boundPartCenter, partDir3.Rotation());
+
+		UE_LOG(LogTemp, Log, TEXT("xxx spawn modifier"));
+		DrawDebugSphere(GWorld, boundPartCenter, 50, 10, FColor::Blue, false, 5);
+
+		//navMod->NavModifier->FailsafeExtent = FVector::OneVector * 500;
+		navMod->Collider->SetBoxExtent(FVector(partLength / 2, 100, 1000));
+	}
 }
 
 void AWaterManager::GenerateFishes()

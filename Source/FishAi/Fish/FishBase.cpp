@@ -150,7 +150,7 @@ void AFishBase::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
 	if (Actor == this) return;
 	
-	UE_LOG(LogTemp, Log, TEXT("xxx OnTargetPerceptionUpdated = %s"), *Actor->GetName());
+	//UE_LOG(LogTemp, Log, TEXT("xxx OnTargetPerceptionUpdated = %s"), *Actor->GetName());
 
 	if(Actor->GetClass()->ImplementsInterface(UStimuliSource::StaticClass()))
 	{
@@ -198,7 +198,7 @@ void AFishBase::RunawayFrom(FVector SourceLocation, int MaxDistance, EFishState 
 	FVector runawayTarget = GetActorLocation() + dirAway * runawayDistance;
 	runawayTarget = Water->GetClosestPointInWater(runawayTarget);
 	
-	DrawDebugSphere(GWorld, runawayTarget, 100, 10, FColor::Purple, false, 5);
+	//DrawDebugSphere(GWorld, runawayTarget, 100, 10, FColor::Purple, false, 5);
 
 	Water->UpdateInWaterTarget(runawayTarget);
 	blackboard->SetValueAsVector(FishBB_Target, runawayTarget);

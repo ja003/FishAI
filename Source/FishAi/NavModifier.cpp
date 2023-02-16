@@ -31,9 +31,9 @@ void ANavModifier::GenerateBetweenPoints(FVector2D PointA, FVector2D PointB)
 	SetActorLocation(boundPartCenter);
 	SetActorRotation(partDir3.Rotation());
 
-	UE_LOG(LogTemp, Log, TEXT("xxx spawn modifier"));
+	//UE_LOG(LogTemp, Log, TEXT("xxx spawn modifier"));
 	//DrawDebugSphere(GWorld, boundPartCenter, 50, 10, FColor::Blue, false, 5);
 
 	//navMod->NavModifier->FailsafeExtent = FVector::OneVector * 500;
-	Collider->SetBoxExtent(FVector(partLength / 2, 250, 1000));
+	Collider->SetBoxExtent(FVector(partLength / 2, 150, 1000));
 }

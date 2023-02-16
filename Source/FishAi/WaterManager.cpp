@@ -13,6 +13,17 @@ AWaterManager::AWaterManager()
 {
 }
 
+void AWaterManager::CalculateCenter()
+{
+	for (int i = 0; i < WaterBounds.Num(); i++)
+	{
+		FVector point = FVector(WaterBounds[i].X, WaterBounds[i].Y, 0);
+		center += point;
+	}
+	center /= WaterBounds.Num();
+	center2D = FVector2D(center.X, center.Y);
+}
+
 // Called when the game starts or when spawned
 void AWaterManager::BeginPlay()
 {
@@ -22,6 +33,10 @@ void AWaterManager::BeginPlay()
 
 	SetWaterBounds();
 
+	CalculateCenter();
+	
+	ScaleDownWaterBounds();
+	
 	CalculateBoundsInfo();
 
 	SetPatrolPath();
@@ -37,6 +52,51 @@ void AWaterManager::BeginPlay()
 		GenerateFishes();
 }
 
+void AWaterManager::ScaleDownWaterBounds()
+{
+	WaterBoundsOrig = WaterBounds;
+	TArray<FVector2D> WaterBoundsCopy = WaterBounds;
+	DrawDebugSphere(GWorld, center, 50, 10, FColor::Yellow, false, 5);
+
+	for (int i = 0; i < WaterBoundsCopy.Num(); ++i)
+	{
+		FVector p = FVector(WaterBounds[i].X, WaterBounds[i].Y, 0);
+		DrawDebugSphere(GWorld, p, 50, 10, FColor::Red, true, 5);
+
+		FVector2D prevPoint = WaterBoundsCopy[(WaterBoundsCopy.Num() + i - 1) % WaterBoundsCopy.Num()];
+		FVector2D nextPoint = WaterBoundsCopy[(i + 1) % WaterBoundsCopy.Num()];
+
+		//DrawDebugSphere(GWorld, (prevPoint + nextPoint) / 2, 50, 10, FColor::Yellow, false, 50);
+		FVector2D dirForward = ((prevPoint + nextPoint) / 2) - WaterBoundsCopy[i];		
+		FVector2D dirToCenter = center2D - WaterBoundsCopy[i];
+		//DrawDebugLine(GetWorld(), PatrolPath[i], PatrolPath[i] + dirToCenter, FColor::Purple, false, 50);
+		//DrawDebugLine(GetWorld(), PatrolPath[i], PatrolPath[i] + dirForward, FColor::Yellow, false, 50);
+
+		float Ang1 = FMath::Atan2(dirForward.X, dirForward.Y);
+		float Ang2 = FMath::Atan2(dirToCenter.X, dirToCenter.Y);
+		float Ang = FMath::RadiansToDegrees(Ang1 - Ang2);
+		if(Ang > 180.0f) Ang -= 360.0f; else if(Ang < -180.0f) Ang += 360.0f;
+
+		UE_LOG(LogTemp, Log, TEXT("xxx Ang = %f"), Ang);
+		
+		FVector2D moveDir = FMath::Abs(Ang) < 90 ? dirForward : -dirForward;
+		
+		moveDir.Normalize();
+		
+		FVector2D movedWaterBound = WaterBoundsCopy[i] + moveDir * ShoreOffset;
+		//UpdateInWaterTarget(movedPatrolPoint);
+
+		WaterBounds[i] = movedWaterBound;
+	}
+
+	for (int i = 0; i < WaterBounds.Num(); i++)
+	{
+		FVector p = FVector(WaterBounds[i].X, WaterBounds[i].Y, 0);
+		DrawDebugSphere(GWorld, p, 50, 10, FColor::Blue, true, 5);
+	}
+
+}
+
 void AWaterManager::CalculateBoundsInfo()
 {
 	for (int i=0; i < WaterBounds.Num(); i++)
@@ -48,25 +108,31 @@ void AWaterManager::CalculateBoundsInfo()
 		if (point.Y > max.Y) max.Y = point.Y;	
 	}
 
-	for (int i = 0; i < WaterBounds.Num(); i++)
-	{
-		FVector patrolPoint = FVector(WaterBounds[i].X, WaterBounds[i].Y, 0);
-		center += patrolPoint;
-		PatrolPath.Add(patrolPoint);
-	}
-	center /= PatrolPath.Num();
+	// for (int i = 0; i < WaterBounds.Num(); i++)
+	// {
+	// 	FVector patrolPoint = FVector(WaterBounds[i].X, WaterBounds[i].Y, 0);
+	// 	//center += patrolPoint;
+	// 	PatrolPath.Add(patrolPoint);
+	// }
+	//center /= PatrolPath.Num();
+	//center2D = FVector2D(center.X, center.Y);
 }
 
 void AWaterManager::SetPatrolPath()
 {
-
+	for (int i = 0; i < WaterBounds.Num(); i++)
+	{
+		FVector patrolPoint = FVector(WaterBounds[i].X, WaterBounds[i].Y, 0);
+		PatrolPath.Add(patrolPoint);
+	}
+	
 	//DrawDebugSphere(GWorld, center, 50, 10, FColor::Blue, true, 5);
 	TArray<FVector> PatrolPathOrig = PatrolPath;
 
 
 	for (int i = PatrolPath.Num() - 1; i >= 0; i--)
 	{
-		//DrawDebugSphere(GWorld, PatrolPath[i], 50, 10, FColor::Red, true, 5);
+		DrawDebugSphere(GWorld, PatrolPath[i], 50, 10, FColor::White, true, 5);
 
 		FVector prevPoint = PatrolPathOrig[(PatrolPathOrig.Num() + i - 1) % PatrolPathOrig.Num()];
 		FVector nextPoint = PatrolPathOrig[(i + 1) % PatrolPathOrig.Num()];
@@ -76,12 +142,22 @@ void AWaterManager::SetPatrolPath()
 		FVector dirToCenter = center - PatrolPath[i];
 		//DrawDebugLine(GetWorld(), PatrolPath[i], PatrolPath[i] + dirToCenter, FColor::Purple, false, 50);
 		//DrawDebugLine(GetWorld(), PatrolPath[i], PatrolPath[i] + dirForward, FColor::Yellow, false, 50);
+
+		float Ang1 = FMath::Atan2(dirForward.X, dirForward.Y);
+		float Ang2 = FMath::Atan2(dirToCenter.X, dirToCenter.Y);
+		float Ang = FMath::RadiansToDegrees(Ang1 - Ang2);
+		if(Ang > 180.0f) Ang -= 360.0f; else if(Ang < -180.0f) Ang += 360.0f;
+
+		UE_LOG(LogTemp, Log, TEXT("xxx Ang = %f"), Ang);
 		
-		FVector moveDir = dirForward.Dot(dirToCenter) > 0 ? dirForward : dirToCenter;
+		FVector moveDir = FMath::Abs(Ang) < 90 ? dirForward : -dirForward;
+		//FVector moveDir = dirForward.Dot(dirToCenter) > 0 ? dirForward : -dirForward;
 		
 		moveDir.Normalize();
 		
 		FVector movedPatrolPoint = PatrolPath[i] + moveDir * PatrolPathShoreOffset;
+		DrawDebugSphere(GWorld, movedPatrolPoint, 50, 10, FColor::Black, true, 5);
+
 		UpdateInWaterTarget(movedPatrolPoint);
 
 		PatrolPath[i] = movedPatrolPoint;
@@ -89,17 +165,17 @@ void AWaterManager::SetPatrolPath()
 
 	for (int i = 0; i < PatrolPath.Num(); i++)
 	{
-		//DrawDebugSphere(GWorld, PatrolPath[i], 50, 10, FColor::Blue, true, 5);
+		DrawDebugSphere(GWorld, PatrolPath[i], 50, 10, FColor::Purple, true, 5);
 	}
 }
 
 void AWaterManager::GenerateNavmeshModifiers()
 {
-	for (int i = 0; i < WaterBounds.Num(); ++i)
+	for (int i = 0; i < WaterBoundsOrig.Num(); ++i)
 	{
 		ANavModifier* navMod = GetWorld()->SpawnActor<ANavModifier>(NavModifierBP, FTransform::Identity);
 		
-		navMod->GenerateBetweenPoints(WaterBounds[i], WaterBounds[(i+1)%WaterBounds.Num()]);
+		navMod->GenerateBetweenPoints(WaterBoundsOrig[i], WaterBoundsOrig[(i+1)%WaterBoundsOrig.Num()]);
 	}
 }
 
@@ -133,9 +209,9 @@ FVector AWaterManager::GetRandomPointInWater(int Counter)
 	FVector point = FVector(FMath::RandRange(min.X, max.X), FMath::RandRange(min.Y, max.Y), 0);
 	if (IsPointInWater(point))
 	{
-		FVector dirToCenter = center - point;
-		dirToCenter.Normalize();
-		point += dirToCenter * PatrolPathShoreOffset;
+		//FVector dirToCenter = center - point;
+		//dirToCenter.Normalize();
+		//point += dirToCenter * PatrolPathShoreOffset;
 		
 		UE_LOG(LogTemp, Log, TEXT("xxx GetRandomPointInWater success on %d"), Counter);
 		return point;

@@ -19,6 +19,7 @@ class FISHAI_API AWaterManager : public AActor
 public:
 	// Sets default values for this actor's properties
 	AWaterManager();
+	void CalculateCenter();
 
 protected:
 	// Called when the game starts or when spawned
@@ -27,9 +28,12 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void SetWaterBounds();
 
+	void ScaleDownWaterBounds();
+
 	FVector2D min;
 	FVector2D max;
 	FVector center;
+	FVector2D center2D;
 
 
 
@@ -68,6 +72,8 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TArray<FVector2D> WaterBounds;
+	
+	TArray<FVector2D> WaterBoundsOrig;
 
 	TArray<FVector> PatrolPath;
 
@@ -76,6 +82,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	int PatrolPathShoreOffset;
+
+	UPROPERTY(EditAnywhere)
+	int ShoreOffset;
 
 	UPROPERTY(EditAnywhere)
 	TMap<EFish, int> FishCount;

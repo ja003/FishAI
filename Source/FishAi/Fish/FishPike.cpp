@@ -99,6 +99,8 @@ FVector AFishPike::GetNextPatrolPoint()
 	}
 	
 	currentPatrolPathIndex++;
-	UE_LOG(LogTemp, Log, TEXT("xxx currentPatrolPathIndex = %d"), currentPatrolPathIndex);
-	return Water->PatrolPath[(currentPatrolPathIndex - 1) % Water->PatrolPath.Num()];
+	FVector result = Water->PatrolPath[(currentPatrolPathIndex - 1) % Water->PatrolPath.Num()];
+	DrawDebugSphere(GWorld, result, 50, 10, FColor::White, false, .1f);
+	//UE_LOG(LogTemp, Log, TEXT("xxx currentPatrolPathIndex = %d"), currentPatrolPathIndex);
+	return result;
 }

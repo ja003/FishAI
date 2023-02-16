@@ -52,7 +52,6 @@ void AWaterManager::CalculateBoundsInfo()
 	{
 		FVector patrolPoint = FVector(WaterBounds[i].X, WaterBounds[i].Y, 0);
 		center += patrolPoint;
-		UpdateInWaterTarget(patrolPoint);
 		PatrolPath.Add(patrolPoint);
 	}
 	center /= PatrolPath.Num();
@@ -62,20 +61,36 @@ void AWaterManager::SetPatrolPath()
 {
 
 	//DrawDebugSphere(GWorld, center, 50, 10, FColor::Blue, true, 5);
+	TArray<FVector> PatrolPathOrig = PatrolPath;
+
 
 	for (int i = PatrolPath.Num() - 1; i >= 0; i--)
 	{
 		//DrawDebugSphere(GWorld, PatrolPath[i], 50, 10, FColor::Red, true, 5);
-		
+
+		FVector prevPoint = PatrolPathOrig[(PatrolPathOrig.Num() + i - 1) % PatrolPathOrig.Num()];
+		FVector nextPoint = PatrolPathOrig[(i + 1) % PatrolPathOrig.Num()];
+
+		//DrawDebugSphere(GWorld, (prevPoint + nextPoint) / 2, 50, 10, FColor::Yellow, false, 50);
+		FVector dirForward = ((prevPoint + nextPoint) / 2) - PatrolPath[i];		
 		FVector dirToCenter = center - PatrolPath[i];
-		dirToCenter.Normalize();
-		PatrolPath[i] = PatrolPath[i] + dirToCenter * PatrolPathShoreOffset;
+		//DrawDebugLine(GetWorld(), PatrolPath[i], PatrolPath[i] + dirToCenter, FColor::Purple, false, 50);
+		//DrawDebugLine(GetWorld(), PatrolPath[i], PatrolPath[i] + dirForward, FColor::Yellow, false, 50);
+		
+		FVector moveDir = dirForward.Dot(dirToCenter) > 0 ? dirForward : dirToCenter;
+		
+		moveDir.Normalize();
+		
+		FVector movedPatrolPoint = PatrolPath[i] + moveDir * PatrolPathShoreOffset;
+		UpdateInWaterTarget(movedPatrolPoint);
+
+		PatrolPath[i] = movedPatrolPoint;
 	}
 
-	// for (int i = 0; i < PatrolPath.Num(); i++)
-	// {
-	// 	DrawDebugSphere(GWorld, PatrolPath[i], 50, 10, FColor::Blue, true, 5);
-	// }
+	for (int i = 0; i < PatrolPath.Num(); i++)
+	{
+		//DrawDebugSphere(GWorld, PatrolPath[i], 50, 10, FColor::Blue, true, 5);
+	}
 }
 
 void AWaterManager::GenerateNavmeshModifiers()

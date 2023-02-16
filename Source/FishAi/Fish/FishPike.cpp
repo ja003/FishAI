@@ -37,7 +37,7 @@ void AFishPike::BeginPlay()
 {
 	Super::BeginPlay();
 
-	currentPatrolPathIndex = FMath::RandRange(0, 5);
+	//currentPatrolPathIndex = FMath::RandRange(0, 5);
 	
 	//dont hunt right away
 	lastHuntTime = FDateTime::Now().ToUnixTimestamp();
@@ -99,5 +99,6 @@ FVector AFishPike::GetNextPatrolPoint()
 	}
 	
 	currentPatrolPathIndex++;
-	return  Water->PatrolPath[(currentPatrolPathIndex - 1) % Water->PatrolPath.Num()];
+	UE_LOG(LogTemp, Log, TEXT("xxx currentPatrolPathIndex = %d"), currentPatrolPathIndex);
+	return Water->PatrolPath[(currentPatrolPathIndex - 1) % Water->PatrolPath.Num()];
 }

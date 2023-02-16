@@ -6,6 +6,7 @@
 #include "EFishState.h"
 #include "Components/CapsuleComponent.h"
 #include "FishAi/Constants.h"
+#include "FishAi/WaterManager.h"
 #include "FishAi/Data/DataManager.h"
 #include "FishAi/PlayerObjects/Bait.h"
 
@@ -27,6 +28,13 @@ void AFishCarp::OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimul
 	UE_LOG(LogTemp, Log, TEXT("xxx OnBaitPerceptionUpdated %s"), *Actor->GetName());
 	blackboard->SetValueAsEnum(FishBB_State, (int)EFishState::Bait);
 
+	if (blackboard->GetValueAsObject(FishBB_Bait) != nullptr)
+	{
+		UE_LOG(LogTemp, Log, TEXT("xxx bait already set"));
+		// bait already set
+		return;
+	}
+	
 	// if perceived by sound => Actor is not the Bait => go search to sound location 
 	if(Actor->ActorHasTag(Tag_Bait))
 	{
@@ -36,8 +44,11 @@ void AFishCarp::OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimul
 	}
 	else
 	{
+		FVector target = Stimulus.StimulusLocation;
+		Water->UpdateInWaterTarget(target);
+		
 		//blackboard->SetValueAsObject(FishBB_Bait, nullptr);		
-		blackboard->SetValueAsVector(FishBB_Target, Stimulus.StimulusLocation);
+		blackboard->SetValueAsVector(FishBB_Target, target);
 		blackboard->SetValueAsBool("BaitVision", false);
 
 	}

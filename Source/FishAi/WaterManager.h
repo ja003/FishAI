@@ -29,7 +29,9 @@ protected:
 	FVector2D min;
 	FVector2D max;
 	FVector center;
-	
+
+
+
 	void CalculateBoundsInfo();
 
 	void SetPatrolPath();
@@ -39,6 +41,10 @@ protected:
 	FVector GetRandomPointInWater(int Counter = 0);
 	
 public:
+	
+	UPROPERTY(EditDefaultsOnly)
+	TArray<TEnumAsByte<EObjectTypeQuery>> GroundObjectType;
+	
 
 	UPROPERTY(EditAnywhere)
 	bool bDebug_DontGenerateFishes;
@@ -47,6 +53,8 @@ public:
 	bool IsPointInWater(FVector point) const;
 
 	FVector GetClosestPointInWater(FVector Point);
+
+	bool UpdateInWaterTarget(FVector& OutTarget);
 
 public:
 

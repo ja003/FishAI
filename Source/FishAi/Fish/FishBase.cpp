@@ -199,7 +199,8 @@ void AFishBase::RunawayFrom(FVector SourceLocation, int MaxDistance, EFishState 
 	runawayTarget = Water->GetClosestPointInWater(runawayTarget);
 	
 	DrawDebugSphere(GWorld, runawayTarget, 100, 10, FColor::Purple, false, 5);
-	
+
+	Water->UpdateInWaterTarget(runawayTarget);
 	blackboard->SetValueAsVector(FishBB_Target, runawayTarget);
 }
 

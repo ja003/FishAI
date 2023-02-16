@@ -46,8 +46,10 @@ void AWaterManager::CalculateBoundsInfo()
 
 	for (int i = 0; i < WaterBounds.Num(); i++)
 	{
-		PatrolPath.Add(FVector(WaterBounds[i].X, WaterBounds[i].Y, 0));
-		center += PatrolPath[i];		
+		FVector patrolPoint = FVector(WaterBounds[i].X, WaterBounds[i].Y, 0);
+		center += patrolPoint;
+		UpdateInWaterTarget(patrolPoint);
+		PatrolPath.Add(patrolPoint);
 	}
 	center /= PatrolPath.Num();
 }
@@ -153,4 +155,18 @@ FVector AWaterManager::GetClosestPointInWater(FVector Point)
 
 	return Point;
 }
+
+bool AWaterManager::UpdateInWaterTarget(FVector& OutTarget)
+{
+	FHitResult outHit;
+	bool result = UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), OutTarget, OutTarget + FVector::DownVector * 1000, GroundObjectType, false, TArray<AActor*>(), EDrawDebugTrace::None, outHit, true);
+
+	if(!result) return false;
+
+	OutTarget = outHit.Location;
+	DrawDebugSphere(GWorld, OutTarget, 100, 10, FColor::White, false, .5f);
+	return true;
+}
+
+
 

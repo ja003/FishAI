@@ -18,11 +18,7 @@ public:
 
 	AFishBase* SpawnFish(EFish FishType, FVector Location);
 	
-public:
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AFishCarp> CarpBP;
-
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AFishPike> PikeBP;
+	TMap<EFish, TSubclassOf<AFishBase>> FishBPs;
 };

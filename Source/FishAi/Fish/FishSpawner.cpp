@@ -10,18 +10,8 @@ AFishBase* AFishSpawner::SpawnFish(EFish FishType, FVector Location)
 	spawnTransform.SetLocation(Location);
 	FActorSpawnParameters spawnParameters;
 	spawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+
+	check(FishBPs.Contains(FishType))
 	
-	switch (FishType)
-	{
-	case EFish::Carp:
-		{
-			return GetWorld()->SpawnActor<AFishBase>(CarpBP, spawnTransform, spawnParameters);
-		}
-	case EFish::Pike:
-		return GetWorld()->SpawnActor<AFishBase>(PikeBP, spawnTransform);		
-	}
-
-
-	checkNoEntry()
-	return nullptr;
+	return GetWorld()->SpawnActor<AFishBase>(FishBPs[FishType], spawnTransform, spawnParameters);
 }

@@ -44,6 +44,8 @@ protected:
 	
 	void GenerateFishes();
 	
+	void GenerateFishes(EFish FishType);
+	
 	FVector GetRandomPointInWater(int Counter = 0);
 	
 public:
@@ -75,6 +77,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	int PatrolPathShoreOffset;
 
+	UPROPERTY(EditAnywhere)
+	TMap<EFish, int> FishCount;
+	
 	UPROPERTY(EditAnywhere)
 	int PikeCount;
 

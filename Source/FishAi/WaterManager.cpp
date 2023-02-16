@@ -102,24 +102,24 @@ void AWaterManager::GenerateNavmeshModifiers()
 void AWaterManager::GenerateFishes()
 {
 	UE_LOG(LogTemp, Log, TEXT("xxx GenerateFishes = %d, %d"), PikeCount, CarpCount);
-	
-	for (int i = 0; i < PikeCount; ++i)
-	{
-		FVector randomPoint = GetRandomPointInWater();
-		AFishPike* pike = Cast<AFishPike>(FishSpawner->SpawnFish(EFish::Pike, randomPoint));
-		if (ensureMsgf(pike, TEXT("Pike not spawned")))
-		{
-			pike->Water = this;
-		}
-	}
 
-	for (int i = 0; i < CarpCount; ++i)
+	GenerateFishes(EFish::Carp);
+	GenerateFishes(EFish::Pike);
+	GenerateFishes(EFish::Gold);
+}
+
+void AWaterManager::GenerateFishes(EFish FishType)
+{
+	if (!FishCount.Contains(FishType))
+		return;
+
+	for (int i = 0; i < FishCount[FishType]; ++i)
 	{
 		FVector randomPoint = GetRandomPointInWater();
-		AFishCarp* carp = Cast<AFishCarp>(FishSpawner->SpawnFish(EFish::Carp, randomPoint));
-		if (ensureMsgf(carp, TEXT("Carp not spawned")))
+		AFishBase* fish = Cast<AFishBase>(FishSpawner->SpawnFish(FishType, randomPoint));
+		if (ensureMsgf(fish, TEXT("fish not spawned")))
 		{
-			carp->Water = this;
+			fish->Water = this;
 		}
 	}
 }

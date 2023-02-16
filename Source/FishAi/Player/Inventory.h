@@ -32,4 +32,7 @@ public:
 
 	UPROPERTY(EditDefaultsOnly)
 	TMap<EThrowableObject, TSubclassOf<AThrowableObject>> ThrowableObjectsBP;
+
+	UPROPERTY(EditAnywhere)
+	bool bDebug_InfiniteItems;
 };

@@ -21,7 +21,7 @@ void AFishPike::OnEdibleFishPerceptionUpdated(AActor* Actor, const FAIStimulus& 
 	
 	if(IsReadyForHunt())
 	{
-		UE_LOG(LogTemp, Log, TEXT("xxx go hunt"));
+		//UE_LOG(LogTemp, Log, TEXT("xxx go hunt"));
 		
 		blackboard->SetValueAsEnum(FishBB_State, (int)EFishState::Hunt);
 		blackboard->SetValueAsObject(FishBB_Prey, Actor);
@@ -81,7 +81,7 @@ void AFishPike::OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AAc
 
 void AFishPike::EndHunt()
 {
-	UE_LOG(LogTemp, Log, TEXT("xxx end hunt"));
+	//UE_LOG(LogTemp, Log, TEXT("xxx end hunt"));
 	blackboard->SetValueAsEnum(FishBB_State, (int)EFishState::Idle);
 }
 

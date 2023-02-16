@@ -19,7 +19,8 @@ bool UInventory::HasItem(EThrowableObject ObjectType)
 
 void UInventory::RemoveItem(EThrowableObject Type)
 {
-	Items[Type]--;
+	if(!bDebug_InfiniteItems)
+		Items[Type]--;
 }
 
 void UInventory::AddItem(EThrowableObject ObjectType)

@@ -268,11 +268,12 @@ FVector AWaterManager::GetClosestPointInWater(FVector Point)
 bool AWaterManager::UpdateInWaterTarget(FVector& OutTarget)
 {
 	FHitResult outHit;
+	OutTarget.Z = 0;
 	bool result = UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), OutTarget, OutTarget + FVector::DownVector * 1000, GroundObjectType, false, TArray<AActor*>(), EDrawDebugTrace::None, outHit, true);
 
 	if(!result) return false;
 
-	OutTarget = outHit.Location;
+	OutTarget = outHit.Location + FVector::UpVector * 100;
 	//DrawDebugSphere(GWorld, OutTarget, 100, 10, FColor::White, false, .5f);
 	return true;
 }

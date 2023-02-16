@@ -4,6 +4,7 @@
 #include "FishBase.h"
 
 #include "AIController.h"
+#include "AntiStackHack.h"
 #include "BrainComponent.h"
 #include "EFishState.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
@@ -54,6 +55,8 @@ AFishBase::AFishBase()
 	MouthCollider->SetCollisionResponseToChannel(COLLISION_THROWABLE_OBJECT, ECR_Overlap);
 	MouthCollider->SetCollisionResponseToChannel(COLLISION_EXPLOSION, ECR_Block);
 
+	AntiStackHack = CreateDefaultSubobject<UAntiStackHack>("AntiStuckHack");	
+
 }
 
 // Called when the game starts or when spawned
@@ -87,6 +90,7 @@ void AFishBase::BeginPlay()
 		Water = Cast<AWaterManager>(UGameplayStatics::GetActorOfClass(GetWorld(), AWaterManager::StaticClass()));
 	}
 	check(Water)
+	AntiStackHack->Water = Water;
 
 	Score = Cast<AScoreManager>(UGameplayStatics::GetActorOfClass(GetWorld(), AScoreManager::StaticClass()));
 	check(Score)
@@ -188,7 +192,7 @@ void AFishBase::RunawayFrom(FVector SourceLocation, int MaxDistance, EFishState 
 {
 	blackboard->SetValueAsEnum(FishBB_State, (int)NewState);
 
-	DrawDebugSphere(GWorld, GetActorLocation(), 5, 10, FColor::Red, false, 5);
+	//DrawDebugSphere(GWorld, GetActorLocation(), 5, 10, FColor::Red, false, 5);
 
 	FVector dirAway = (GetActorLocation() - SourceLocation);
 	dirAway.Z = 0;

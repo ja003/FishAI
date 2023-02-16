@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AntiStackHack.h"
 #include "EFish.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Components/SphereComponent.h"
@@ -90,6 +91,9 @@ protected: // Components
 	// Default value measured by observation
 	UPROPERTY(EditAnywhere)
 	FVector AfterDeathTorque = FVector(3000, 20000, 10000);
+
+	UPROPERTY(EditDefaultsOnly)
+	UAntiStackHack* AntiStackHack;
 
 public: // Variables
 

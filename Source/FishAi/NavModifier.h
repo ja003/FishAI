@@ -22,4 +22,6 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	UBoxComponent* Collider;
+	
+	void GenerateBetweenPoints(FVector2D PointA, FVector2D PointB);
 };

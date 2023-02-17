@@ -18,7 +18,6 @@ public:
 
 public:
 
-
 	UPROPERTY(EditDefaultsOnly)
 	UBoxComponent* BoardCollider;
 	

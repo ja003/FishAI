@@ -18,7 +18,7 @@ void AFishCarp::OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AAc
 	if(Cast<ABait>(Actor))
 	{
 		Cast<ABait>(Actor)->OnEaten();
-		blackboard->SetValueAsEnum(FishBB_State, (int)EFishState::Idle);
+		SetState(EFishState::Idle);
 	}
 }
 
@@ -26,7 +26,8 @@ void AFishCarp::OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AAc
 void AFishCarp::OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
 {
 	UE_LOG(LogTemp, Log, TEXT("xxx OnBaitPerceptionUpdated %s"), *Actor->GetName());
-	blackboard->SetValueAsEnum(FishBB_State, (int)EFishState::Bait);
+
+	SetState(EFishState::Bait);
 
 	if (blackboard->GetValueAsObject(FishBB_Bait) != nullptr)
 	{

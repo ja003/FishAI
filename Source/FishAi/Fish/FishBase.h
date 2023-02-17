@@ -76,6 +76,11 @@ protected: // AI
 
 	UPROPERTY()
 	UBlackboardComponent* blackboard;
+
+public:
+
+	UFUNCTION(BlueprintCallable)
+	virtual void SetState(EFishState NewState);
 	
 protected: // Components
 

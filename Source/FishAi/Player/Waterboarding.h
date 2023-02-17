@@ -14,9 +14,6 @@ class FISHAI_API UWaterboarding : public UActorComponent
 	GENERATED_BODY()
 
 public:
-
-	// Sets default values for this component's properties
-	UWaterboarding();
 	
 	UFUNCTION()
 	void OnPlayerBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult);
@@ -27,10 +24,4 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	AWaterboard* Waterboard;
 
-	UPROPERTY(BlueprintReadOnly)
-	bool bIsWaterboarding;
-
-protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
 };

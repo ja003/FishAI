@@ -1,6 +1,7 @@
 ﻿#include "FishPike.h"
 
 #include "EFishState.h"
+#include "Components/TextRenderComponent.h"
 #include "FishAi/Constants.h"
 #include "FishAi/WaterManager.h"
 #include "FishAi/Data/DataManager.h"
@@ -9,6 +10,9 @@
 
 AFishPike::AFishPike()
 {
+	StateText = CreateDefaultSubobject<UTextRenderComponent>(TEXT("StateText"));
+	StateText->AttachToComponent(bodyMesh, FAttachmentTransformRules::KeepRelativeTransform);
+	StateText->SetVisibility(false);
 }
 
 void AFishPike::OnEdibleFishPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
@@ -22,8 +26,7 @@ void AFishPike::OnEdibleFishPerceptionUpdated(AActor* Actor, const FAIStimulus& 
 	if(IsReadyForHunt())
 	{
 		//UE_LOG(LogTemp, Log, TEXT("xxx go hunt"));
-		
-		blackboard->SetValueAsEnum(FishBB_State, (int)EFishState::Hunt);
+		SetState(EFishState::Hunt);
 		blackboard->SetValueAsObject(FishBB_Prey, Actor);
 
 		lastHuntTime = FDateTime::Now().ToUnixTimestamp();
@@ -32,6 +35,14 @@ void AFishPike::OnEdibleFishPerceptionUpdated(AActor* Actor, const FAIStimulus& 
 		GetWorld()->GetTimerManager().SetTimer(EndHuntHandle, this, &AFishPike::EndHunt, Data->Fish->HuntDuration, false);
 	}
 }
+
+void AFishPike::SetState(EFishState NewState)
+{
+	Super::SetState(NewState);
+	//UE_LOG(LogTemp, Log, TEXT("xxx hunt = %s"), NewState == EFishState::Hunt ? TEXT("true"):TEXT("false"));
+	StateText->SetVisibility(NewState == EFishState::Hunt);
+}
+
 
 void AFishPike::BeginPlay()
 {
@@ -82,7 +93,7 @@ void AFishPike::OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AAc
 void AFishPike::EndHunt()
 {
 	//UE_LOG(LogTemp, Log, TEXT("xxx end hunt"));
-	blackboard->SetValueAsEnum(FishBB_State, (int)EFishState::Idle);
+	SetState(EFishState::Idle);
 }
 
 void AFishPike::Roar()

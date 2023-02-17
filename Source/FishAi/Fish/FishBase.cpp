@@ -190,7 +190,7 @@ void AFishBase::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 
 void AFishBase::RunawayFrom(FVector SourceLocation, int MaxDistance, EFishState NewState)
 {
-	blackboard->SetValueAsEnum(FishBB_State, (int)NewState);
+	SetState(NewState);
 
 	//DrawDebugSphere(GWorld, GetActorLocation(), 5, 10, FColor::Red, false, 5);
 
@@ -214,5 +214,11 @@ void AFishBase::OnRockPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimul
 	// Actor is player character, not the rock!
 
 	RunawayFrom(Stimulus.StimulusLocation, Data->Fish->RockRunawayDistance, EFishState::Rock);
+}
+
+void AFishBase::SetState(EFishState NewState)
+{
+	//UE_LOG(LogTemp, Log, TEXT("xxx SetState"));
+	blackboard->SetValueAsEnum(FishBB_State, (int)NewState);
 }
 

@@ -11,6 +11,7 @@
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "ThrowableObject.generated.h"
 
+class ADataManager;
 class ANoiseReporter;
 class USphereComponent;
 
@@ -55,6 +56,8 @@ public:
 	virtual void OnEnteredWater();
 
 	virtual EThrowableObject GetType();
+
+	ADataManager* Data;
 	
 public:		// Senses
 

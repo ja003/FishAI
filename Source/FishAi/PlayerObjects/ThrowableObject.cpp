@@ -5,6 +5,7 @@
 
 #include "Components/SphereComponent.h"
 #include "FishAi/Constants.h"
+#include "FishAi/Data/DataManager.h"
 #include "FishAi/Managers/NoiseReporter.h"
 #include "Kismet/GameplayStatics.h"
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
@@ -64,6 +65,9 @@ void AThrowableObject::BeginPlay()
 
 	NoiseReporter = Cast<ANoiseReporter>(UGameplayStatics::GetActorOfClass(GetWorld(), ANoiseReporter::StaticClass()));
 	check(NoiseReporter)
+
+	Data = Cast<ADataManager>(UGameplayStatics::GetActorOfClass(GetWorld(), ADataManager::StaticClass()));
+	check(Data)
 }
 
 void AThrowableObject::SetVelocity(FVector Velocity)
@@ -98,8 +102,10 @@ void AThrowableObject::OnEnteredWater()
 	SphereCollider->SetSimulatePhysics(true);
 	SphereCollider->SetEnableGravity(true);
 
-	//todo: data - range
-	NoiseReporter->ReportNoise(nullptr, GetActorLocation(), nullptr, 1, 500, GetTag());
+	int range = Data->Throwable->NoiseRange[GetType()];
+	NoiseReporter->ReportNoise(nullptr, GetActorLocation(), nullptr, 1, range, GetTag());
+
+	DrawDebugSphere(GWorld, GetActorLocation(), range, 10, FColor::Yellow, false, .1f);
 }
 
 EThrowableObject AThrowableObject::GetType()

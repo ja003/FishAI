@@ -55,7 +55,7 @@ void UAntiStackHack::UnStuck()
 	FVector location = GetOwner()->GetActorLocation();
 	//UE_LOG(LogTemp, Log, TEXT("xxx UnStuck from = %s"), *location.ToString());
 	Water->UpdateInWaterTarget(location);
-	UE_LOG(LogTemp, Log, TEXT("xxx UnStuck to = %s"), *location.ToString());
+	//UE_LOG(LogTemp, Log, TEXT("xxx UnStuck to = %s"), *location.ToString());
 	//DrawDebugSphere(GWorld, location, 5, 50, FColor::Blue, false, 5);
 	GetOwner()->SetActorLocation(location);
 

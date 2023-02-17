@@ -207,12 +207,19 @@ void AFishBase::RunawayFrom(FVector SourceLocation, int MaxDistance, EFishState 
 	dirAway.Normalize();
 	int runawayDistance = FMath::RandRange(MaxDistance / 2, MaxDistance);
 	FVector runawayTarget = GetActorLocation() + dirAway * runawayDistance;
-	runawayTarget = Water->GetClosestPointInWater(runawayTarget);
+	FVector inWaterTarget = Water->GetClosestPointInWater(runawayTarget);
+	if (FVector::Distance(inWaterTarget, GetActorLocation()) < 200)
+	{
+		//UE_LOG(LogTemp, Log, TEXT("xxx runaway target too close"));
+		FVector dirToRandom = Water->GetRandomPointInWater() - GetActorLocation();
+		dirToRandom.Normalize();
+		inWaterTarget = GetActorLocation() + dirToRandom * runawayDistance; 
+	}
 	
-	//DrawDebugSphere(GWorld, runawayTarget, 100, 10, FColor::Purple, false, 5);
+	//DrawDebugSphere(GWorld, inWaterTarget, 100, 10, FColor::Purple, false, 5);
 
-	Water->UpdateInWaterTarget(runawayTarget);
-	blackboard->SetValueAsVector(FishBB_Target, runawayTarget);
+	Water->UpdateInWaterTarget(inWaterTarget);
+	blackboard->SetValueAsVector(FishBB_Target, inWaterTarget);
 }
 
 void AFishBase::OnRockPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)

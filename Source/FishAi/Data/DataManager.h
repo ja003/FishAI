@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "FishData.h"
+#include "ThrowableData.h"
 #include "GameFramework/Actor.h"
 #include "DataManager.generated.h"
 
@@ -15,5 +16,8 @@ class FISHAI_API ADataManager : public AActor
 public:
 
 	UPROPERTY(EditDefaultsOnly)
-	UFishData* Fish; 
+	UFishData* Fish;
+
+	UPROPERTY(EditDefaultsOnly)
+	UThrowableData* Throwable;
 };

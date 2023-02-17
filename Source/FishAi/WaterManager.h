@@ -52,9 +52,10 @@ protected:
 	
 	void GenerateFishes(EFish FishType);
 	
-	FVector GetRandomPointInWater(int Counter = 0);
 	
 public:
+	
+	FVector GetRandomPointInWater(int Counter = 0);
 	
 	UPROPERTY(EditDefaultsOnly)
 	TArray<TEnumAsByte<EObjectTypeQuery>> GroundObjectType;

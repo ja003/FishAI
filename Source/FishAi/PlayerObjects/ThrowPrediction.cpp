@@ -33,6 +33,8 @@ void AThrowPrediction::BeginPlay()
 
 	EndPoint = GetWorld()->SpawnActor(EndPointBP);
 	EndPoint->SetActorHiddenInGame(true);
+
+	SetActorTransform(FTransform::Identity);
 }
 
 void AThrowPrediction::DestroyMeshes()

@@ -1,0 +1,18 @@
+create landscape
+- set Z = 0
+- set ObjectType = Ground
+- add tag Ground
+
+create Lake
+- set Z = 0
+- set Overlap to all
+- set Block to WorldStatic
+- create WaterManager
+-- assign Lake to it 
+
+Managers
+- Data
+- FishSpawner
+- NoiseReporter
+- Score
+- ThrowPrediction

@@ -11,6 +11,7 @@
 #include "WaterManager.generated.h"
 
 class ANavModifier;
+
 UCLASS()
 class FISHAI_API AWaterManager : public AActor
 {
@@ -99,12 +100,6 @@ public:
 	UPROPERTY(EditAnywhere)
 	TMap<EFish, int> FishCount;
 	
-	UPROPERTY(EditAnywhere)
-	int PikeCount;
-
-	UPROPERTY(EditAnywhere)
-	int CarpCount;
-
 	AFishSpawner* FishSpawner;
 	
 };

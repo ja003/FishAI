@@ -19,7 +19,6 @@ class FISHAI_API UThrowing : public UActorComponent
 	GENERATED_BODY()
 
 public:
-
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	
 	// Sets default values for this component's properties
@@ -29,13 +28,19 @@ public:
 	USkeletalMeshComponent* SkeletalMesh;
 	
 	UPROPERTY()
-	USceneComponent* ThrowStart;
+	USceneComponent* ThrowStartRock;
+	UPROPERTY()
+	USceneComponent* ThrowStartBait;
+	UPROPERTY()
+	USceneComponent* ThrowStartGrenade;
 
 	const FName RightHand_SocketName = "RightHand";
 
 private:
 	
 	EThrowableObject LastActiveObject;
+
+	USceneComponent* GetThrowStart();
 
 protected:
 	// Called when the game starts

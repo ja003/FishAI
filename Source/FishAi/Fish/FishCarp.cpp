@@ -25,13 +25,13 @@ void AFishCarp::OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AAc
 
 void AFishCarp::OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
 {
-	UE_LOG(LogTemp, Log, TEXT("xxx OnBaitPerceptionUpdated %s"), *Actor->GetName());
+	//UE_LOG(LogTemp, Log, TEXT("xxx OnBaitPerceptionUpdated %s"), *Actor->GetName());
 
 	SetState(EFishState::Bait);
 
 	if (blackboard->GetValueAsObject(FishBB_Bait) != nullptr)
 	{
-		UE_LOG(LogTemp, Log, TEXT("xxx bait already set"));
+		//UE_LOG(LogTemp, Log, TEXT("xxx bait already set"));
 		// bait already set
 		return;
 	}

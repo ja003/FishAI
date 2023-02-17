@@ -57,7 +57,13 @@ public:
 	USphereComponent* BallsCollider;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	USceneComponent* ThrowStart;
+	USceneComponent* ThrowStartRock;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	USceneComponent* ThrowStartBait;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	USceneComponent* ThrowStartGrenade;
 
 
 	

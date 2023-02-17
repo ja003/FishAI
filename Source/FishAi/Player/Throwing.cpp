@@ -13,7 +13,9 @@ void UThrowing::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 	TArray<AActor*> ignoredActors;
 	ignoredActors.Add(GetOwner());
 	ignoredActors.Add(SpawnedObject);
-	Prediction->UpdateValues(ThrowStart->GetComponentLocation(), ThrowStart->GetForwardVector() * ThrowPower, ignoredActors);
+
+	if (LastActiveObject != EThrowableObject::None)
+		Prediction->UpdateValues(GetThrowStart()->GetComponentLocation(), GetThrowStart()->GetForwardVector() * ThrowPower, ignoredActors);
 }
 
 // Sets default values for this component's properties
@@ -22,6 +24,18 @@ UThrowing::UThrowing()
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
+
+USceneComponent* UThrowing::GetThrowStart()
+{
+	switch (LastActiveObject) { 
+	case EThrowableObject::Rock: return ThrowStartRock;
+	case EThrowableObject::Bait: return ThrowStartBait;
+	case EThrowableObject::Grenade: return ThrowStartGrenade;
+	}
+
+	checkNoEntry()
+	return ThrowStartRock;
+}
 
 // Called when the game starts
 void UThrowing::BeginPlay()
@@ -65,7 +79,7 @@ void UThrowing::Throw()
 		return;
 	}
 
-	SpawnedObject->SetVelocity(ThrowStart->GetForwardVector() * ThrowPower);
+	SpawnedObject->SetVelocity(GetThrowStart()->GetForwardVector() * ThrowPower);
 	Inventory->RemoveItem(SpawnedObject->GetType());
 
 	SpawnedObject = nullptr;
@@ -76,7 +90,7 @@ void UThrowing::SetActiveObject(EThrowableObject ObjectType)
 {
 	if(bIsThrowing) return;
 	
-	UE_LOG(LogTemp, Log, TEXT("xxx SetActiveObject = %d"), (int)ObjectType);
+	//UE_LOG(LogTemp, Log, TEXT("xxx SetActiveObject = %d"), (int)ObjectType);
 
 	if (!Inventory->HasItem(ObjectType))
 	{
@@ -112,7 +126,7 @@ void UThrowing::DeselectObjects()
 {
 	if(bIsThrowing) return;
 
-	UE_LOG(LogTemp, Log, TEXT("xxx DeselectObjects"));
+	//UE_LOG(LogTemp, Log, TEXT("xxx DeselectObjects"));
 
 	if(SpawnedObject != nullptr)
 	{

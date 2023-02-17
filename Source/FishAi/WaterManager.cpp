@@ -181,7 +181,7 @@ void AWaterManager::GenerateNavmeshModifiers()
 
 void AWaterManager::GenerateFishes()
 {
-	UE_LOG(LogTemp, Log, TEXT("xxx GenerateFishes = %d, %d"), PikeCount, CarpCount);
+	//UE_LOG(LogTemp, Log, TEXT("xxx GenerateFishes = %d, %d"), PikeCount, CarpCount);
 
 	GenerateFishes(EFish::Carp);
 	GenerateFishes(EFish::Pike);
@@ -257,7 +257,7 @@ FVector AWaterManager::GetClosestPointInWater(FVector Point)
 		counter++;
 		if (counter > 20)
 		{
-			UE_LOG(LogTemp, Log, TEXT("xxx GetInWaterPoint too many iterations"));
+			//UE_LOG(LogTemp, Log, TEXT("xxx GetInWaterPoint too many iterations"));
 			return center;
 		}
 	}

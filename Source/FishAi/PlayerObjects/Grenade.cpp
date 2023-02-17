@@ -23,7 +23,7 @@ void AGrenade::OnEnteredWater()
 
 void AGrenade::Explode()
 {
-	UE_LOG(LogTemp, Log, TEXT("xxx explode"));
+	//UE_LOG(LogTemp, Log, TEXT("xxx explode"));
 
 
 	Radius = 500.0f;

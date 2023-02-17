@@ -38,10 +38,15 @@ APlayerCharacter::APlayerCharacter()
 	Throwing = CreateDefaultSubobject<UThrowing>("Throwing");
 	Throwing->SkeletalMesh = GetMesh();
 
-	ThrowStart = CreateDefaultSubobject<USceneComponent>("ThrowStart");
-	ThrowStart->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform);
-
-	Throwing->ThrowStart = ThrowStart;
+	ThrowStartRock = CreateDefaultSubobject<USceneComponent>("ThrowStartRock");
+	ThrowStartRock->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform);
+	Throwing->ThrowStartRock = ThrowStartRock;
+	ThrowStartBait = CreateDefaultSubobject<USceneComponent>("ThrowStartBait");
+	ThrowStartBait->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform);
+	Throwing->ThrowStartBait = ThrowStartBait;
+	ThrowStartGrenade = CreateDefaultSubobject<USceneComponent>("ThrowStartGrenade");
+	ThrowStartGrenade->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform);
+	Throwing->ThrowStartGrenade = ThrowStartGrenade;
 	
 	Inventory = CreateDefaultSubobject<UInventory>("Inventory");
 

@@ -115,7 +115,7 @@ void AFishBase::Tick(float DeltaSeconds)
 
 void AFishBase::OnKilledByGrenade(FVector ExplosionForce)
 {
-	UE_LOG(LogTemp, Log, TEXT("xxx OnKilledByPlayer"));
+	//UE_LOG(LogTemp, Log, TEXT("xxx OnKilledByPlayer"));
 
  	Cast<AAIController>(GetController())->BrainComponent->StopLogic("Death");
 	
@@ -209,7 +209,7 @@ void AFishBase::RunawayFrom(FVector SourceLocation, int MaxDistance, EFishState 
 
 void AFishBase::OnRockPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
 {
-	UE_LOG(LogTemp, Log, TEXT("xxx OnRockPerceptionUpdated = %s"), *Actor->GetName());
+	//UE_LOG(LogTemp, Log, TEXT("xxx OnRockPerceptionUpdated = %s"), *Actor->GetName());
 
 	// Actor is player character, not the rock!
 

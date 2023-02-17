@@ -31,7 +31,7 @@ void ARock::OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* Acto
 
 	if(Actor->ActorHasTag(Tag_Ground))
 	{
-		UE_LOG(LogTemp, Log, TEXT("xxx Ground!"));
+		//UE_LOG(LogTemp, Log, TEXT("xxx Ground!"));
 		bHasHitGround = true;
 
 		FTimerHandle UnusedHandle;

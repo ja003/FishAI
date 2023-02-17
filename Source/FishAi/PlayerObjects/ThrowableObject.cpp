@@ -77,7 +77,7 @@ void AThrowableObject::SetVelocity(FVector Velocity)
 	//SphereCollider->SetSimulatePhysics(true);
 	//SphereCollider->SetEnableGravity(true);
 
-	UE_LOG(LogTemp, Log, TEXT("xxx Velocity = %s"), *Velocity.ToString());
+	//UE_LOG(LogTemp, Log, TEXT("xxx Velocity = %s"), *Velocity.ToString());
 	ProjectileMovement->Velocity = Velocity;
 
 }
@@ -89,7 +89,7 @@ FName AThrowableObject::GetTag()
 
 void AThrowableObject::OnEnteredWater()
 {
-	UE_LOG(LogTemp, Log, TEXT("xxx OnEnteredWater"));
+	//UE_LOG(LogTemp, Log, TEXT("xxx OnEnteredWater"));
 	//UGameplayStatics::PlaySoundAtLocation(GetWorld(), Sound_HitWater, GetActorLocation());
 
 	ProjectileMovement->bSimulationEnabled = false;

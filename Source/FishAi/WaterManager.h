@@ -20,6 +20,8 @@ public:
 	// Sets default values for this actor's properties
 	AWaterManager();
 	void CalculateCenter();
+	
+	void OnFishDie(AFishBase* Fish);
 
 protected:
 	// Called when the game starts or when spawned
@@ -34,8 +36,8 @@ protected:
 	FVector2D max;
 	FVector center;
 	FVector2D center2D;
-
-
+	
+	TArray<AFishBase*> Fishes;
 
 	void CalculateBoundsInfo();
 

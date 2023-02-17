@@ -55,7 +55,11 @@ public:
 
 	bool IsDead;
 	
-	void Die();
+	void OnEatenByFish();
+
+private:
+
+	void Die(int DestroyDelay = 0);
 
 protected: // AI
 

@@ -129,18 +129,26 @@ void AFishBase::OnKilledByGrenade(FVector ExplosionForce)
 		FMath::RandRange(-torque_offset, torque_offset));
 	bodyMesh->AddTorqueInDegrees(AfterDeathTorque, NAME_None, true);
 
-	IsDead = true;
-
 	Score->OnFishKilled(this);
 	
-	SetLifeSpan(2);
+	Die(2);
 }
 
 //todo: death by fish - animation
-void AFishBase::Die()
+void AFishBase::OnEatenByFish()
+{
+	Die();
+}
+
+void AFishBase::Die(int DestroyDelay)
 {
 	IsDead = true;
-	Destroy();
+	Water->OnFishDie(this);
+
+	if (DestroyDelay <= 0)
+		Destroy();
+	else
+		SetLifeSpan(DestroyDelay);
 }
 
 void AFishBase::GetActorEyesViewPoint(FVector& OutLocation, FRotator& OutRotation) const

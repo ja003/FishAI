@@ -24,6 +24,16 @@ void AWaterManager::CalculateCenter()
 	center2D = FVector2D(center.X, center.Y);
 }
 
+void AWaterManager::OnFishDie(AFishBase* Fish)
+{
+	int count = Fishes.Num();
+	Fishes.Remove(Fish);
+	if (ensureMsgf(Fishes.Num() == count - 1, TEXT("fish not removed")))
+	{		
+		UE_LOG(LogTemp, Log, TEXT("xxx %d fishes left"), Fishes.Num());
+	}
+}
+
 // Called when the game starts or when spawned
 void AWaterManager::BeginPlay()
 {
@@ -201,6 +211,10 @@ void AWaterManager::GenerateFishes(EFish FishType)
 		{
 			fish->Water = this;
 		}
+
+		UE_LOG(LogTemp, Log, TEXT("xxx Add fish %d"), (int)FishType);
+		Fishes.Add(fish);
+		UE_LOG(LogTemp, Log, TEXT("xxx Fishes = %d"), Fishes.Num());
 	}
 }
 

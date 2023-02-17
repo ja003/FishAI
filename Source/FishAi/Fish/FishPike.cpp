@@ -66,7 +66,7 @@ void AFishPike::OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* 
 
 	if(Cast<AFishBase>(Actor))
 	{
-		Cast<AFishBase>(Actor)->Die();
+		Cast<AFishBase>(Actor)->OnEatenByFish();
 	}
 }
 
@@ -86,7 +86,7 @@ void AFishPike::OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AAc
 	if(AFishBase* fish = Cast<AFishBase>(Actor))
 	{
 		if (fish->Type != EFish::Pike)
-			fish->Die();
+			fish->OnEatenByFish();
 	}
 }
 

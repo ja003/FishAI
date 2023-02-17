@@ -29,8 +29,6 @@ private:
 	
 	int64 lastHuntTime;
 
-	UPROPERTY(EditDefaultsOnly)
-	UTextRenderComponent* StateText;
 
 	bool IsReadyForHunt();
 
@@ -44,6 +42,10 @@ private:
 	void Roar();
 
 public:
+
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UTextRenderComponent* StateText;
 	
 	UFUNCTION(BlueprintCallable)
 	FVector GetNextPatrolPoint();

@@ -1,5 +1,3 @@
-2 navigable areas
-- player, fish
+bait dont attract enough
 
-pike 
-- eat fish
+pike still getting stuck

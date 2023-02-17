@@ -236,7 +236,7 @@ void AFishBase::OnRockPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimul
 
 void AFishBase::SetState(EFishState NewState)
 {
-	//UE_LOG(LogTemp, Log, TEXT("xxx SetState"));
+	UE_LOG(LogTemp, Log, TEXT("xxx SetState %d"), (int)NewState);
 	blackboard->SetValueAsEnum(FishBB_State, (int)NewState);
 }
 

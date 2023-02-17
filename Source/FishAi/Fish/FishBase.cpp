@@ -109,6 +109,9 @@ void AFishBase::Tick(float DeltaSeconds)
 
 	if (!IsDead)
 	{
+		// this doesnt include waves:(
+		//FVector waterSurfaceLoc = Water->GetWaterSurfaceLocation(GetActorLocation());
+		// bodyMesh->SetWorldLocation(waterSurfaceLoc + FVector::UpVector * InWaterBodyOffset);
 		bodyMesh->SetRelativeLocation(FVector(0,0, -GetActorLocation().Z));
 	}
 }

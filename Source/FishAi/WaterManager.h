@@ -54,6 +54,10 @@ protected:
 	
 	
 public:
+
+	// this doesnt include waves:(
+	UFUNCTION(BlueprintImplementableEvent)
+	FVector GetWaterSurfaceLocation(FVector AtLocation);
 	
 	FVector GetRandomPointInWater(int Counter = 0);
 	
@@ -70,6 +74,9 @@ public:
 	FVector GetClosestPointInWater(FVector Point);
 
 	bool UpdateInWaterTarget(FVector& OutTarget);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	FVector GetWaterBottomLocation(FVector AtLocation);
 
 public:
 

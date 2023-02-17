@@ -48,6 +48,9 @@ protected:
 public:
 
 	UPROPERTY(EditDefaultsOnly)
+	int InWaterBodyOffset;
+
+	UPROPERTY(EditDefaultsOnly)
 	EFish Type = EFish::None;
 
 	UFUNCTION(BlueprintCallable)

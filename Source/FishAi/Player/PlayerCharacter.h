@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Throwing.h"
+#include "Waterboarding.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/Character.h"
 #include "PlayerCharacter.generated.h"
@@ -41,7 +42,10 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UInventory* Inventory;
-	
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UWaterboarding* Waterboarding;
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

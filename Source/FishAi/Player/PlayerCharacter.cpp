@@ -3,6 +3,7 @@
 
 #include "PlayerCharacter.h"
 
+#include "Waterboarding.h"
 #include "WaterBodyActor.h"
 #include "WaterBodyComponent.h"
 #include "Camera/CameraComponent.h"
@@ -43,6 +44,10 @@ APlayerCharacter::APlayerCharacter()
 	Throwing->ThrowStart = ThrowStart;
 	
 	Inventory = CreateDefaultSubobject<UInventory>("Inventory");
+
+	Waterboarding = CreateDefaultSubobject<UWaterboarding>("Waterboarding");
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(Waterboarding, &UWaterboarding::OnPlayerBeginOverlap);
+	GetCapsuleComponent()->OnComponentEndOverlap.AddDynamic(Waterboarding, &UWaterboarding::OnPlayerEndOverlap);
 }
 
 // Called when the game starts or when spawned

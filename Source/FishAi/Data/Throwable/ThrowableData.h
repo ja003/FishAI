@@ -21,4 +21,7 @@ public:
 	
 	UPROPERTY(EditAnywhere)
 	FTransform SpawnOffset;
+
+	UPROPERTY(EditAnywhere)
+	FRotator TickRotation;
 };

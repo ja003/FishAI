@@ -14,6 +14,8 @@
 
 AThrowableObject::AThrowableObject()
 {
+	PrimaryActorTick.bCanEverTick = true;
+	
 	StimuliSource = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>("StimuliSource");
 	// todo: doesnt work, only when configured in BP
 	StimuliSource->bAutoRegister = false;
@@ -68,8 +70,14 @@ void AThrowableObject::BeginPlay()
 
 	Data = Cast<ADataManager>(UGameplayStatics::GetActorOfClass(GetWorld(), ADataManager::StaticClass()));
 	check(Data)
+}
 
-	//SetActorRelativeTransform(Data->Throwable[GetType()]->SpawnOffset);
+void AThrowableObject::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	if(ProjectileMovement->bSimulationEnabled)
+		AddActorLocalRotation(Data->Throwable[GetType()]->TickRotation);
 }
 
 void AThrowableObject::Throw(FVector Velocity)
@@ -90,6 +98,13 @@ void AThrowableObject::Throw(FVector Velocity)
 
 	// spawned object is scaled down. set original scale
 	SetActorRelativeScale3D(FVector::OneVector);
+
+	// randomize starting rotation
+	FRotator throwStartRot = Data->Throwable[GetType()]->TickRotation;
+	throwStartRot.Yaw = FMath::RandRange(-throwStartRot.Yaw, throwStartRot.Yaw);
+	throwStartRot.Pitch = FMath::RandRange(-throwStartRot.Pitch, throwStartRot.Pitch);
+	throwStartRot.Roll = FMath::RandRange(-throwStartRot.Roll, throwStartRot.Roll);
+	SetActorRotation(throwStartRot);
 }
 
 FName AThrowableObject::GetTag()

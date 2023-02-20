@@ -9,6 +9,7 @@ create Lake
 - set Block to WorldStatic
 - create WaterManager
 -- assign Lake to it 
+-- set shore offset + patrol path offset
 
 Managers
 - Data

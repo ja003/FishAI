@@ -35,6 +35,15 @@ void AWaterManager::OnFishDie(AFishBase* Fish)
 	{		
 		UE_LOG(LogTemp, Log, TEXT("xxx %d fishes left"), Fishes.Num());
 	}
+
+	for (AFishBase* fish : Fishes)
+	{
+		if(fish->Type == EFish::Gold)
+			return;
+	}
+
+	UE_LOG(LogTemp, Log, TEXT("xxx only gold fishes remain"));
+	OnAllFishesDead.Broadcast();
 }
 
 // Called when the game starts or when spawned
@@ -296,7 +305,7 @@ bool AWaterManager::UpdateInWaterTarget(FVector& OutTarget)
 	OutTarget = GetWaterBottomLocation(OutTarget);
 	OutTarget += FVector::UpVector * 100;
 	
-	DrawDebugSphere(GWorld, OutTarget, 100, 10, FColor::White, false, 5);
+	//DrawDebugSphere(GWorld, OutTarget, 100, 10, FColor::White, false, 5);
 	return true;
 }
 

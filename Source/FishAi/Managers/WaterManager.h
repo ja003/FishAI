@@ -26,6 +26,10 @@ public:
 	
 	void OnFishDie(AFishBase* Fish);
 
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAllFishesDead);
+	UPROPERTY(BlueprintAssignable)
+	FOnAllFishesDead OnAllFishesDead;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

@@ -127,7 +127,7 @@ void AThrowableObject::OnEnteredWater()
 	//todo: play sound at water bottom where fishes have ears?
 	NoiseReporter->ReportNoise(nullptr, GetActorLocation(), nullptr, 1, range, GetTag());
 
-	DrawDebugSphere(GWorld, GetActorLocation(), range, 10, FColor::Yellow, false, .1f);
+	//DrawDebugSphere(GWorld, GetActorLocation(), range, 10, FColor::Yellow, false, .1f);
 
 	StimuliSource->RegisterForSense(TSubclassOf<UAISense_Sight>());
 	StimuliSource->RegisterWithPerceptionSystem();

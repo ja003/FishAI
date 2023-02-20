@@ -7,11 +7,11 @@
 #include "EFish.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Components/SphereComponent.h"
-#include "FishAi/Data/FishData.h"
 #include "GameFramework/Character.h"
 #include "Perception/AIPerceptionTypes.h"
 #include "FishBase.generated.h"
 
+class UFishData;
 class ANoiseReporter;
 enum class EFishState : uint8;
 class ADataManager;

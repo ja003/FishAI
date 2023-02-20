@@ -3,9 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "FishData.h"
-#include "ThrowableData.h"
+#include "Fish/FishData.h"
 #include "GameFramework/Actor.h"
+#include "Throwable/ThrowableData.h"
 #include "DataManager.generated.h"
 
 UCLASS()
@@ -19,5 +19,5 @@ public:
 	TMap<EFish, UFishData*> Fish;
 
 	UPROPERTY(EditDefaultsOnly)
-	UThrowableData* Throwable;
+	TMap<EThrowableObject, UThrowableData*> Throwable;
 };

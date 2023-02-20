@@ -18,9 +18,6 @@ class FISHAI_API UThrowableData : public UDataAsset
 public:
 	
 	UPROPERTY(EditAnywhere)
-	TMap<EThrowableObject, int> NoiseRange;
-
-	UPROPERTY(EditDefaultsOnly)
-	int GrenadeRange;
+	int NoiseRange;
 	
 };

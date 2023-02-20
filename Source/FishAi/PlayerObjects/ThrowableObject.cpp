@@ -103,7 +103,7 @@ void AThrowableObject::OnEnteredWater()
 	SphereCollider->SetSimulatePhysics(true);
 	SphereCollider->SetEnableGravity(true);
 
-	int range = Data->Throwable->NoiseRange[GetType()];
+	int range = Data->Throwable[GetType()]->NoiseRange;
 	//todo: play sound at water bottom where fishes have ears?
 	NoiseReporter->ReportNoise(nullptr, GetActorLocation(), nullptr, 1, range, GetTag());
 

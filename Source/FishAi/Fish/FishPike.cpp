@@ -5,7 +5,7 @@
 #include "FishAi/Constants.h"
 #include "FishAi/WaterManager.h"
 #include "FishAi/Data/DataManager.h"
-#include "FishAi/Data/PikeData.h"
+#include "FishAi/Data/Fish/PikeData.h"
 #include "FishAi/Managers/NoiseReporter.h"
 #include "Kismet/GameplayStatics.h"
 

@@ -6,6 +6,7 @@
 #include "Explosion.h"
 #include "FishAi/Constants.h"
 #include "FishAi/Data/DataManager.h"
+#include "FishAi/Data/Throwable/GrenadeData.h"
 #include "FishAi/Fish/FishBase.h"
 
 AGrenade::AGrenade()
@@ -26,8 +27,7 @@ void AGrenade::Explode()
 {
 	//UE_LOG(LogTemp, Log, TEXT("xxx explode"));
 
-
-	Radius = Data->Throwable->GrenadeRange;
+	Radius = Cast<UGrenadeData>(Data->Throwable[EThrowableObject::Grenade])->Radius;
 	
 	// create a collision sphere
 	FCollisionShape MyColSphere = FCollisionShape::MakeSphere(Radius);

@@ -7,7 +7,7 @@
 #include "Components/CapsuleComponent.h"
 #include "FishAi/Constants.h"
 #include "FishAi/WaterManager.h"
-#include "FishAi/Data/CarpData.h"
+#include "FishAi/Data/Fish/CarpData.h"
 #include "FishAi/Data/DataManager.h"
 #include "FishAi/PlayerObjects/Bait.h"
 

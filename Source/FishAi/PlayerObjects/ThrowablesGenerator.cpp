@@ -21,7 +21,6 @@ AThrowablesGenerator::AThrowablesGenerator()
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Mesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-
 	
 	StateMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StateMesh"));
 	StateMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);

@@ -46,9 +46,8 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	UMaterialInterface* Material;
 	
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	EThrowableObject ObjectType;
-
 
 	UPROPERTY(EditAnywhere)
 	int Cooldown;

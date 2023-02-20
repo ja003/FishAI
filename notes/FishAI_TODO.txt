@@ -2,6 +2,6 @@ bait dont attract enough
 
 pike still getting stuck
 
-fix throwable attach to hand
+throw generators DA
 
-rotate thrown object
+initiate next water when all fishes dead

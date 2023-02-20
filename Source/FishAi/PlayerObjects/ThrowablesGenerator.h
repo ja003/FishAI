@@ -24,7 +24,8 @@ private:
 	void OnBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult);
 
 	virtual void BeginPlay() override;
-	
+	void SetStateOpacity(float opacity);
+
 	virtual void Tick(float DeltaSeconds) override;
 
 	UPROPERTY(EditDefaultsOnly)
@@ -32,6 +33,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	UStaticMeshComponent* Mesh;
+
+	UPROPERTY(EditDefaultsOnly)
+	UStaticMeshComponent* StateMesh;
 	
 	int64 LastTimeItemAdded;
 	

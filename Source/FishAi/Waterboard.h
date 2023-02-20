@@ -25,6 +25,9 @@ public:
 	UStaticMeshComponent* Mesh;
 
 	UPROPERTY(EditDefaultsOnly)
+	UStaticMeshComponent* StateMesh;
+
+	UPROPERTY(EditDefaultsOnly)
 	UBoxComponent* InteractArea;
 	
 	UPROPERTY(EditDefaultsOnly)

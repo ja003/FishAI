@@ -21,6 +21,11 @@ AThrowablesGenerator::AThrowablesGenerator()
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Mesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	
+	StateMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StateMesh"));
+	StateMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	StateMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	
 	Cooldown = 5;
 
@@ -50,7 +55,16 @@ void AThrowablesGenerator::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Material = Mesh->GetMaterial(0);
+	Material = StateMesh->GetMaterial(0);
+
+	SetStateOpacity(0);
+}
+
+void AThrowablesGenerator::SetStateOpacity(float opacity)
+{
+	UMaterialInstanceDynamic* MI_Throwable = UMaterialInstanceDynamic::Create(Material,this); 
+	StateMesh->SetMaterial(0, MI_Throwable);
+	MI_Throwable->SetScalarParameterValue(TEXT("Opacity"), opacity);
 }
 
 void AThrowablesGenerator::Tick(float DeltaSeconds)
@@ -60,12 +74,10 @@ void AThrowablesGenerator::Tick(float DeltaSeconds)
 	if (GetRemainingCooldown() < 0)
 		return;
 
-	float opacity = 1 - GetRemainingCooldown() / Cooldown;
+	float opacity = GetRemainingCooldown() / Cooldown;
 	opacity = FMath::Clamp(opacity, 0, 1);
 
-	UMaterialInstanceDynamic* MI_Throwable = UMaterialInstanceDynamic::Create(Material,this); 
-	Mesh->SetMaterial(0, MI_Throwable);
-	MI_Throwable->SetScalarParameterValue(TEXT("Opacity"), opacity);
+	SetStateOpacity(opacity);
 }
 
 float AThrowablesGenerator::GetRemainingCooldown()

@@ -5,6 +5,7 @@
 #include "FishAi/Constants.h"
 #include "FishAi/WaterManager.h"
 #include "FishAi/Data/DataManager.h"
+#include "FishAi/Data/PikeData.h"
 #include "FishAi/Managers/NoiseReporter.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -32,7 +33,7 @@ void AFishPike::OnEdibleFishPerceptionUpdated(AActor* Actor, const FAIStimulus& 
 		lastHuntTime = FDateTime::Now().ToUnixTimestamp();
 
 		GetWorld()->GetTimerManager().ClearTimer(EndHuntHandle);
-		GetWorld()->GetTimerManager().SetTimer(EndHuntHandle, this, &AFishPike::EndHunt, Data->Fish->HuntDuration, false);
+		GetWorld()->GetTimerManager().SetTimer(EndHuntHandle, this, &AFishPike::EndHunt, Cast<UPikeData>(Data)->HuntDuration, false);
 	}
 }
 
@@ -53,7 +54,7 @@ void AFishPike::BeginPlay()
 	//dont hunt right away
 	lastHuntTime = FDateTime::Now().ToUnixTimestamp();
 
-	GetWorld()->GetTimerManager().SetTimer(RoarHandle, this, &AFishPike::Roar, Data->Fish->RoarCoolDown, true);
+	GetWorld()->GetTimerManager().SetTimer(RoarHandle, this, &AFishPike::Roar, Cast<UPikeData>(Data)->RoarCoolDown, true);
 
 }
 
@@ -73,7 +74,7 @@ void AFishPike::OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* 
 
 bool AFishPike::IsReadyForHunt()
 {
-	return FDateTime::Now().ToUnixTimestamp() - lastHuntTime > Data->Fish->HuntCooldown;
+	return FDateTime::Now().ToUnixTimestamp() - lastHuntTime > Cast<UPikeData>(Data)->HuntCooldown;
 }
 
 void AFishPike::OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,
@@ -98,7 +99,7 @@ void AFishPike::EndHunt()
 
 void AFishPike::Roar()
 {
-	NoiseReporter->ReportNoise(this, GetActorLocation(), nullptr, 1, Data->Fish->RoarRange);
+	NoiseReporter->ReportNoise(this, GetActorLocation(), nullptr, 1, Cast<UPikeData>(Data)->RoarRange);
 	//UE_LOG(LogTemp, Log, TEXT("xxx roar"));
 }
 

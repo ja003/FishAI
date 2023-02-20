@@ -19,7 +19,7 @@ void AScoreManager::OnFishKilled(AFishBase* Fish)
 {
 	ARewardText* text = GetWorld()->SpawnActor<ARewardText>(RewardTextBP, Fish->GetActorTransform());
 	
-	int reward = Data->Fish->Reward[Fish->Type];
+	int reward = Data->Fish[Fish->Type]->Reward;
 	
 	text->SetReward(reward);
 	Score += reward;

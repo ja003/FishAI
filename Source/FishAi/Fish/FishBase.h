@@ -7,6 +7,7 @@
 #include "EFish.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Components/SphereComponent.h"
+#include "FishAi/Data/FishData.h"
 #include "GameFramework/Character.h"
 #include "Perception/AIPerceptionTypes.h"
 #include "FishBase.generated.h"
@@ -97,6 +98,9 @@ protected: // Components
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = AI)
 	class UAIPerceptionComponent* AIPerceptionComponent;
 
+	TObjectPtr<class UAISenseConfig_Sight> AISenseConfigSight = nullptr;
+	TObjectPtr<class UAISenseConfig_Hearing> AISenseConfigHearing = nullptr;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Collision)
 	USphereComponent* MouthCollider;
 
@@ -107,14 +111,19 @@ protected: // Components
 	UPROPERTY(EditDefaultsOnly)
 	UAntiStackHack* AntiStackHack;
 
+protected:
+	
+	UFishData* Data;
+	
 public: // Variables
+
 
 	UPROPERTY(EditAnywhere)
 	AWaterManager* Water;
 
 	AScoreManager* Score;
 
-	ADataManager* Data;
+	ADataManager* DataManager;
 
 	ANoiseReporter* NoiseReporter; 
 

@@ -3,30 +3,31 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "FishAi/Fish/EFish.h"
-#include "UObject/Object.h"
-#include "FishData.generated.h"
+#include "FishData.h"
+#include "PikeData.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class FISHAI_API UFishData : public UDataAsset
+class FISHAI_API UPikeData : public UFishData
 {
 	GENERATED_BODY()
 
+
 public:
-
-	UPROPERTY(EditAnywhere)
-	int RockRunawayDistance = 800;
 	
-	UPROPERTY(EditAnywhere)
-	int Reward;
 
 	UPROPERTY(EditAnywhere)
-	int SightRadius = 1000;
+	int HuntCooldown = 5;
 
 	UPROPERTY(EditAnywhere)
-	int HearRadius = 1000;
+	int HuntDuration = 3;
+
+	UPROPERTY(EditAnywhere)
+	int RoarCoolDown = 1;
+
+	UPROPERTY(EditAnywhere)
+	int RoarRange = 1500;
 	
 };

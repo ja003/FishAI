@@ -19,6 +19,8 @@
 #include "GameFramework/PhysicsVolume.h"
 #include "Kismet/GameplayStatics.h"
 #include "Perception/AIPerceptionComponent.h"
+#include "Perception/AISenseConfig_Hearing.h"
+#include "Perception/AISenseConfig_Sight.h"
 
 // Sets default values
 AFishBase::AFishBase()
@@ -39,6 +41,24 @@ AFishBase::AFishBase()
 
 	AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>("PerceptionComponent");	
 	AIPerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AFishBase::OnTargetPerceptionUpdated);
+
+	AISenseConfigSight = CreateDefaultSubobject<UAISenseConfig_Sight>("SenseSight");
+	AISenseConfigSight->DetectionByAffiliation.bDetectEnemies = true;
+	AISenseConfigSight->DetectionByAffiliation.bDetectFriendlies = true;
+	AISenseConfigSight->DetectionByAffiliation.bDetectNeutrals = true;
+
+	AISenseConfigHearing = CreateDefaultSubobject<UAISenseConfig_Hearing>("SenseHearing");
+	AISenseConfigHearing->DetectionByAffiliation.bDetectEnemies = true;
+	AISenseConfigHearing->DetectionByAffiliation.bDetectFriendlies = true;
+	AISenseConfigHearing->DetectionByAffiliation.bDetectNeutrals = true;
+
+	// AISenseConfigSight->SightRadius = Data->SightRadius;
+	// AISenseConfigSight->LoseSightRadius = Data->SightRadius * 2;
+	// AISenseConfigHearing->HearingRange = Data->HearRadius;
+	//
+	AIPerceptionComponent->ConfigureSense(*AISenseConfigSight);
+	AIPerceptionComponent->ConfigureSense(*AISenseConfigHearing);
+	AIPerceptionComponent->SetDominantSense(UAISenseConfig_Sight::StaticClass());
 
 	// GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AFishBase::OnComponentBeginOverlap);
 	//
@@ -95,12 +115,20 @@ void AFishBase::BeginPlay()
 	Score = Cast<AScoreManager>(UGameplayStatics::GetActorOfClass(GetWorld(), AScoreManager::StaticClass()));
 	check(Score)
 
-	Data = Cast<ADataManager>(UGameplayStatics::GetActorOfClass(GetWorld(), ADataManager::StaticClass()));
-	check(Data)
-
-
 	NoiseReporter = Cast<ANoiseReporter>(UGameplayStatics::GetActorOfClass(GetWorld(), ANoiseReporter::StaticClass()));
 	check(NoiseReporter)
+
+	DataManager = Cast<ADataManager>(UGameplayStatics::GetActorOfClass(GetWorld(), ADataManager::StaticClass()));
+	check(DataManager)
+
+	Data = DataManager->Fish[Type];
+	check(Data)
+
+	AISenseConfigSight->SightRadius = Data->SightRadius;
+	AISenseConfigSight->LoseSightRadius = Data->SightRadius * 2;
+	AISenseConfigHearing->HearingRange = Data->HearRadius;
+
+	AIPerceptionComponent->RequestStimuliListenerUpdate();
 }
 
 void AFishBase::Tick(float DeltaSeconds)
@@ -231,7 +259,7 @@ void AFishBase::OnRockPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimul
 
 	// Actor is player character, not the rock!
 
-	RunawayFrom(Stimulus.StimulusLocation, Data->Fish->RockRunawayDistance, EFishState::Rock);
+	RunawayFrom(Stimulus.StimulusLocation, Data->RockRunawayDistance, EFishState::Rock);
 }
 
 void AFishBase::SetState(EFishState NewState)

@@ -16,7 +16,7 @@ class FISHAI_API ADataManager : public AActor
 public:
 
 	UPROPERTY(EditDefaultsOnly)
-	UFishData* Fish;
+	TMap<EFish, UFishData*> Fish;
 
 	UPROPERTY(EditDefaultsOnly)
 	UThrowableData* Throwable;

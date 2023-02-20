@@ -7,6 +7,7 @@
 #include "Components/CapsuleComponent.h"
 #include "FishAi/Constants.h"
 #include "FishAi/WaterManager.h"
+#include "FishAi/Data/CarpData.h"
 #include "FishAi/Data/DataManager.h"
 #include "FishAi/PlayerObjects/Bait.h"
 
@@ -60,7 +61,7 @@ void AFishCarp::OnPikePerceptionUpdated(AActor* Actor, const FAIStimulus& Stimul
 {
 	//UE_LOG(LogTemp, Log, TEXT("xxx OnPikePerceptionUpdated"));
 
-	RunawayFrom(Actor->GetActorLocation(), Data->Fish->PikeRunawayDistance, EFishState::Danger);
+	RunawayFrom(Actor->GetActorLocation(), Cast<UCarpData>(Data)->PikeRunawayDistance, EFishState::Danger);
 
 	// blackboard->SetValueAsEnum(FishBB_State, (int)EFishState::Danger);
 	//

@@ -20,6 +20,10 @@ void UWaterboarding::OnPlayerBeginOverlap(UPrimitiveComponent* PrimitiveComponen
 
 		float newYaw = UKismetMathLibrary::FindLookAtRotation(GetOwner()->GetActorLocation(), GetOwner()->GetActorLocation() + Waterboard->GetActorForwardVector()).Yaw;
 		GetOwner()->SetActorRotation(FRotator(0,newYaw,0));
+
+		FVector newLocation = waterboard->BoardCollider->GetComponentLocation();
+		newLocation.Z = GetOwner()->GetActorLocation().Z;
+		GetOwner()->SetActorLocation(newLocation);
 	}
 }
 

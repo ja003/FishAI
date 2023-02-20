@@ -1,3 +1,7 @@
 bait dont attract enough
 
 pike still getting stuck
+
+fix throwable attach to hand
+
+rotate thrown object

@@ -79,7 +79,7 @@ void UThrowing::Throw()
 		return;
 	}
 
-	SpawnedObject->SetVelocity(GetThrowStart()->GetForwardVector() * ThrowPower);
+	SpawnedObject->Throw(GetThrowStart()->GetForwardVector() * ThrowPower);
 	Inventory->RemoveItem(SpawnedObject->GetType());
 
 	SpawnedObject = nullptr;

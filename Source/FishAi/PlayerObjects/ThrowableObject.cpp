@@ -16,7 +16,7 @@ AThrowableObject::AThrowableObject()
 {
 	StimuliSource = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>("StimuliSource");
 	// todo: doesnt work, only when configured in BP
-	// StimuliSource->bAutoRegister = true;
+	StimuliSource->bAutoRegister = false;
 	// StimuliSource->RegisterForSense(TSubclassOf<UAISense_Sight>());
 	
 	SphereCollider = CreateDefaultSubobject<USphereComponent>(TEXT("collider"));
@@ -61,7 +61,7 @@ void AThrowableObject::BeginPlay()
 	Super::BeginPlay();
 
 	if (bDebug_Throw)
-		SetVelocity(bDebug_Velocity);
+		Throw(bDebug_Velocity);
 
 	NoiseReporter = Cast<ANoiseReporter>(UGameplayStatics::GetActorOfClass(GetWorld(), ANoiseReporter::StaticClass()));
 	check(NoiseReporter)
@@ -70,7 +70,7 @@ void AThrowableObject::BeginPlay()
 	check(Data)
 }
 
-void AThrowableObject::SetVelocity(FVector Velocity)
+void AThrowableObject::Throw(FVector Velocity)
 {
 	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
 	
@@ -84,6 +84,7 @@ void AThrowableObject::SetVelocity(FVector Velocity)
 	//UE_LOG(LogTemp, Log, TEXT("xxx Velocity = %s"), *Velocity.ToString());
 	ProjectileMovement->Velocity = Velocity;
 
+	//StimuliSource->RegisterForSense(TSubclassOf<UAISense_Sight>());
 }
 
 FName AThrowableObject::GetTag()
@@ -107,6 +108,10 @@ void AThrowableObject::OnEnteredWater()
 	NoiseReporter->ReportNoise(nullptr, GetActorLocation(), nullptr, 1, range, GetTag());
 
 	DrawDebugSphere(GWorld, GetActorLocation(), range, 10, FColor::Yellow, false, .1f);
+
+	StimuliSource->RegisterForSense(TSubclassOf<UAISense_Sight>());
+	StimuliSource->RegisterWithPerceptionSystem();
+
 }
 
 EThrowableObject AThrowableObject::GetType()

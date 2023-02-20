@@ -42,7 +42,7 @@ public:
 	//UBuoyancyComponent Buoyancy;
 
 	UFUNCTION(BlueprintCallable)
-	void SetVelocity(FVector Velocity);
+	void Throw(FVector Velocity);
 	virtual FName GetTag();
 
 	UPROPERTY(EditAnywhere)

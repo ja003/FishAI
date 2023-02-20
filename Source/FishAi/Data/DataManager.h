@@ -8,6 +8,7 @@
 #include "Throwable/ThrowableData.h"
 #include "DataManager.generated.h"
 
+enum class EThrowableObject : uint8;
 UCLASS()
 class FISHAI_API ADataManager : public AActor
 {

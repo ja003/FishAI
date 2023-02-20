@@ -4,11 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "RewardText.h"
-#include "Fish/EFish.h"
-#include "Fish/FishBase.h"
 #include "GameFramework/Actor.h"
 #include "ScoreManager.generated.h"
 
+class AFishBase;
 UCLASS()
 class FISHAI_API AScoreManager : public AActor
 {
@@ -26,7 +25,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category=Grenade)
 	TSubclassOf<ARewardText> RewardTextBP;
 
-	ADataManager* Data;
+	class ADataManager* Data;
 
 	
 };

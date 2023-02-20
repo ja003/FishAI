@@ -3,7 +3,7 @@
 #include "EFishState.h"
 #include "Components/TextRenderComponent.h"
 #include "FishAi/Constants.h"
-#include "FishAi/WaterManager.h"
+#include "FishAi/Managers/WaterManager.h"
 #include "FishAi/Data/DataManager.h"
 #include "FishAi/Data/Fish/PikeData.h"
 #include "FishAi/Managers/NoiseReporter.h"

@@ -3,7 +3,8 @@
 
 #include "ScoreManager.h"
 
-#include "Data/DataManager.h"
+#include "FishAi/Data/DataManager.h"
+#include "FishAi/Fish/FishBase.h"
 #include "Kismet/GameplayStatics.h"
 
 

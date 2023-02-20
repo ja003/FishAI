@@ -6,10 +6,10 @@
 #include "EFishState.h"
 #include "Components/CapsuleComponent.h"
 #include "FishAi/Constants.h"
-#include "FishAi/WaterManager.h"
+#include "FishAi/Managers/WaterManager.h"
 #include "FishAi/Data/Fish/CarpData.h"
 #include "FishAi/Data/DataManager.h"
-#include "FishAi/PlayerObjects/Bait.h"
+#include "FishAi/Throwable/Bait.h"
 
 
 void AFishCarp::OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,	UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult)

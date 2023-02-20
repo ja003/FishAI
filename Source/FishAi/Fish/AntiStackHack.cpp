@@ -3,8 +3,9 @@
 
 #include "AntiStackHack.h"
 
+#include "FishBase.h"
 #include "Components/CapsuleComponent.h"
-#include "FishAi/WaterManager.h"
+#include "FishAi/Managers/WaterManager.h"
 
 
 // Sets default values for this component's properties

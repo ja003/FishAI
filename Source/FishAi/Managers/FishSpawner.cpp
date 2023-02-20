@@ -3,6 +3,8 @@
 
 #include "FishSpawner.h"
 
+#include "FishAi/Fish/FishBase.h"
+
 
 AFishBase* AFishSpawner::SpawnFish(EFish FishType, FVector Location)
 {

@@ -2,9 +2,12 @@
 
 
 #include "WaterManager.h"
+
+#include "FishSpawner.h"
 #include "GeomTools.h"
 #include "NavModifier.h"
 #include "NavModifierVolume.h"
+#include "FishAi/Fish/FishBase.h"
 #include "Kismet/GameplayStatics.h"
 
 

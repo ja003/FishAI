@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "FishAi/PlayerObjects/EThrowableObject.h"
 #include "UObject/Object.h"
 #include "ThrowableData.generated.h"
 

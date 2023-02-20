@@ -7,8 +7,8 @@
 #include "Camera/CameraComponent.h"
 #include "Components/ActorComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "FishAi/PlayerObjects/ThrowableObject.h"
-#include "FishAi/PlayerObjects/ThrowPrediction.h"
+#include "FishAi/Throwable/ThrowableObject.h"
+#include "FishAi/Throwable/ThrowPrediction.h"
 #include "Throwing.generated.h"
 
 

@@ -3,12 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "EFish.h"
-#include "FishCarp.h"
-#include "FishPike.h"
 #include "GameFramework/Actor.h"
 #include "FishSpawner.generated.h"
 
+enum class EFish : uint8;
 UCLASS()
 class FISHAI_API AFishSpawner : public AActor
 {
@@ -16,7 +14,7 @@ class FISHAI_API AFishSpawner : public AActor
 
 public:
 
-	AFishBase* SpawnFish(EFish FishType, FVector Location);
+	class AFishBase* SpawnFish(EFish FishType, FVector Location);
 	
 
 	UPROPERTY(EditDefaultsOnly)

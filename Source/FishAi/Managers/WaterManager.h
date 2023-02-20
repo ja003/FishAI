@@ -5,11 +5,13 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "WaterBodyActor.h"
-#include "Fish/FishSpawner.h"
+#include "FishSpawner.h"
 
 
 #include "WaterManager.generated.h"
 
+enum class EFish : uint8;
+class AFishBase;
 class ANavModifier;
 
 UCLASS()

@@ -4,8 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "FishAi/PlayerObjects/ThrowableObject.h"
-#include "FishAi/PlayerObjects/ThrowablesGenerator.h"
+#include "FishAi/Throwable/ThrowableObject.h"
+#include "FishAi/Throwable/ThrowablesGenerator.h"
 #include "Inventory.generated.h"
 
 

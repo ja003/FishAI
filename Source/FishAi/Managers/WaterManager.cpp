@@ -38,7 +38,7 @@ void AWaterManager::OnFishDie(AFishBase* Fish)
 
 	for (AFishBase* fish : Fishes)
 	{
-		if(fish->Type == EFish::Gold)
+		if(fish->Type != EFish::Gold)
 			return;
 	}
 

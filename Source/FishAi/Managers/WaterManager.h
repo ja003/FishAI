@@ -20,6 +20,7 @@ class FISHAI_API AWaterManager : public AActor
 	GENERATED_BODY()
 
 public:
+	
 	// Sets default values for this actor's properties
 	AWaterManager();
 	void CalculateCenter();

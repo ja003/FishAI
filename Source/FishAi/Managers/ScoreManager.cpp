@@ -18,7 +18,13 @@ void AScoreManager::BeginPlay()
 
 void AScoreManager::OnFishKilled(AFishBase* Fish)
 {
-	ARewardText* text = GetWorld()->SpawnActor<ARewardText>(RewardTextBP, Fish->GetActorTransform());
+	FTransform spawnTransform = Fish->GetActorTransform();
+	spawnTransform.SetLocation(FVector(
+		spawnTransform.GetLocation().X,
+		spawnTransform.GetLocation().Y,
+		100));
+	
+	ARewardText* text = GetWorld()->SpawnActor<ARewardText>(RewardTextBP, spawnTransform);
 	
 	int reward = Data->Fish[Fish->Type]->Reward;
 	

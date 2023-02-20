@@ -71,12 +71,16 @@ void AThrowablesGenerator::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 
 	if (GetRemainingCooldown() < 0)
+	{
+		Mesh->AddRelativeRotation(FRotator(0,1,0));
 		return;
+	}
 
 	float opacity = GetRemainingCooldown() / Cooldown;
 	opacity = FMath::Clamp(opacity, 0, 1);
 
 	SetStateOpacity(opacity);
+
 }
 
 float AThrowablesGenerator::GetRemainingCooldown()

@@ -22,7 +22,7 @@ void AFishPike::OnEdibleFishPerceptionUpdated(AActor* Actor, const FAIStimulus& 
 
 	Super::OnEdibleFishPerceptionUpdated(Actor, Stimulus);
 
-	//UE_LOG(LogTemp, Log, TEXT("xxx IsReadyForHunt = %s"), IsReadyForHunt() ? TEXT("true"):TEXT("false"));
+	UE_LOG(LogTemp, Log, TEXT("xxx IsReadyForHunt = %s"), IsReadyForHunt() ? TEXT("true"):TEXT("false"));
 	
 	if(IsReadyForHunt())
 	{
@@ -53,6 +53,7 @@ void AFishPike::BeginPlay()
 	
 	//dont hunt right away
 	lastHuntTime = FDateTime::Now().ToUnixTimestamp();
+	lastHuntTime = -99;
 
 	GetWorld()->GetTimerManager().SetTimer(RoarHandle, this, &AFishPike::Roar, Cast<UPikeData>(Data)->RoarCoolDown, true);
 

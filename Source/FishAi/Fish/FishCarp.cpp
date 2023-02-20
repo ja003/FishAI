@@ -28,6 +28,12 @@ void AFishCarp::OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimul
 {
 	//UE_LOG(LogTemp, Log, TEXT("xxx OnBaitPerceptionUpdated %s"), *Actor->GetName());
 
+	if (GetState() != EFishState::Idle)
+	{
+		UE_LOG(LogTemp, Log, TEXT("xxx ignoring bait"));
+		return;
+	}
+
 	SetState(EFishState::Bait);
 
 	if (blackboard->GetValueAsObject(FishBB_Bait) != nullptr)

@@ -26,6 +26,9 @@ AWaterboard::AWaterboard()
 
 void AWaterboard::SetInput(float X, float Y)
 {
+	BoardCollider->SetAllPhysicsLinearVelocity(FVector::ZeroVector);
+	BoardCollider->SetAllPhysicsAngularVelocityInDegrees(FVector::ZeroVector);
+	
 	// UE_LOG(LogTemp, Log, TEXT("xxx SetInput X = %f"), X);
 	// UE_LOG(LogTemp, Log, TEXT("xxx SetInput Y = %f"), Y);
 	FVector forwardVector = GetActorForwardVector();

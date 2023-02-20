@@ -20,9 +20,12 @@ public:
 
 
 private:
-
 	UFUNCTION()
 	void OnBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult);
+
+	virtual void BeginPlay() override;
+	
+	virtual void Tick(float DeltaSeconds) override;
 
 	UPROPERTY(EditDefaultsOnly)
 	UBoxComponent* Collider;
@@ -31,8 +34,13 @@ private:
 	UStaticMeshComponent* Mesh;
 	
 	int64 LastTimeItemAdded;
+	
+	float GetRemainingCooldown();
 
 public:
+
+	UPROPERTY(EditDefaultsOnly)
+	UMaterialInterface* Material;
 	
 	UPROPERTY(EditAnywhere)
 	EThrowableObject ObjectType;

@@ -129,6 +129,8 @@ void AFishBase::BeginPlay()
 	AISenseConfigHearing->HearingRange = Data->HearRadius;
 
 	AIPerceptionComponent->RequestStimuliListenerUpdate();
+
+	GetCharacterMovement()->MaxSwimSpeed = Data->Speed;
 }
 
 void AFishBase::Tick(float DeltaSeconds)
@@ -264,7 +266,14 @@ void AFishBase::OnRockPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimul
 
 void AFishBase::SetState(EFishState NewState)
 {
-	UE_LOG(LogTemp, Log, TEXT("xxx SetState %d"), (int)NewState);
+	//UE_LOG(LogTemp, Log, TEXT("
+	//xxx SetState %d"), (int)NewState);
 	blackboard->SetValueAsEnum(FishBB_State, (int)NewState);
+}
+
+EFishState AFishBase::GetState()
+{
+	int state = blackboard->GetValueAsEnum(FishBB_State);
+	return (EFishState)state;
 }
 

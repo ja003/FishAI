@@ -18,6 +18,9 @@ class FISHAI_API UFishData : public UDataAsset
 public:
 
 	UPROPERTY(EditAnywhere)
+	int Speed = 200;
+	
+	UPROPERTY(EditAnywhere)
 	int RockRunawayDistance = 800;
 	
 	UPROPERTY(EditAnywhere)

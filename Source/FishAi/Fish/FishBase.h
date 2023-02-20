@@ -88,7 +88,10 @@ protected: // AI
 public:
 
 	UFUNCTION(BlueprintCallable)
+	
 	virtual void SetState(EFishState NewState);
+
+	EFishState GetState();
 	
 protected: // Components
 

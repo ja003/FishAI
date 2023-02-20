@@ -68,6 +68,8 @@ void AThrowableObject::BeginPlay()
 
 	Data = Cast<ADataManager>(UGameplayStatics::GetActorOfClass(GetWorld(), ADataManager::StaticClass()));
 	check(Data)
+
+	//SetActorRelativeTransform(Data->Throwable[GetType()]->SpawnOffset);
 }
 
 void AThrowableObject::Throw(FVector Velocity)
@@ -85,6 +87,9 @@ void AThrowableObject::Throw(FVector Velocity)
 	ProjectileMovement->Velocity = Velocity;
 
 	//StimuliSource->RegisterForSense(TSubclassOf<UAISense_Sight>());
+
+	// spawned object is scaled down. set original scale
+	SetActorRelativeScale3D(FVector::OneVector);
 }
 
 FName AThrowableObject::GetTag()

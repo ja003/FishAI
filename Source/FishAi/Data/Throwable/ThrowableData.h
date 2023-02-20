@@ -19,4 +19,6 @@ public:
 	UPROPERTY(EditAnywhere)
 	int NoiseRange;
 	
+	UPROPERTY(EditAnywhere)
+	FTransform SpawnOffset;
 };

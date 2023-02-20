@@ -2,6 +2,8 @@
 
 
 #include "Throwing.h"
+
+#include "FishAi/Data/DataManager.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 
@@ -45,6 +47,8 @@ void UThrowing::BeginPlay()
 	//Prediction = Cast<AThrowPrediction>(GetWorld()->SpawnActor(AThrowPrediction::StaticClass()));
 	
 	Prediction = Cast<AThrowPrediction>(UGameplayStatics::GetActorOfClass(GetWorld(), AThrowPrediction::StaticClass()));
+
+	Data = Cast<ADataManager>(UGameplayStatics::GetActorOfClass(GetWorld(), ADataManager::StaticClass()));
 
 	Inventory = GetOwner()->FindComponentByClass<UInventory>();
 	
@@ -109,6 +113,7 @@ void UThrowing::SetActiveObject(EThrowableObject ObjectType)
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	FTransform spawnTransform = SkeletalMesh->GetSocketTransform(RightHand_SocketName);
+	//spawnTransform.SetRotation(FRotator::MakeFromEuler(Data->Throwable[ObjectType]->SpawnRotation).Quaternion());
 
 	check(Inventory->ThrowableObjectsBP[ObjectType])
 	AActor* spawnActor = GetWorld()->SpawnActor<AActor>(Inventory->ThrowableObjectsBP[ObjectType], spawnTransform, SpawnParams);
@@ -117,6 +122,9 @@ void UThrowing::SetActiveObject(EThrowableObject ObjectType)
 	SpawnedObject->ProjectileMovement->bSimulationEnabled = false;
 	SpawnedObject->AttachToComponent(SkeletalMesh, FAttachmentTransformRules::SnapToTargetIncludingScale, RightHand_SocketName);
 
+	// adjust object to fit into hand
+	SpawnedObject->SetActorRelativeTransform(Data->Throwable[ObjectType]->SpawnOffset);
+	
 	Prediction->SetEnabled(true);
 
 	RotateCharacterToFaceCamera();

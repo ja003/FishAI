@@ -34,7 +34,7 @@ public:
 	UPROPERTY()
 	USceneComponent* ThrowStartGrenade;
 
-	const FName RightHand_SocketName = "RightHand";
+	const FName RightHand_SocketName = "RightHandIndex1";
 
 private:
 	
@@ -47,6 +47,8 @@ protected:
 	virtual void BeginPlay() override;
 
 	AThrowPrediction* Prediction;
+	
+	ADataManager* Data;
 
 	UInventory* Inventory;
 

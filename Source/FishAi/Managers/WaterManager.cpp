@@ -215,9 +215,9 @@ void AWaterManager::GenerateFishes(EFish FishType)
 			fish->Water = this;
 		}
 
-		UE_LOG(LogTemp, Log, TEXT("xxx Add fish %d"), (int)FishType);
+		//UE_LOG(LogTemp, Log, TEXT("xxx Add fish %d"), (int)FishType);
 		Fishes.Add(fish);
-		UE_LOG(LogTemp, Log, TEXT("xxx Fishes = %d"), Fishes.Num());
+		//UE_LOG(LogTemp, Log, TEXT("xxx Fishes = %d"), Fishes.Num());
 	}
 }
 

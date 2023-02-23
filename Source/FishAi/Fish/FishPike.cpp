@@ -38,6 +38,14 @@ void AFishPike::OnEdibleFishPerceptionUpdated(AActor* Actor, const FAIStimulus& 
 	}
 }
 
+void AFishPike::OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
+{
+	Super::OnBaitPerceptionUpdated(Actor, Stimulus);
+
+	// pike perceives a bait as a rock
+	RunawayFrom(Stimulus.StimulusLocation, Data->RockRunawayDistance, EFishState::Rock);
+}
+
 void AFishPike::SetState(EFishState NewState)
 {
 	Super::SetState(NewState);
@@ -89,13 +97,19 @@ bool AFishPike::IsReadyForHunt()
 void AFishPike::OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,
 	UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult)
 {
+	if(GetGameTimeSinceCreation() < 1)
+	{
+		UE_LOG(LogTemp, Log, TEXT("xxx 2 fishes spawned too close to each other"));
+		return;	
+	}
+	
 	Super::OnMouthBeginOverlap(PrimitiveComponent, Actor, PrimitiveComponent1, I, Arg, HitResult);
 
 	//UE_LOG(LogTemp, Log, TEXT("xxx AFishPike::OnMouthBeginOverlap"));
 
 	if(AFishBase* fish = Cast<AFishBase>(Actor))
 	{
-		if (fish->Type != EFish::Pike)
+		if (fish->FishType != EFish::Pike)
 			fish->OnEatenByFish();
 	}
 }
@@ -146,13 +160,13 @@ FVector AFishPike::GetNextPatrolPoint()
 		if (Water->IsPointInWater(randomReachablePoint))
 		{
 			//DrawDebugSphere(GWorld, patrolPoint, radius, 10, FColor::Green, false, 5);
-			DrawDebugLine(GetWorld(), GetActorLocation(), randomReachablePoint, FColor::Purple, false, 5);
+			//DrawDebugLine(GetWorld(), GetActorLocation(), randomReachablePoint, FColor::Purple, false, 5);
 
 
 			return randomReachablePoint;
 		}
 	}
-	DrawDebugLine(GetWorld(), GetActorLocation(), patrolPoint, FColor::Purple, false, 5);
+	//DrawDebugLine(GetWorld(), GetActorLocation(), patrolPoint, FColor::Purple, false, 5);
 
 	
 	//DrawDebugSphere(GWorld, patrolPoint, radius, 10, FColor::Red, false, 5);

@@ -20,6 +20,8 @@ protected: // AI
 
 	virtual void OnEdibleFishPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus) override;
 
+	virtual void OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus) override;
+
 	virtual void SetState(EFishState NewState) override;
 
 private:

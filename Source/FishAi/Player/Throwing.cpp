@@ -99,7 +99,7 @@ void UThrowing::SetActiveObject(EThrowableObject ObjectType)
 	if (!Inventory->HasItem(ObjectType))
 	{
 		UE_LOG(LogTemp, Log, TEXT("xxx item %d not in inventory"), (int)ObjectType);
-		LastActiveObject = EThrowableObject::None;
+		DeselectObjects();
 		return;
 	}
 

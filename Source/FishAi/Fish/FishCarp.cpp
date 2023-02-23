@@ -28,9 +28,15 @@ void AFishCarp::OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimul
 {
 	//UE_LOG(LogTemp, Log, TEXT("xxx OnBaitPerceptionUpdated %s"), *Actor->GetName());
 
-	if (GetState() != EFishState::Idle)
+	// if (GetState() != EFishState::Idle)
+	// {
+	// 	UE_LOG(LogTemp, Log, TEXT("xxx ignoring bait"));
+	// 	return;
+	// }
+
+	// gold fish ignores bait..to make it simpler
+	if (FishType == EFish::Gold)
 	{
-		UE_LOG(LogTemp, Log, TEXT("xxx ignoring bait"));
 		return;
 	}
 

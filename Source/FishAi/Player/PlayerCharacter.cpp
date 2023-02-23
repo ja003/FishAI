@@ -82,7 +82,7 @@ void APlayerCharacter::SetSwimming(bool IsSwimming)
 void APlayerCharacter::OnBallsBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,
 	UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult)
 {
-	UE_LOG(LogTemp, Log, TEXT("xxx OnBallsBeginOverlap = %s"), *Actor->GetName());
+	//UE_LOG(LogTemp, Log, TEXT("xxx OnBallsBeginOverlap = %s"), *Actor->GetName());
 
 	if(Actor->GetClass()->IsChildOf(AWaterBody::StaticClass()))
 	{

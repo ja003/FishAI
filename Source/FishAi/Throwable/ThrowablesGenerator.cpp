@@ -41,7 +41,7 @@ void AThrowablesGenerator::OnBeginOverlap(UPrimitiveComponent* PrimitiveComponen
 		return;
 	}
 	
-	UE_LOG(LogTemp, Log, TEXT("xxx OnBeginOverlap = %s"), *Actor->GetName());
+	//UE_LOG(LogTemp, Log, TEXT("xxx AThrowablesGenerator::OnBeginOverlap = %s"), *Actor->GetName());
 
 	float cooldown = GetRemainingCooldown();
 	if(cooldown > 0)

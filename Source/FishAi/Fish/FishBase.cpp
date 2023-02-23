@@ -116,7 +116,7 @@ void AFishBase::BeginPlay()
 	DataManager = Cast<ADataManager>(UGameplayStatics::GetActorOfClass(GetWorld(), ADataManager::StaticClass()));
 	check(DataManager)
 
-	Data = DataManager->Fish[Type];
+	Data = DataManager->Fish[FishType];
 	check(Data)
 
 	AISenseConfigSight->SightRadius = Data->SightRadius;

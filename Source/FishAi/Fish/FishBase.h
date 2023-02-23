@@ -56,7 +56,7 @@ public:
 	int InWaterBodyOffset;
 
 	UPROPERTY(EditDefaultsOnly)
-	EFish Type = EFish::None;
+	EFish FishType = EFish::None;
 
 	UFUNCTION(BlueprintCallable)
 	void OnKilledByGrenade(FVector ExplosionForce);

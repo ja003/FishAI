@@ -26,11 +26,11 @@ void UAntiStackHack::BeginPlay()
 	body = GetOwner()->FindComponentByClass<UStaticMeshComponent>();
 
 	FTimerHandle UnusedHandle;
-	GetWorld()->GetTimerManager().SetTimer(UnusedHandle, this, &UAntiStackHack::CheckStucked, 1, true);
+	GetWorld()->GetTimerManager().SetTimer(UnusedHandle, this, &UAntiStackHack::CheckStuck, 1, true);
 	
 }
 
-void UAntiStackHack::CheckStucked()
+void UAntiStackHack::CheckStuck()
 {
 	bool isStucked = IsStucked();
 	if(isStucked)

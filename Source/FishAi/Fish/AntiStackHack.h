@@ -22,9 +22,13 @@ protected:
 	virtual void BeginPlay() override;
 
 	FVector lastLocation;
+	
 	int stuckedCounter;
-	void CheckStucked();
+	
+	void CheckStuck();
+	
 	bool IsStucked();
+	
 	void UnStuck();
 
 	UStaticMeshComponent* body;

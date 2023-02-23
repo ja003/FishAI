@@ -4,6 +4,7 @@
 #include "ThrowablesGenerator.h"
 
 #include "Components/BoxComponent.h"
+#include "FishAi/Data/Throwable/ThrowableGeneratorData.h"
 #include "FishAi/Player/PlayerCharacter.h"
 
 
@@ -57,6 +58,8 @@ void AThrowablesGenerator::BeginPlay()
 	Material = StateMesh->GetMaterial(0);
 
 	SetStateOpacity(0);
+
+	Cooldown = Data->Cooldown;
 }
 
 void AThrowablesGenerator::SetStateOpacity(float opacity)
@@ -72,6 +75,7 @@ void AThrowablesGenerator::Tick(float DeltaSeconds)
 
 	if (GetRemainingCooldown() < 0)
 	{
+		// rotate mesh animation
 		Mesh->AddRelativeRotation(FRotator(0,1,0));
 		return;
 	}
@@ -80,7 +84,6 @@ void AThrowablesGenerator::Tick(float DeltaSeconds)
 	opacity = FMath::Clamp(opacity, 0, 1);
 
 	SetStateOpacity(opacity);
-
 }
 
 float AThrowablesGenerator::GetRemainingCooldown()

@@ -8,6 +8,7 @@
 #include "GameFramework/Actor.h"
 #include "ThrowablesGenerator.generated.h"
 
+class UThrowableGeneratorData;
 UCLASS()
 class FISHAI_API AThrowablesGenerator : public AActor
 {
@@ -49,7 +50,11 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	EThrowableObject ObjectType;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
+	UThrowableGeneratorData* Data;
+
+private:
+	
 	int Cooldown;
 	
 };

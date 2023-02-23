@@ -10,6 +10,7 @@
 
 #include "WaterManager.generated.h"
 
+class UWaterData;
 enum class EFish : uint8;
 class AFishBase;
 class ANavModifier;
@@ -75,9 +76,6 @@ public:
 	TArray<TEnumAsByte<EObjectTypeQuery>> GroundObjectType;
 	
 
-	UPROPERTY(EditAnywhere)
-	bool bDebug_DontGenerateFishes;
-
 	UFUNCTION(BlueprintCallable)
 	bool IsPointInWater(FVector point) const;
 
@@ -107,7 +105,7 @@ public:
 	int ShoreOffset;
 
 	UPROPERTY(EditAnywhere)
-	TMap<EFish, int> FishCount;
+	UWaterData* Data;
 	
 	AFishSpawner* FishSpawner;
 	

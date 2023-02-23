@@ -7,6 +7,7 @@
 #include "GeomTools.h"
 #include "NavModifier.h"
 #include "NavModifierVolume.h"
+#include "FishAi/Data/WaterData.h"
 #include "FishAi/Fish/FishBase.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -67,7 +68,7 @@ void AWaterManager::Init()
 
 	GenerateNavmeshModifiers();
 	
-	if(!bDebug_DontGenerateFishes)
+	if(!Data->bDebug_DontGenerateFishes)
 	{
 		FTimerHandle UnusedHandle;
 		GetWorld()->GetTimerManager().SetTimer(UnusedHandle, this, &AWaterManager::GenerateFishes, 1, false);
@@ -220,10 +221,10 @@ void AWaterManager::GenerateFishes()
 
 void AWaterManager::GenerateFishes(EFish FishType)
 {
-	if (!FishCount.Contains(FishType))
+	if (!Data->FishCount.Contains(FishType))
 		return;
 
-	for (int i = 0; i < FishCount[FishType]; ++i)
+	for (int i = 0; i < Data->FishCount[FishType]; ++i)
 	{
 		FVector randomPoint = GetRandomPointInWater();
 		AFishBase* fish = Cast<AFishBase>(FishSpawner->SpawnFish(FishType, randomPoint));

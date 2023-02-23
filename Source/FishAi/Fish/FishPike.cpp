@@ -1,6 +1,7 @@
 ﻿#include "FishPike.h"
 
 #include "EFishState.h"
+#include "NavigationSystem.h"
 #include "Components/TextRenderComponent.h"
 #include "FishAi/Constants.h"
 #include "FishAi/Managers/WaterManager.h"
@@ -108,16 +109,38 @@ FVector AFishPike::GetNextPatrolPoint()
 {
 	if (Water == nullptr || Water->PatrolPath.Num() == 0)
 	{
+		UE_LOG(LogTemp, Log, TEXT("xxx error: patrol point not set"));
 		return GetActorLocation();
 	}
 	
 	// currentPatrolPathIndex++;
 	// FVector result = Water->PatrolPath[(currentPatrolPathIndex - 1) % Water->PatrolPath.Num()];
 	currentPatrolPathIndex = FMath::RandRange(0, Water->PatrolPath.Num() - 1);
-	FVector result = Water->PatrolPath[currentPatrolPathIndex];
+	FVector patrolPoint = Water->PatrolPath[currentPatrolPathIndex];
 
+	UNavigationSystemV1* NavSys = FNavigationSystem::GetCurrent<UNavigationSystemV1>(GetWorld());
+	if (!NavSys)
+	{
+		UE_LOG(LogTemp, Log, TEXT("xxx error: UNavigationSystemV1"));
+		return GetActorLocation();
+	}
 	
+	FVector Result;
+	int radius = 400;
+	bool bSuccess = NavSys->K2_GetRandomReachablePointInRadius(GetWorld(), patrolPoint, Result, radius);
+
+	if (bSuccess)
+	{
+		//DrawDebugSphere(GWorld, patrolPoint, radius, 10, FColor::Green, false, 5);
+
+		return Result;
+	}
+	else
+	{
+		//DrawDebugSphere(GWorld, patrolPoint, radius, 10, FColor::Red, false, 5);
+		UE_LOG(LogTemp, Log, TEXT("xxx error: K2_GetRandomReachablePointInRadius"));
+		return patrolPoint;
+	}	
 	//DrawDebugSphere(GWorld, result, 50, 10, FColor::White, false, .1f);
 	//UE_LOG(LogTemp, Log, TEXT("xxx currentPatrolPathIndex = %d"), currentPatrolPathIndex);
-	return result;
 }

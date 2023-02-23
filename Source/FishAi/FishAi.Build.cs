@@ -8,7 +8,10 @@ public class FishAi : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "AIModule", "Water" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "AIModule", 
+			"Water",
+			"NavigationSystem"
+		});
 
 		//PrivateDependencyModuleNames.AddRange(new string[] {"Water"});
 

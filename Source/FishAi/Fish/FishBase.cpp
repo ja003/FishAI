@@ -75,7 +75,7 @@ AFishBase::AFishBase()
 	MouthCollider->SetCollisionResponseToChannel(COLLISION_THROWABLE_OBJECT, ECR_Overlap);
 	MouthCollider->SetCollisionResponseToChannel(COLLISION_EXPLOSION, ECR_Block);
 
-	AntiStackHack = CreateDefaultSubobject<UFishStateHack>("AntiStuckHack");	
+	FishStateHack = CreateDefaultSubobject<UFishStateHack>("FishStateHack");	
 
 }
 
@@ -110,7 +110,7 @@ void AFishBase::BeginPlay()
 		Water = Cast<AWaterManager>(UGameplayStatics::GetActorOfClass(GetWorld(), AWaterManager::StaticClass()));
 	}
 	check(Water)
-	AntiStackHack->Water = Water;
+	FishStateHack->Water = Water;
 
 	Score = Cast<AScoreManager>(UGameplayStatics::GetActorOfClass(GetWorld(), AScoreManager::StaticClass()));
 	check(Score)

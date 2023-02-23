@@ -71,7 +71,11 @@ void AWaterManager::BeginPlay()
 	GenerateNavmeshModifiers();
 	
 	if(!bDebug_DontGenerateFishes)
-		GenerateFishes();
+	{
+		FTimerHandle UnusedHandle;
+		GetWorld()->GetTimerManager().SetTimer(UnusedHandle, this, &AWaterManager::GenerateFishes, 1, false);
+		//GenerateFishes();
+	}
 }
 
 void AWaterManager::ScaleDownWaterBounds()

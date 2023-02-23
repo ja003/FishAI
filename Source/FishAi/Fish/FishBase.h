@@ -110,7 +110,7 @@ protected: // Components
 	FVector AfterDeathTorque = FVector(3000, 20000, 10000);
 
 	UPROPERTY(EditDefaultsOnly)
-	UFishStateHack* AntiStackHack;
+	UFishStateHack* FishStateHack;
 
 protected:
 	

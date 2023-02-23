@@ -53,6 +53,12 @@ void AFishCarp::OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimul
 	else
 	{
 		FVector target = Stimulus.StimulusLocation;
+		if (!Water->IsPointInWater(target))
+		{
+			SetState(EFishState::Idle);
+			return;
+		}
+		
 		Water->UpdateInWaterTarget(target);
 		
 		//blackboard->SetValueAsObject(FishBB_Bait, nullptr);		

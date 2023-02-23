@@ -61,8 +61,11 @@ protected:
 	TSubclassOf<ANavModifier> NavModifierBP;
 	
 	void GenerateFishes();
-	
 	void GenerateFishes(EFish FishType);
+
+public:
+	
+	void GenerateFish(EFish FishType);
 	
 	
 public:

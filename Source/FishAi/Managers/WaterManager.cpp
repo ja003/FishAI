@@ -133,12 +133,12 @@ void AWaterManager::ScaleDownWaterBounds()
 	for (int i = 0; i < WaterBounds.Num(); i++)
 	{
 		FVector p = FVector(WaterBounds[i].X, WaterBounds[i].Y, 0);
-		DrawDebugSphere(GWorld, p, 50, 10, FColor::White, true, 5);
+		//DrawDebugSphere(GWorld, p, 50, 10, FColor::White, true, 5);
 
 		if(i < WaterBounds.Num() - 1)
 		{
 			FVector p2 = FVector(WaterBounds[i+1].X, WaterBounds[i+1].Y, 0);
-			DrawDebugLine(GetWorld(), p, p2, FColor::White, true, 5);
+			//DrawDebugLine(GetWorld(), p, p2, FColor::White, true, 5);
 		}
 
 	}
@@ -213,7 +213,7 @@ void AWaterManager::SetPatrolPath()
 
 	for (int i = 0; i < PatrolPath.Num(); i++)
 	{
-		DrawDebugSphere(GWorld, PatrolPath[i], 50, 10, FColor::Red, true, 5);
+		//DrawDebugSphere(GWorld, PatrolPath[i], 50, 10, FColor::Red, true, 5);
 	}
 }
 
@@ -236,6 +236,20 @@ void AWaterManager::GenerateFishes()
 	GenerateFishes(EFish::Gold);
 }
 
+void AWaterManager::GenerateFish(EFish FishType)
+{
+	FVector randomPoint = GetRandomPointInWater();
+	AFishBase* fish = Cast<AFishBase>(FishSpawner->SpawnFish(FishType, randomPoint));
+	if (ensureMsgf(fish, TEXT("fish not spawned")))
+	{
+		fish->Init(this);
+	}
+
+	//UE_LOG(LogTemp, Log, TEXT("xxx Add fish %d"), (int)FishType);
+	Fishes.Add(fish);
+	//UE_LOG(LogTemp, Log, TEXT("xxx Fishes = %d"), Fishes.Num());
+}
+
 void AWaterManager::GenerateFishes(EFish FishType)
 {
 	if (!Data->FishCount.Contains(FishType))
@@ -243,16 +257,7 @@ void AWaterManager::GenerateFishes(EFish FishType)
 
 	for (int i = 0; i < Data->FishCount[FishType]; ++i)
 	{
-		FVector randomPoint = GetRandomPointInWater();
-		AFishBase* fish = Cast<AFishBase>(FishSpawner->SpawnFish(FishType, randomPoint));
-		if (ensureMsgf(fish, TEXT("fish not spawned")))
-		{
-			fish->Init(this);
-		}
-
-		//UE_LOG(LogTemp, Log, TEXT("xxx Add fish %d"), (int)FishType);
-		Fishes.Add(fish);
-		//UE_LOG(LogTemp, Log, TEXT("xxx Fishes = %d"), Fishes.Num());
+		GenerateFish(FishType);
 	}
 }
 

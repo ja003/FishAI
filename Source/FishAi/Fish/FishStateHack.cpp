@@ -30,6 +30,9 @@ void UFishStateHack::BeginPlay()
 
 	FTimerHandle CheckInWaterHandle;
 	GetWorld()->GetTimerManager().SetTimer(CheckInWaterHandle, this, &UFishStateHack::CheckInWater, 1, true);
+
+	FTimerHandle CheckOnNavmeshHandle;
+	GetWorld()->GetTimerManager().SetTimer(CheckOnNavmeshHandle, this, &UFishStateHack::CheckOnNavmesh, 1, true);
 	
 }
 
@@ -88,5 +91,17 @@ void UFishStateHack::CheckInWater()
 		UE_LOG(LogTemp, Log, TEXT("xxx error: fish is outside of water. Destroying"));
 		Cast<AFishBase>(GetOwner())->Die();
 	}
+}
+
+void UFishStateHack::CheckOnNavmesh()
+{
+	if (GetOwner()->GetActorLocation().Z > -9999)
+		return;
+
+	AFishBase* fish = Cast<AFishBase>(GetOwner());
+
+	UE_LOG(LogTemp, Log, TEXT("xxx error: fish not on navmesh -> respawn"));
+	Water->GenerateFish(fish->Type);
+	fish->Die();
 }
 

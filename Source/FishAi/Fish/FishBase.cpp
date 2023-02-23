@@ -258,8 +258,8 @@ void AFishBase::RunawayFrom(FVector SourceLocation, int MaxDistance, EFishState 
 	int runawayDistance = FMath::RandRange(MaxDistance / 2, MaxDistance);
 	FVector runawayTarget = GetActorLocation() + dirAway * runawayDistance;
 	FVector inWaterTarget = Water->GetClosestPointInWater(runawayTarget);
-	DrawDebugSphere(GWorld, runawayTarget, 100, 10, FColor::Yellow, false, 5);
-	DrawDebugSphere(GWorld, inWaterTarget, 100, 10, FColor::Blue, false, 5);
+	//DrawDebugSphere(GWorld, runawayTarget, 100, 10, FColor::Yellow, false, 5);
+	//DrawDebugSphere(GWorld, inWaterTarget, 100, 10, FColor::Blue, false, 5);
 
 	
 	if (FVector::Distance(inWaterTarget, GetActorLocation()) < 200)
@@ -270,7 +270,7 @@ void AFishBase::RunawayFrom(FVector SourceLocation, int MaxDistance, EFishState 
 		inWaterTarget = GetActorLocation() + dirToRandom * runawayDistance; 
 	}
 	
-	DrawDebugSphere(GWorld, inWaterTarget, 100, 10, FColor::Purple, false, 5);
+	//DrawDebugSphere(GWorld, inWaterTarget, 100, 10, FColor::Purple, false, 5);
 
 	Water->UpdateInWaterTarget(inWaterTarget);
 	blackboard->SetValueAsVector(FishBB_Target, inWaterTarget);

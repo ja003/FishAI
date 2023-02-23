@@ -62,14 +62,14 @@ void AThrowableObject::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (bDebug_Throw)
-		Throw(bDebug_Velocity);
-
 	NoiseReporter = Cast<ANoiseReporter>(UGameplayStatics::GetActorOfClass(GetWorld(), ANoiseReporter::StaticClass()));
 	check(NoiseReporter)
 
 	Data = Cast<ADataManager>(UGameplayStatics::GetActorOfClass(GetWorld(), ADataManager::StaticClass()));
 	check(Data)
+
+	if (bDebug_Throw)
+		Throw(bDebug_Velocity);
 }
 
 void AThrowableObject::Tick(float DeltaSeconds)

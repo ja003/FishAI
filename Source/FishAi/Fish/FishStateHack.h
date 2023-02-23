@@ -32,6 +32,8 @@ protected:
 	void UnStuck();
 
 	void CheckInWater();
+	
+	void CheckOnNavmesh();
 
 	int outsideWaterCounter;
 

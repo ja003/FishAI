@@ -61,16 +61,19 @@ void APlayerCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	//todo: why tf I have to do this?
-	SetSwimming(false);
+	//SetSwimming(false);
 }
 
 void APlayerCharacter::SetSwimming(bool IsSwimming)
 {
+	UE_LOG(LogTemp, Log, TEXT("xxx SetSwimming = %s"), IsSwimming ? TEXT("true"):TEXT("false"));
+	//return;
+	
 	IsInWater = IsSwimming;
 	GetCharacterMovement()->GetPhysicsVolume()->bWaterVolume = IsSwimming;
 	GetCharacterMovement()->SetMovementMode(IsSwimming ? MOVE_Swimming : MOVE_Walking);
 
-	if(IsSwimming)
+	if (IsSwimming)
 	{
 		Throwing->DeselectObjects();
 	}
@@ -79,6 +82,8 @@ void APlayerCharacter::SetSwimming(bool IsSwimming)
 void APlayerCharacter::OnBallsBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,
 	UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult)
 {
+	UE_LOG(LogTemp, Log, TEXT("xxx OnBallsBeginOverlap = %s"), *Actor->GetName());
+
 	if(Actor->GetClass()->IsChildOf(AWaterBody::StaticClass()))
 	{
 		SetSwimming(true);

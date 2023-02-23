@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/BoxComponent.h"
+#include "Data/WaterboardData.h"
 #include "GameFramework/Actor.h"
 #include "Waterboard.generated.h"
 
@@ -31,10 +32,7 @@ public:
 	UBoxComponent* InteractArea;
 	
 	UPROPERTY(EditDefaultsOnly)
-	float ForwardSpeed;
-
-	UPROPERTY(EditDefaultsOnly)
-	float TurnSpeed;
+	UWaterboardData* Data;
 
 	UFUNCTION(BlueprintCallable)
 	void SetInput(float X, float Y);

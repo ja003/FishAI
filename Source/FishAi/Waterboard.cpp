@@ -34,7 +34,7 @@ void AWaterboard::SetInput(float X, float Y)
 	FVector forwardVector = GetActorForwardVector();
 	forwardVector.Z = 0;
 	//BoardCollider->AddForce(GetActorForwardVector() * X * ForwardSpeed);
-	SetActorLocation(GetActorLocation() + forwardVector * Y * ForwardSpeed);
+	SetActorLocation(GetActorLocation() + forwardVector * Y * Data->ForwardSpeed);
 
-	AddActorWorldRotation(FRotator(0, X * TurnSpeed, 0));
+	AddActorWorldRotation(FRotator(0, X * Data->TurnSpeed, 0));
 }

@@ -4,18 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "AntiStackHack.generated.h"
+#include "FishStateHack.generated.h"
 
 
 class AWaterManager;
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
-class FISHAI_API UAntiStackHack : public UActorComponent
+class FISHAI_API UFishStateHack : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this component's properties
-	UAntiStackHack();
+	UFishStateHack();
 
 protected:
 	// Called when the game starts
@@ -23,13 +23,17 @@ protected:
 
 	FVector lastLocation;
 	
-	int stuckedCounter;
+	int stuckCounter;
 	
 	void CheckStuck();
 	
-	bool IsStucked();
+	bool IsStuck();
 	
 	void UnStuck();
+
+	void CheckInWater();
+
+	int outsideWaterCounter;
 
 	UStaticMeshComponent* body;
 

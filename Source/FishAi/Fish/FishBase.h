@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AntiStackHack.h"
+#include "FishStateHack.h"
 #include "EFish.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Components/SphereComponent.h"
@@ -61,8 +61,6 @@ public:
 	
 	void OnEatenByFish();
 
-private:
-
 	void Die(int DestroyDelay = 0);
 
 protected: // AI
@@ -112,7 +110,7 @@ protected: // Components
 	FVector AfterDeathTorque = FVector(3000, 20000, 10000);
 
 	UPROPERTY(EditDefaultsOnly)
-	UAntiStackHack* AntiStackHack;
+	UFishStateHack* AntiStackHack;
 
 protected:
 	

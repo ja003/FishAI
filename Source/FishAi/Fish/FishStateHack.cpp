@@ -1,7 +1,7 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "AntiStackHack.h"
+#include "FishStateHack.h"
 
 #include "FishBase.h"
 #include "Components/CapsuleComponent.h"
@@ -9,7 +9,7 @@
 
 
 // Sets default values for this component's properties
-UAntiStackHack::UAntiStackHack()
+UFishStateHack::UFishStateHack()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
@@ -19,39 +19,42 @@ UAntiStackHack::UAntiStackHack()
 
 
 // Called when the game starts
-void UAntiStackHack::BeginPlay()
+void UFishStateHack::BeginPlay()
 {
 	Super::BeginPlay();
 
 	body = GetOwner()->FindComponentByClass<UStaticMeshComponent>();
 
-	FTimerHandle UnusedHandle;
-	GetWorld()->GetTimerManager().SetTimer(UnusedHandle, this, &UAntiStackHack::CheckStuck, 1, true);
+	FTimerHandle CheckStuckHandle;
+	GetWorld()->GetTimerManager().SetTimer(CheckStuckHandle, this, &UFishStateHack::CheckStuck, 1, true);
+
+	FTimerHandle CheckInWaterHandle;
+	GetWorld()->GetTimerManager().SetTimer(CheckInWaterHandle, this, &UFishStateHack::CheckInWater, 1, true);
 	
 }
 
-void UAntiStackHack::CheckStuck()
+void UFishStateHack::CheckStuck()
 {
-	bool isStucked = IsStucked();
+	bool isStucked = IsStuck();
 	if(isStucked)
-		stuckedCounter++;
+		stuckCounter++;
 	else
-		stuckedCounter = 0;
+		stuckCounter = 0;
 
 	lastLocation = body->GetComponentLocation();
 
-	if(stuckedCounter > 3)
+	if(stuckCounter > 3)
 		UnStuck();
 }
 
-bool UAntiStackHack::IsStucked()
+bool UFishStateHack::IsStuck()
 {
 	float distance = FVector::Distance(body->GetComponentLocation(), lastLocation);
 	//UE_LOG(LogTemp, Log, TEXT("xxx distance = %f"), distance);
 	return distance < MinMoveDistance;
 }
 
-void UAntiStackHack::UnStuck()
+void UFishStateHack::UnStuck()
 {
 	FVector location = GetOwner()->GetActorLocation();
 	//UE_LOG(LogTemp, Log, TEXT("xxx UnStuck from = %s"), *location.ToString());
@@ -62,6 +65,24 @@ void UAntiStackHack::UnStuck()
 
 	Cast<AFishBase>(GetOwner())->GetCapsuleComponent()->SetAllPhysicsLinearVelocity(FVector::ZeroVector);
 	
-	stuckedCounter = 0;
+	stuckCounter = 0;
+}
+
+void UFishStateHack::CheckInWater()
+{
+	if (Water->IsPointInWater(GetOwner()->GetActorLocation()))
+	{
+		outsideWaterCounter = 0;
+		return;
+	}
+
+	outsideWaterCounter++;
+	UE_LOG(LogTemp, Log, TEXT("xxx warning: fish outside of water"));
+	
+	if (outsideWaterCounter > 3)
+	{
+		UE_LOG(LogTemp, Log, TEXT("xxx error: fish is outside of water. Destroying"));
+		Cast<AFishBase>(GetOwner())->Die();
+	}
 }
 

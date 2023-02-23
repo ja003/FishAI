@@ -4,7 +4,7 @@
 #include "FishBase.h"
 
 #include "AIController.h"
-#include "AntiStackHack.h"
+#include "FishStateHack.h"
 #include "BrainComponent.h"
 #include "EFishState.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
@@ -75,7 +75,7 @@ AFishBase::AFishBase()
 	MouthCollider->SetCollisionResponseToChannel(COLLISION_THROWABLE_OBJECT, ECR_Overlap);
 	MouthCollider->SetCollisionResponseToChannel(COLLISION_EXPLOSION, ECR_Block);
 
-	AntiStackHack = CreateDefaultSubobject<UAntiStackHack>("AntiStuckHack");	
+	AntiStackHack = CreateDefaultSubobject<UFishStateHack>("AntiStuckHack");	
 
 }
 

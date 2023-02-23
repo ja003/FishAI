@@ -46,11 +46,8 @@ void AWaterManager::OnFishDie(AFishBase* Fish)
 	OnAllFishesDead.Broadcast();
 }
 
-// Called when the game starts or when spawned
-void AWaterManager::BeginPlay()
+void AWaterManager::Init()
 {
-	Super::BeginPlay();
-
 	FishSpawner = Cast<AFishSpawner>(UGameplayStatics::GetActorOfClass(GetWorld(), AFishSpawner::StaticClass()));
 
 	SetWaterBounds();
@@ -76,6 +73,13 @@ void AWaterManager::BeginPlay()
 		GetWorld()->GetTimerManager().SetTimer(UnusedHandle, this, &AWaterManager::GenerateFishes, 1, false);
 		//GenerateFishes();
 	}
+}
+
+// Called when the game starts or when spawned
+void AWaterManager::BeginPlay()
+{
+	Super::BeginPlay();
+	
 }
 
 void AWaterManager::ScaleDownWaterBounds()

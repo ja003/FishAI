@@ -25,9 +25,13 @@ private:
 	void OnBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult);
 
 	virtual void BeginPlay() override;
+
+	// Sets opacity to mesh showing the state of cooldown.
+	// 0 = ready, 1 = not-ready
 	void SetStateOpacity(float opacity);
 
 	virtual void Tick(float DeltaSeconds) override;
+	
 
 	UPROPERTY(EditDefaultsOnly)
 	UBoxComponent* Collider;
@@ -52,6 +56,11 @@ public:
 
 	UPROPERTY(EditDefaultsOnly)
 	UThrowableGeneratorData* Data;
+
+	bool bIsDisabled;
+	
+	void Disable();
+
 
 private:
 	

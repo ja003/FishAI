@@ -45,6 +45,11 @@ void AWaterManager::OnFishDie(AFishBase* Fish)
 
 	UE_LOG(LogTemp, Log, TEXT("xxx only gold fishes remain"));
 	OnAllFishesDead.Broadcast();
+	
+	for (auto generator : Generators)
+	{
+		generator->Disable();
+	}
 }
 
 void AWaterManager::Init()

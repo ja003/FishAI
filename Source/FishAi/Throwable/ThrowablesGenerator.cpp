@@ -35,6 +35,12 @@ AThrowablesGenerator::AThrowablesGenerator()
 void AThrowablesGenerator::OnBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,
 	UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult)
 {
+	if (bIsDisabled)
+	{
+		UE_LOG(LogTemp, Log, TEXT("xxx generator is disabled"));
+		return;
+	}
+	
 	UE_LOG(LogTemp, Log, TEXT("xxx OnBeginOverlap = %s"), *Actor->GetName());
 
 	float cooldown = GetRemainingCooldown();
@@ -89,4 +95,11 @@ void AThrowablesGenerator::Tick(float DeltaSeconds)
 float AThrowablesGenerator::GetRemainingCooldown()
 {
 	return LastTimeItemAdded + Cooldown - FDateTime::Now().ToUnixTimestamp();
+}
+
+void AThrowablesGenerator::Disable()
+{
+	bIsDisabled = true;
+	PrimaryActorTick.SetTickFunctionEnable(false);
+	SetStateOpacity(1);
 }

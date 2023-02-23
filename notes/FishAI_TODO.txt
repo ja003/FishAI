@@ -2,8 +2,10 @@ bait dont attract enough
 
 pike still getting stuck
 
-water DA 
-
 debug run fast
 
 remove generators on all fishes dead
+
+carp runaway target set outside water
+
+UI all fishes dead - go to next lake

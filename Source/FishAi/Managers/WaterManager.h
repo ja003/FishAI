@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "WaterBodyActor.h"
 #include "FishSpawner.h"
+#include "FishAi/Throwable/ThrowablesGenerator.h"
 
 
 #include "WaterManager.generated.h"
@@ -108,5 +109,8 @@ public:
 	UWaterData* Data;
 	
 	AFishSpawner* FishSpawner;
+
+	UPROPERTY(EditAnywhere)
+	TArray<AThrowablesGenerator*> Generators;
 	
 };

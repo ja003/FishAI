@@ -10,6 +10,8 @@ create Lake
 - create WaterManager
 -- assign Lake to it 
 -- set shore offset + patrol path offset
+-- create generators
+--- assign them to WaterManager
 
 Managers
 - Data
@@ -17,3 +19,5 @@ Managers
 - NoiseReporter
 - Score
 - ThrowPrediction
+- Game
+-- assign WaterManagers

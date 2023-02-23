@@ -12,6 +12,8 @@ create Lake
 -- set shore offset + patrol path offset
 -- create generators
 --- assign them to WaterManager
+-- set PatrolPath ShoreOffset (cca 800)
+-- set ShoreOffset (cca 200)
 
 Managers
 - Data

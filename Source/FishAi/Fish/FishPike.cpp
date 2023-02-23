@@ -132,22 +132,32 @@ FVector AFishPike::GetNextPatrolPoint()
 		return GetActorLocation();
 	}
 	
-	FVector Result;
-	int radius = 400;
-	bool bSuccess = NavSys->K2_GetRandomReachablePointInRadius(GetWorld(), patrolPoint, Result, radius);
-
-	if (bSuccess)
+	FVector randomReachablePoint;
+	for (int i = 0; i < 10; ++i)
 	{
-		//DrawDebugSphere(GWorld, patrolPoint, radius, 10, FColor::Green, false, 5);
+		int radius = 500;
+		bool bSuccess = NavSys->K2_GetRandomReachablePointInRadius(GetWorld(), patrolPoint, randomReachablePoint, radius);
+		if (!bSuccess)
+		{
+			UE_LOG(LogTemp, Log, TEXT("xxx error: K2_GetRandomReachablePointInRadius"));
+			break;
+		}
+		
+		if (Water->IsPointInWater(randomReachablePoint))
+		{
+			//DrawDebugSphere(GWorld, patrolPoint, radius, 10, FColor::Green, false, 5);
+			DrawDebugLine(GetWorld(), GetActorLocation(), randomReachablePoint, FColor::Purple, false, 5);
 
-		return Result;
+
+			return randomReachablePoint;
+		}
 	}
-	else
-	{
-		//DrawDebugSphere(GWorld, patrolPoint, radius, 10, FColor::Red, false, 5);
-		UE_LOG(LogTemp, Log, TEXT("xxx error: K2_GetRandomReachablePointInRadius"));
-		return patrolPoint;
-	}	
+	DrawDebugLine(GetWorld(), GetActorLocation(), patrolPoint, FColor::Purple, false, 5);
+
+	
+	//DrawDebugSphere(GWorld, patrolPoint, radius, 10, FColor::Red, false, 5);
+	return patrolPoint;
+	
 	//DrawDebugSphere(GWorld, result, 50, 10, FColor::White, false, .1f);
 	//UE_LOG(LogTemp, Log, TEXT("xxx currentPatrolPathIndex = %d"), currentPatrolPathIndex);
 }

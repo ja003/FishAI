@@ -70,6 +70,10 @@ void UFishStateHack::UnStuck()
 
 void UFishStateHack::CheckInWater()
 {
+	// doesnt work very well...navagent doesnt move in straight line and sometimes
+	// fish goes outside of bounds and it is evaluated as outside of water
+	return;
+	
 	if (Water->IsPointInWater(GetOwner()->GetActorLocation()))
 	{
 		outsideWaterCounter = 0;
@@ -79,7 +83,7 @@ void UFishStateHack::CheckInWater()
 	outsideWaterCounter++;
 	UE_LOG(LogTemp, Log, TEXT("xxx warning: fish outside of water"));
 	
-	if (outsideWaterCounter > 3)
+	if (outsideWaterCounter > 6)
 	{
 		UE_LOG(LogTemp, Log, TEXT("xxx error: fish is outside of water. Destroying"));
 		Cast<AFishBase>(GetOwner())->Die();

@@ -85,6 +85,11 @@ void AWaterManager::Init()
 void AWaterManager::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (bDebug_SelfInit)
+	{
+		Init();
+	}
 	
 }
 
@@ -128,7 +133,14 @@ void AWaterManager::ScaleDownWaterBounds()
 	for (int i = 0; i < WaterBounds.Num(); i++)
 	{
 		FVector p = FVector(WaterBounds[i].X, WaterBounds[i].Y, 0);
-		//DrawDebugSphere(GWorld, p, 50, 10, FColor::Blue, true, 5);
+		DrawDebugSphere(GWorld, p, 50, 10, FColor::White, true, 5);
+
+		if(i < WaterBounds.Num() - 1)
+		{
+			FVector p2 = FVector(WaterBounds[i+1].X, WaterBounds[i+1].Y, 0);
+			DrawDebugLine(GetWorld(), p, p2, FColor::White, true, 5);
+		}
+
 	}
 
 }
@@ -201,7 +213,7 @@ void AWaterManager::SetPatrolPath()
 
 	for (int i = 0; i < PatrolPath.Num(); i++)
 	{
-		//DrawDebugSphere(GWorld, PatrolPath[i], 50, 10, FColor::Purple, true, 5);
+		DrawDebugSphere(GWorld, PatrolPath[i], 50, 10, FColor::Red, true, 5);
 	}
 }
 

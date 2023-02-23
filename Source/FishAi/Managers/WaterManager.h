@@ -89,6 +89,9 @@ public:
 
 public:
 
+	UPROPERTY(EditAnywhere)
+	bool bDebug_SelfInit;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TArray<FVector2D> WaterBounds;
 	

@@ -34,6 +34,10 @@ protected:
 
 	virtual void Tick(float DeltaSeconds) override;
 
+public:
+
+	virtual void Init(AWaterManager* InWater);
+
 protected:
 
 	UFUNCTION()
@@ -119,7 +123,7 @@ protected:
 public: // Variables
 
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	AWaterManager* Water;
 
 	AScoreManager* Score;

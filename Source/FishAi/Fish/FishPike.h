@@ -24,6 +24,8 @@ protected: // AI
 
 private:
 	virtual void BeginPlay() override;
+
+	virtual void Init(AWaterManager* InWater) override;
 	
 	virtual void OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, FVector Normal, const FHitResult& HitResult) override;
 	

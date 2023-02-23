@@ -50,13 +50,20 @@ void AFishPike::BeginPlay()
 {
 	Super::BeginPlay();
 
-	currentPatrolPathIndex = FMath::RandRange(0, Water->PatrolPath.Num() - 1);
 	
 	//dont hunt right away
 	lastHuntTime = FDateTime::Now().ToUnixTimestamp();
 	lastHuntTime = -99;
 
 	GetWorld()->GetTimerManager().SetTimer(RoarHandle, this, &AFishPike::Roar, Cast<UPikeData>(Data)->RoarCoolDown, true);
+
+}
+
+void AFishPike::Init(AWaterManager* InWater)
+{
+	Super::Init(InWater);
+
+	currentPatrolPathIndex = FMath::RandRange(0, Water->PatrolPath.Num() - 1);
 
 }
 

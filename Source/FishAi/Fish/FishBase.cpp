@@ -105,12 +105,7 @@ void AFishBase::BeginPlay()
 		UE_LOG(LogTemp, Log, TEXT("xxx ERROR: fish not placed in water"));
 	}
 
-	if (Water == nullptr)
-	{
-		Water = Cast<AWaterManager>(UGameplayStatics::GetActorOfClass(GetWorld(), AWaterManager::StaticClass()));
-	}
-	check(Water)
-	FishStateHack->Water = Water;
+	
 
 	Score = Cast<AScoreManager>(UGameplayStatics::GetActorOfClass(GetWorld(), AScoreManager::StaticClass()));
 	check(Score)
@@ -132,6 +127,21 @@ void AFishBase::BeginPlay()
 
 	GetCharacterMovement()->MaxSwimSpeed = Data->Speed;
 }
+
+
+void AFishBase::Init(AWaterManager* InWater)
+{
+	Water = InWater;
+	
+	if (Water == nullptr)
+	{
+		UE_LOG(LogTemp, Log, TEXT("xxx error: water not assigned"));
+		Water = Cast<AWaterManager>(UGameplayStatics::GetActorOfClass(GetWorld(), AWaterManager::StaticClass()));
+	}
+	check(Water)
+	FishStateHack->Water = Water;
+}
+
 
 void AFishBase::Tick(float DeltaSeconds)
 {

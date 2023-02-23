@@ -225,7 +225,7 @@ void AWaterManager::GenerateFishes(EFish FishType)
 		AFishBase* fish = Cast<AFishBase>(FishSpawner->SpawnFish(FishType, randomPoint));
 		if (ensureMsgf(fish, TEXT("fish not spawned")))
 		{
-			fish->Water = this;
+			fish->Init(this);
 		}
 
 		//UE_LOG(LogTemp, Log, TEXT("xxx Add fish %d"), (int)FishType);

@@ -42,7 +42,10 @@ void AGameManager::OnNextLevelTriggerOverlap(UPrimitiveComponent* PrimitiveCompo
 	UE_LOG(LogTemp, Log, TEXT("xxx OnNextLevelTriggerOverlap"));
 	
 	if (Cast<APlayerCharacter>(Actor))
+	{
+		NextLevelTriggers[currentLevel]->SetActorHiddenInGame(true);
 		TriggerNextLevel();
+	}
 }
 
 void AGameManager::TriggerNextLevel()

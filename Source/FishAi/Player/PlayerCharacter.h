@@ -23,9 +23,12 @@ protected:
 	virtual void BeginPlay() override;
 
 
-private: // water
+public: // water
 
+	UFUNCTION(BlueprintCallable)
 	void SetSwimming(bool IsSwimming);
+	
+private: // water
 	
 	UFUNCTION()
 	void OnBallsBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult);

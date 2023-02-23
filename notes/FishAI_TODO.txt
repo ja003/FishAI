@@ -2,6 +2,8 @@ bait dont attract enough
 
 pike still getting stuck
 
-throw generators DA
+water DA 
 
-initiate next water when all fishes dead
+debug run fast
+
+remove generators on all fishes dead

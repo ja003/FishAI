@@ -29,6 +29,7 @@ void AGameManager::OnAllFishesDead()
 	{
 		// end game
 		UE_LOG(LogTemp, Log, TEXT("xxx end game"));
+		EndGameBP();
 		return;
 	}
 

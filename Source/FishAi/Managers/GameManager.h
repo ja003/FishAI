@@ -23,6 +23,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnAllFishesDeadBP();
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void EndGameBP();
+
 private:
 
 	UFUNCTION()

@@ -33,7 +33,7 @@ void AGrenade::Explode()
 	FCollisionShape MyColSphere = FCollisionShape::MakeSphere(Radius);
 
 	// draw collision sphere
-	DrawDebugSphere(GetWorld(), GetActorLocation(), MyColSphere.GetSphereRadius(), 50, FColor::Purple, false, 2);
+	//DrawDebugSphere(GetWorld(), GetActorLocation(), MyColSphere.GetSphereRadius(), 50, FColor::Purple, false, 2);
 	
 	// create tarray for hit results
 	TArray<FHitResult> OutHits;
@@ -54,17 +54,7 @@ void AGrenade::Explode()
 				FVector impulse = dir * ExplosionStrength;
 				
 				fish->OnKilledByGrenade(impulse);
-			}
-			
-			if (GEngine && Hit.GetActor() != nullptr) 
-			{
-				// screen log information on what was hit
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, FString::Printf(TEXT("Hit Result: %s"), *Hit.GetActor()->GetName()));
-				// uncommnet to see more info on sweeped actor
-				// GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("All Hit Information: %s"), *Hit.ToString()));
-
-				//Hit.GetActor()->Destroy();
-			}						
+			}					
 		}
 	}
 

@@ -66,9 +66,6 @@ void APlayerCharacter::BeginPlay()
 
 void APlayerCharacter::SetSwimming(bool IsSwimming)
 {
-	UE_LOG(LogTemp, Log, TEXT("xxx SetSwimming = %s"), IsSwimming ? TEXT("true"):TEXT("false"));
-	//return;
-	
 	IsInWater = IsSwimming;
 	GetCharacterMovement()->GetPhysicsVolume()->bWaterVolume = IsSwimming;
 	GetCharacterMovement()->SetMovementMode(IsSwimming ? MOVE_Swimming : MOVE_Walking);

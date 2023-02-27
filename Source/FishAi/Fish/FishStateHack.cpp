@@ -99,9 +99,12 @@ void UFishStateHack::CheckOnNavmesh()
 		return;
 
 	AFishBase* fish = Cast<AFishBase>(GetOwner());
+	if (fish->IsDead)
+		return;
 
 	UE_LOG(LogTemp, Log, TEXT("xxx error: fish not on navmesh -> respawn"));
-	Water->GenerateFish(fish->FishType);
+	EFish fishType = fish->FishType;
 	fish->Die();
+	Water->GenerateFish(fishType);
 }
 

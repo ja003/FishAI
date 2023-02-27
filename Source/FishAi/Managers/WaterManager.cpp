@@ -196,6 +196,11 @@ void AWaterManager::GenerateNavmeshModifiers()
 
 void AWaterManager::SetGenerators()
 {
+	if (Tags.Num() < 1)
+	{
+		UE_LOG(LogTemp, Error, TEXT("xxx error: WaterManager doesnt have any tag"));
+		return;
+	}
 	TArray<AActor*> generators;
 	UGameplayStatics::GetAllActorsWithTag(GetWorld(), Tags[0], generators);
 

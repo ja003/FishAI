@@ -5,6 +5,7 @@ const FName FishBB_Bait = "Bait";
 const FName FishBB_Rock = "Rock";
 const FName FishBB_Prey = "Prey";
 const FName FishBB_Target = "Target";
+const FName FishBB_Fail = "Fail";
 
 const FName Tag_Ground = "Ground";
 const FName Tag_Water = "Water";

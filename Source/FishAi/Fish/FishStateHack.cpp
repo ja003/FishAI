@@ -72,7 +72,7 @@ void UFishStateHack::CheckInWater()
 	
 	if (outsideWaterCounter > 6)
 	{
-		UE_LOG(LogTemp, Log, TEXT("xxx error: fish is outside of water. Destroying"));
+		UE_LOG(LogTemp, Error, TEXT("xxx error: fish is outside of water. Destroying"));
 		Cast<AFishBase>(GetOwner())->Die();
 	}
 }
@@ -86,7 +86,7 @@ void UFishStateHack::CheckOnNavmesh()
 	if (fish->IsDead)
 		return;
 
-	UE_LOG(LogTemp, Log, TEXT("xxx error: fish not on navmesh -> respawn"));
+	UE_LOG(LogTemp, Error, TEXT("xxx error: fish not on navmesh -> respawn"));
 	Water->GenerateFish(fish->FishType);
 	fish->Die();
 }

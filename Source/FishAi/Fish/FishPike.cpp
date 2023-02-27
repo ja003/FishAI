@@ -104,7 +104,7 @@ FVector AFishPike::GetNextPatrolPoint()
 {
 	if (Water == nullptr || Water->PatrolPath.Num() == 0)
 	{
-		UE_LOG(LogTemp, Log, TEXT("xxx error: patrol point not set"));
+		UE_LOG(LogTemp, Error, TEXT("xxx error: patrol point not set"));
 		return GetActorLocation();
 	}
 	
@@ -118,7 +118,7 @@ FVector AFishPike::GetNextPatrolPoint()
 	UNavigationSystemV1* NavSys = FNavigationSystem::GetCurrent<UNavigationSystemV1>(GetWorld());
 	if (!NavSys)
 	{
-		UE_LOG(LogTemp, Log, TEXT("xxx error: UNavigationSystemV1"));
+		UE_LOG(LogTemp, Error, TEXT("xxx error: UNavigationSystemV1"));
 		return GetActorLocation();
 	}
 	
@@ -129,7 +129,7 @@ FVector AFishPike::GetNextPatrolPoint()
 		bool bSuccess = NavSys->K2_GetRandomReachablePointInRadius(GetWorld(), patrolPoint, randomReachablePoint, radius);
 		if (!bSuccess)
 		{
-			UE_LOG(LogTemp, Log, TEXT("xxx error: K2_GetRandomReachablePointInRadius"));
+			UE_LOG(LogTemp, Error, TEXT("xxx error: K2_GetRandomReachablePointInRadius"));
 			break;
 		}
 		

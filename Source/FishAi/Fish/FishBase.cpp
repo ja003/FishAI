@@ -96,7 +96,7 @@ void AFishBase::BeginPlay()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Log, TEXT("xxx ERROR: fish not placed in water"));
+		UE_LOG(LogTemp, Error, TEXT("xxx error: fish not placed in water"));
 	}
 
 	Score = Cast<AScoreManager>(UGameplayStatics::GetActorOfClass(GetWorld(), AScoreManager::StaticClass()));
@@ -133,7 +133,7 @@ void AFishBase::Init(AWaterManager* InWater)
 	
 	if (Water == nullptr)
 	{
-		UE_LOG(LogTemp, Log, TEXT("xxx error: water not assigned"));
+		UE_LOG(LogTemp, Error, TEXT("xxx error: water not assigned"));
 		Water = Cast<AWaterManager>(UGameplayStatics::GetActorOfClass(GetWorld(), AWaterManager::StaticClass()));
 	}
 	check(Water)
@@ -231,10 +231,36 @@ void AFishBase::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 	}
 }
 
+void AFishBase::SetFail(bool InValue)
+{
+	if(InValue)
+	{
+		blackboard->SetValueAsBool(FishBB_Fail, true);
+
+		FTimerHandle UnusedHandle;
+		FTimerDelegate TimerDel;
+		
+		TimerDel.BindUFunction(this, FName("SetFail"), false);
+		
+		GetWorld()->GetTimerManager().SetTimer(UnusedHandle, TimerDel, 0.1f, false);
+	}
+	else
+	{
+		blackboard->SetValueAsBool(FishBB_Fail, false);
+	}
+}
+
 void AFishBase::RunawayFrom(FVector SourceLocation, int MaxDistance, EFishState NewState)
 {
+	// if we are running away from the same kind of source - force reevaluate
+	// BT to update runaway location
+	if (GetState() == NewState)
+	{
+		SetFail(true);
+	}
+	
 	SetState(NewState);
-
+	
 	FVector dirAway = (GetActorLocation() - SourceLocation);
 	dirAway.Z = 0;
 	dirAway.Normalize();
@@ -250,6 +276,7 @@ void AFishBase::RunawayFrom(FVector SourceLocation, int MaxDistance, EFishState 
 	}
 	
 	Water->UpdateInWaterTarget(inWaterTarget);
+
 	blackboard->SetValueAsVector(FishBB_Target, inWaterTarget);
 }
 

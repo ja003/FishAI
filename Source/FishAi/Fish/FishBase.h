@@ -75,6 +75,10 @@ protected: // AI
 	UFUNCTION()
 	virtual void OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
 
+	// Forces BT to reevaluate
+	UFUNCTION()
+	void SetFail(bool InValue);
+
 	// Sets NewState and move Target to run away from SourceLocation
 	void RunawayFrom(FVector SourceLocation, int MaxDistance, EFishState NewState);
 

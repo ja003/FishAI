@@ -3,7 +3,7 @@
 #pragma once
 
 UENUM(BlueprintType)
-enum class EThrowableObject : uint8 
+enum class EThrowableObjectType : uint8 
 {
 	None     UMETA(DisplayName = "None"),
 	Rock     UMETA(DisplayName = "Rock"),

@@ -8,7 +8,7 @@
 #include "WaterData.generated.h"
 
 /**
- * 
+ * DA for a lake
  */
 UCLASS()
 class FISHAI_API UWaterData : public UDataAsset

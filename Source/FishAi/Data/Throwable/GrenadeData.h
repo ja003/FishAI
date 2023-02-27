@@ -6,9 +6,6 @@
 #include "ThrowableData.h"
 #include "GrenadeData.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class FISHAI_API UGrenadeData : public UThrowableData
 {

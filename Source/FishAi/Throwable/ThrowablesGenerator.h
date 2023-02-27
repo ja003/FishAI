@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "EThrowableObject.h"
+#include "EThrowableObjectType.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/Actor.h"
 #include "ThrowablesGenerator.generated.h"
@@ -52,7 +52,7 @@ public:
 	UMaterialInterface* Material;
 	
 	UPROPERTY(EditDefaultsOnly)
-	EThrowableObject ObjectType;
+	EThrowableObjectType ObjectType;
 
 	UPROPERTY(EditDefaultsOnly)
 	UThrowableGeneratorData* Data;

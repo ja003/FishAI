@@ -6,9 +6,6 @@
 #include "FishData.h"
 #include "CarpData.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class FISHAI_API UCarpData : public UFishData
 {

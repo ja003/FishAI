@@ -6,14 +6,10 @@
 #include "FishData.h"
 #include "PikeData.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class FISHAI_API UPikeData : public UFishData
 {
 	GENERATED_BODY()
-
 
 public:
 	

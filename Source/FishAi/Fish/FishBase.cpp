@@ -22,11 +22,12 @@
 #include "Perception/AISenseConfig_Hearing.h"
 #include "Perception/AISenseConfig_Sight.h"
 
-// Sets default values
 AFishBase::AFishBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
-		
+
+	// MESH & COLLISIONS
+	
 	bodyMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("body"));
 	bodyMesh->AddLocalRotation(FRotator(0,-90,0));
 	bodyMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
@@ -34,7 +35,21 @@ AFishBase::AFishBase()
 	bodyMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	
+	GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
+    
+    MouthCollider = CreateDefaultSubobject<USphereComponent>(TEXT("Mouth"));
+    MouthCollider->AttachToComponent(bodyMesh, FAttachmentTransformRules::KeepRelativeTransform);
 
+    MouthCollider->OnComponentBeginOverlap.AddDynamic(this, &AFishBase::OnMouthBeginOverlap);
+    MouthCollider->SetCollisionObjectType(COLLISION_FISH);
+    MouthCollider->SetCollisionResponseToAllChannels(ECR_Ignore);
+    MouthCollider->SetCollisionResponseToChannel(COLLISION_FISH, ECR_Overlap);
+    MouthCollider->SetCollisionResponseToChannel(COLLISION_THROWABLE_OBJECT, ECR_Overlap);
+    MouthCollider->SetCollisionResponseToChannel(COLLISION_EXPLOSION, ECR_Block);
+
+	// AI
+	
 	// needs to be set otherwise AI controller doesnt initiate
 	// when spawned from code
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
@@ -52,34 +67,14 @@ AFishBase::AFishBase()
 	AISenseConfigHearing->DetectionByAffiliation.bDetectFriendlies = true;
 	AISenseConfigHearing->DetectionByAffiliation.bDetectNeutrals = true;
 
-	// AISenseConfigSight->SightRadius = Data->SightRadius;
-	// AISenseConfigSight->LoseSightRadius = Data->SightRadius * 2;
-	// AISenseConfigHearing->HearingRange = Data->HearRadius;
-	//
 	AIPerceptionComponent->ConfigureSense(*AISenseConfigSight);
 	AIPerceptionComponent->ConfigureSense(*AISenseConfigHearing);
 	AIPerceptionComponent->SetDominantSense(UAISenseConfig_Sight::StaticClass());
 
-	// GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AFishBase::OnComponentBeginOverlap);
-	//
-	// GetCapsuleComponent()->OnComponentHit.AddDynamic(this, &AFishBase::OnComponentHit);
-	GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
-
-	MouthCollider = CreateDefaultSubobject<USphereComponent>(TEXT("Mouth"));
-	MouthCollider->AttachToComponent(bodyMesh, FAttachmentTransformRules::KeepRelativeTransform);
-
-	MouthCollider->OnComponentBeginOverlap.AddDynamic(this, &AFishBase::OnMouthBeginOverlap);
-	MouthCollider->SetCollisionObjectType(COLLISION_FISH);
-	MouthCollider->SetCollisionResponseToAllChannels(ECR_Ignore);
-	MouthCollider->SetCollisionResponseToChannel(COLLISION_FISH, ECR_Overlap);
-	MouthCollider->SetCollisionResponseToChannel(COLLISION_THROWABLE_OBJECT, ECR_Overlap);
-	MouthCollider->SetCollisionResponseToChannel(COLLISION_EXPLOSION, ECR_Block);
-
+	
 	FishStateHack = CreateDefaultSubobject<UFishStateHack>("FishStateHack");	
-
 }
 
-// Called when the game starts or when spawned
 void AFishBase::BeginPlay()
 {
 	Super::BeginPlay();
@@ -90,22 +85,19 @@ void AFishBase::BeginPlay()
 	GetCharacterMovement()->GetPhysicsVolume()->bWaterVolume = true;
 	GetCharacterMovement()->SetMovementMode(MOVE_Swimming);
 
-	//Target = GetWorld()->SpawnActor<ATargetObject>();
 
-	// fish actor has to be placed at the water bottom (where navmesh is generated)
-	// otherwise it wont mmove 
+	// fish actor has to be placed at the water bottom
+	// (where navmesh is generated)
+	// otherwise it wont move 
 	FHitResult hit;
 	if(GetWorld()->LineTraceSingleByObjectType(hit, GetActorLocation(), GetActorLocation() + FVector::DownVector * 1000, COLLISION_GROUND))
 	{
 		SetActorLocation(hit.Location);
-		//UE_LOG(LogTemp, Log, TEXT("xxx new fish location = %s"), *hit.Location.ToString());
 	}
 	else
 	{
 		UE_LOG(LogTemp, Log, TEXT("xxx ERROR: fish not placed in water"));
 	}
-
-	
 
 	Score = Cast<AScoreManager>(UGameplayStatics::GetActorOfClass(GetWorld(), AScoreManager::StaticClass()));
 	check(Score)
@@ -135,7 +127,6 @@ void AFishBase::BeginPlay()
 	}
 }
 
-
 void AFishBase::Init(AWaterManager* InWater)
 {
 	Water = InWater;
@@ -149,26 +140,23 @@ void AFishBase::Init(AWaterManager* InWater)
 	FishStateHack->Water = Water;
 }
 
-
 void AFishBase::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
 	if (!IsDead)
 	{
-		// this doesnt include waves:(
-		//FVector waterSurfaceLoc = Water->GetWaterSurfaceLocation(GetActorLocation());
-		// bodyMesh->SetWorldLocation(waterSurfaceLoc + FVector::UpVector * InWaterBodyOffset);
+		// update body position so the fish is visually on the surface.
+		// unfortunately this doesnt take waves into account
 		bodyMesh->SetRelativeLocation(FVector(0,0, -GetActorLocation().Z));
 	}
 }
 
 void AFishBase::OnKilledByGrenade(FVector ExplosionForce)
 {
-	//UE_LOG(LogTemp, Log, TEXT("xxx OnKilledByPlayer"));
-
  	Cast<AAIController>(GetController())->BrainComponent->StopLogic("Death");
-	
+
+	// throw fish into air for nice visual effect
 	bodyMesh->SetSimulatePhysics(true);
 	bodyMesh->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
 	bodyMesh->AddImpulse(ExplosionForce);
@@ -184,7 +172,6 @@ void AFishBase::OnKilledByGrenade(FVector ExplosionForce)
 	Die(2);
 }
 
-//todo: death by fish - animation
 void AFishBase::OnEatenByFish()
 {
 	Die();
@@ -211,8 +198,6 @@ void AFishBase::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
 	if (Actor == this) return;
 	
-	//UE_LOG(LogTemp, Log, TEXT("xxx OnTargetPerceptionUpdated = %s"), *Actor->GetName());
-
 	if(Actor->GetClass()->ImplementsInterface(UStimuliSource::StaticClass()))
 	{
 		switch(Cast<IStimuliSource>(Actor)->GetStimuliType())
@@ -239,7 +224,7 @@ void AFishBase::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 		OnRockPerceptionUpdated(Actor, Stimulus);
 		return;
 	}
-	else if (Stimulus.Tag == Tag_Bait)
+	if (Stimulus.Tag == Tag_Bait)
 	{
 		OnBaitPerceptionUpdated(Actor, Stimulus);
 		return;
@@ -250,45 +235,32 @@ void AFishBase::RunawayFrom(FVector SourceLocation, int MaxDistance, EFishState 
 {
 	SetState(NewState);
 
-	//DrawDebugSphere(GWorld, GetActorLocation(), 5, 10, FColor::Red, false, 5);
-
 	FVector dirAway = (GetActorLocation() - SourceLocation);
 	dirAway.Z = 0;
 	dirAway.Normalize();
 	int runawayDistance = FMath::RandRange(MaxDistance / 2, MaxDistance);
 	FVector runawayTarget = GetActorLocation() + dirAway * runawayDistance;
 	FVector inWaterTarget = Water->GetClosestPointInWater(runawayTarget);
-	//DrawDebugSphere(GWorld, runawayTarget, 100, 10, FColor::Yellow, false, 5);
-	//DrawDebugSphere(GWorld, inWaterTarget, 100, 10, FColor::Blue, false, 5);
-
 	
 	if (FVector::Distance(inWaterTarget, GetActorLocation()) < 200)
 	{
-		//UE_LOG(LogTemp, Log, TEXT("xxx runaway target too close"));
 		FVector dirToRandom = Water->GetRandomPointInWater() - GetActorLocation();
 		dirToRandom.Normalize();
 		inWaterTarget = GetActorLocation() + dirToRandom * runawayDistance; 
 	}
 	
-	//DrawDebugSphere(GWorld, inWaterTarget, 100, 10, FColor::Purple, false, 5);
-
 	Water->UpdateInWaterTarget(inWaterTarget);
 	blackboard->SetValueAsVector(FishBB_Target, inWaterTarget);
 }
 
 void AFishBase::OnRockPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
 {
-	//UE_LOG(LogTemp, Log, TEXT("xxx OnRockPerceptionUpdated = %s"), *Actor->GetName());
-
 	// Actor is player character, not the rock!
-
 	RunawayFrom(Stimulus.StimulusLocation, Data->RockRunawayDistance, EFishState::Rock);
 }
 
 void AFishBase::SetState(EFishState NewState)
 {
-	//UE_LOG(LogTemp, Log, TEXT("
-	//xxx SetState %d"), (int)NewState);
 	blackboard->SetValueAsEnum(FishBB_State, (int)NewState);
 }
 

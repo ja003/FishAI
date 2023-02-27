@@ -10,6 +10,7 @@ class UThrowableGeneratorData : public UDataAsset
 	GENERATED_BODY()
 
 public:
+	
 	UPROPERTY(EditAnywhere)
 	int Cooldown;
 	

@@ -134,9 +134,9 @@ void AThrowableObject::OnEnteredWater()
 
 }
 
-EThrowableObject AThrowableObject::GetType()
+EThrowableObjectType AThrowableObject::GetType()
 {
 	checkNoEntry();
-	return EThrowableObject::None;
+	return EThrowableObjectType::None;
 }
 

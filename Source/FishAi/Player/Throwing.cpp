@@ -16,7 +16,7 @@ void UThrowing::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 	ignoredActors.Add(GetOwner());
 	ignoredActors.Add(SpawnedObject);
 
-	if (LastActiveObject != EThrowableObject::None)
+	if (LastActiveObject != EThrowableObjectType::None)
 		Prediction->UpdateValues(GetThrowStart()->GetComponentLocation(), GetThrowStart()->GetForwardVector() * ThrowPower, ignoredActors);
 }
 
@@ -30,9 +30,9 @@ UThrowing::UThrowing()
 USceneComponent* UThrowing::GetThrowStart()
 {
 	switch (LastActiveObject) { 
-	case EThrowableObject::Rock: return ThrowStartRock;
-	case EThrowableObject::Bait: return ThrowStartBait;
-	case EThrowableObject::Grenade: return ThrowStartGrenade;
+	case EThrowableObjectType::Rock: return ThrowStartRock;
+	case EThrowableObjectType::Bait: return ThrowStartBait;
+	case EThrowableObjectType::Grenade: return ThrowStartGrenade;
 	}
 
 	checkNoEntry()
@@ -90,7 +90,7 @@ void UThrowing::Throw()
 	Prediction->SetEnabled(false);
 }
 
-void UThrowing::SetActiveObject(EThrowableObject ObjectType)
+void UThrowing::SetActiveObject(EThrowableObjectType ObjectType)
 {
 	if(bIsThrowing) return;
 	

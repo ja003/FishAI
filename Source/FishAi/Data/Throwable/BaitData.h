@@ -6,9 +6,6 @@
 #include "ThrowableData.h"
 #include "BaitData.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class FISHAI_API UBaitData : public UThrowableData
 {

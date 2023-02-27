@@ -8,7 +8,11 @@
 #include "Throwable/ThrowableData.h"
 #include "DataManager.generated.h"
 
-enum class EThrowableObject : uint8;
+enum class EThrowableObjectType : uint8;
+
+/*
+ * Manager of data assets accessible in scene
+ */
 UCLASS()
 class FISHAI_API ADataManager : public AActor
 {
@@ -20,5 +24,5 @@ public:
 	TMap<EFish, UFishData*> Fish;
 
 	UPROPERTY(EditDefaultsOnly)
-	TMap<EThrowableObject, UThrowableData*> Throwable;
+	TMap<EThrowableObjectType, UThrowableData*> Throwable;
 };

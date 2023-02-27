@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "EThrowableObject.h"
+#include "EThrowableObjectType.h"
 #include "ThrowableObject.h"
 #include "FishAi/StimuliObject.h"
 #include "GameFramework/Actor.h"
@@ -57,7 +57,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void OnEnteredWater();
 
-	virtual EThrowableObject GetType();
+	virtual EThrowableObjectType GetType();
 
 	ADataManager* Data;
 	

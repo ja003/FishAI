@@ -8,16 +8,6 @@
 #include "FishAi/Managers/WaterManager.h"
 
 
-// Sets default values for this component's properties
-UFishStateHack::UFishStateHack()
-{
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-
-	// ...
-}
-
-
 // Called when the game starts
 void UFishStateHack::BeginPlay()
 {
@@ -33,37 +23,31 @@ void UFishStateHack::BeginPlay()
 
 	FTimerHandle CheckOnNavmeshHandle;
 	GetWorld()->GetTimerManager().SetTimer(CheckOnNavmeshHandle, this, &UFishStateHack::CheckOnNavmesh, 1, true);
-	
 }
 
 void UFishStateHack::CheckStuck()
 {
-	bool isStucked = IsStuck();
-	if(isStucked)
+	if (IsStuck())
 		stuckCounter++;
 	else
 		stuckCounter = 0;
 
 	lastLocation = body->GetComponentLocation();
 
-	if(stuckCounter > 3)
+	if (stuckCounter > 3)
 		UnStuck();
 }
 
 bool UFishStateHack::IsStuck()
 {
 	float distance = FVector::Distance(body->GetComponentLocation(), lastLocation);
-	//UE_LOG(LogTemp, Log, TEXT("xxx distance = %f"), distance);
 	return distance < MinMoveDistance;
 }
 
 void UFishStateHack::UnStuck()
 {
 	FVector location = GetOwner()->GetActorLocation();
-	//UE_LOG(LogTemp, Log, TEXT("xxx UnStuck from = %s"), *location.ToString());
 	Water->UpdateInWaterTarget(location);
-	//UE_LOG(LogTemp, Log, TEXT("xxx UnStuck to = %s"), *location.ToString());
-	//DrawDebugSphere(GWorld, location, 5, 50, FColor::Blue, false, 5);
 	GetOwner()->SetActorLocation(location);
 
 	Cast<AFishBase>(GetOwner())->GetCapsuleComponent()->SetAllPhysicsLinearVelocity(FVector::ZeroVector);
@@ -103,8 +87,7 @@ void UFishStateHack::CheckOnNavmesh()
 		return;
 
 	UE_LOG(LogTemp, Log, TEXT("xxx error: fish not on navmesh -> respawn"));
-	EFish fishType = fish->FishType;
+	Water->GenerateFish(fish->FishType);
 	fish->Die();
-	Water->GenerateFish(fishType);
 }
 

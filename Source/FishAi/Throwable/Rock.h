@@ -20,7 +20,7 @@ public:
 
 	virtual EStimuliObject GetStimuliType() override { return Rock; }
 
-	virtual EThrowableObject GetType() override { return EThrowableObject::Rock; };
+	virtual EThrowableObjectType GetType() override { return EThrowableObjectType::Rock; };
 
 	virtual FName GetTag() override { return Tag_Rock; }
 	

@@ -7,7 +7,7 @@
 #include "ThrowableData.generated.h"
 
 /**
- * 
+ * Base data class for throwable objects
  */
 UCLASS()
 class FISHAI_API UThrowableData : public UDataAsset
@@ -18,10 +18,12 @@ public:
 	
 	UPROPERTY(EditAnywhere)
 	int NoiseRange;
-	
+
+	// Offset of spawned object to visually fit in hand of a player
 	UPROPERTY(EditAnywhere)
 	FTransform SpawnOffset;
 
+	// Rotation applied during Tick after the object if thrown 
 	UPROPERTY(EditAnywhere)
 	FRotator TickRotation;
 };

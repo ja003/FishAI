@@ -4,8 +4,16 @@ pike still getting stuck
 
 debug run fast
 
-remove generators on all fishes dead
-
 carp runaway target set outside water
 
-UI all fishes dead - go to next lake
+jump - land too long
+
+run-jump = swim
+
+package
+- item icons black
+- cant click 1,2,3 
+
+player data asset - items
+
+

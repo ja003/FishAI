@@ -6,9 +6,6 @@
 #include "ThrowableData.h"
 #include "RockData.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class FISHAI_API URockData : public UThrowableData
 {

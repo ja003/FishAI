@@ -22,7 +22,7 @@ public:
 
 	virtual EStimuliObject GetStimuliType() override { return Bait; }
 
-	virtual EThrowableObject GetType() override { return EThrowableObject::Bait; };
+	virtual EThrowableObjectType GetType() override { return EThrowableObjectType::Bait; };
 
 	virtual FName GetTag() override { return Tag_Bait; }
 

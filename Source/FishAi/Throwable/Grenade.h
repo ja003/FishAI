@@ -22,7 +22,7 @@ class FISHAI_API AGrenade : public AThrowableObject
 public:
 	virtual void OnEnteredWater() override;
 
-	virtual EThrowableObject GetType() override { return EThrowableObject::Grenade; }
+	virtual EThrowableObjectType GetType() override { return EThrowableObjectType::Grenade; }
 	
 	virtual FName GetTag() override { return Tag_Grenade; }
 

@@ -19,15 +19,10 @@ AFishPike::AFishPike()
 
 void AFishPike::OnEdibleFishPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
 {
-	//UE_LOG(LogTemp, Log, TEXT("xxx OnEdibleFishPerceptionUpdated"));
-
 	Super::OnEdibleFishPerceptionUpdated(Actor, Stimulus);
 
-	//UE_LOG(LogTemp, Log, TEXT("xxx IsReadyForHunt = %s"), IsReadyForHunt() ? TEXT("true"):TEXT("false"));
-	
 	if(IsReadyForHunt())
 	{
-		//UE_LOG(LogTemp, Log, TEXT("xxx go hunt"));
 		SetState(EFishState::Hunt);
 		blackboard->SetValueAsObject(FishBB_Prey, Actor);
 
@@ -49,22 +44,18 @@ void AFishPike::OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimul
 void AFishPike::SetState(EFishState NewState)
 {
 	Super::SetState(NewState);
-	//UE_LOG(LogTemp, Log, TEXT("xxx hunt = %s"), NewState == EFishState::Hunt ? TEXT("true"):TEXT("false"));
 	StateText->SetVisibility(NewState == EFishState::Hunt);
 }
-
 
 void AFishPike::BeginPlay()
 {
 	Super::BeginPlay();
-
 	
 	//dont hunt right away
 	lastHuntTime = FDateTime::Now().ToUnixTimestamp();
 	lastHuntTime = -99;
 
 	GetWorld()->GetTimerManager().SetTimer(RoarHandle, this, &AFishPike::Roar, Cast<UPikeData>(Data)->RoarCoolDown, true);
-
 }
 
 void AFishPike::Init(AWaterManager* InWater)
@@ -72,22 +63,7 @@ void AFishPike::Init(AWaterManager* InWater)
 	Super::Init(InWater);
 
 	currentPatrolPathIndex = FMath::RandRange(0, Water->PatrolPath.Num() - 1);
-
 }
-
-void AFishPike::OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,
-	UPrimitiveComponent* PrimitiveComponent1, FVector Normal, const FHitResult& HitResult)
-{
-	Super::OnComponentHit(PrimitiveComponent, Actor, PrimitiveComponent1, Normal, HitResult);
-
-	//UE_LOG(LogTemp, Log, TEXT("xxx OnComponentHit"));
-
-	if(Cast<AFishBase>(Actor))
-	{
-		Cast<AFishBase>(Actor)->OnEatenByFish();
-	}
-}
-
 
 bool AFishPike::IsReadyForHunt()
 {
@@ -97,15 +73,15 @@ bool AFishPike::IsReadyForHunt()
 void AFishPike::OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,
 	UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult)
 {
-	if(GetGameTimeSinceCreation() < 1)
+	// 2 fishes can be spawned at the same location - we dont want
+	// them to overlap right away
+	if (GetGameTimeSinceCreation() < 1)
 	{
 		UE_LOG(LogTemp, Log, TEXT("xxx 2 fishes spawned too close to each other"));
 		return;	
 	}
 	
 	Super::OnMouthBeginOverlap(PrimitiveComponent, Actor, PrimitiveComponent1, I, Arg, HitResult);
-
-	//UE_LOG(LogTemp, Log, TEXT("xxx AFishPike::OnMouthBeginOverlap"));
 
 	if(AFishBase* fish = Cast<AFishBase>(Actor))
 	{
@@ -116,14 +92,12 @@ void AFishPike::OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AAc
 
 void AFishPike::EndHunt()
 {
-	//UE_LOG(LogTemp, Log, TEXT("xxx end hunt"));
 	SetState(EFishState::Idle);
 }
 
 void AFishPike::Roar()
 {
 	NoiseReporter->ReportNoise(this, GetActorLocation(), nullptr, 1, Cast<UPikeData>(Data)->RoarRange);
-	//UE_LOG(LogTemp, Log, TEXT("xxx roar"));
 }
 
 FVector AFishPike::GetNextPatrolPoint()
@@ -134,11 +108,13 @@ FVector AFishPike::GetNextPatrolPoint()
 		return GetActorLocation();
 	}
 	
-	// currentPatrolPathIndex++;
-	// FVector result = Water->PatrolPath[(currentPatrolPathIndex - 1) % Water->PatrolPath.Num()];
 	currentPatrolPathIndex = FMath::RandRange(0, Water->PatrolPath.Num() - 1);
 	FVector patrolPoint = Water->PatrolPath[currentPatrolPathIndex];
 
+	// BUG
+	// it seems that patrol points are sometimes unreachable and sending the pike
+	// there sets it into invalid state and it falls through a navmesh.
+	// I try to fix it by using GetRandomReachablePoint but no luck so far..
 	UNavigationSystemV1* NavSys = FNavigationSystem::GetCurrent<UNavigationSystemV1>(GetWorld());
 	if (!NavSys)
 	{

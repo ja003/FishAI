@@ -8,7 +8,7 @@
 #include "FishData.generated.h"
 
 /**
- * 
+ * Base data class for fishes
  */
 UCLASS()
 class FISHAI_API UFishData : public UDataAsset

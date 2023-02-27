@@ -12,7 +12,7 @@
 #include "Throwing.generated.h"
 
 
-enum class EThrowableObject : uint8;
+enum class EThrowableObjectType : uint8;
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class FISHAI_API UThrowing : public UActorComponent
 {
@@ -38,7 +38,7 @@ public:
 
 private:
 	
-	EThrowableObject LastActiveObject;
+	EThrowableObjectType LastActiveObject;
 
 	USceneComponent* GetThrowStart();
 
@@ -70,7 +70,7 @@ public:
 	void Throw();
 
 	UFUNCTION(BlueprintCallable)
-	void SetActiveObject(EThrowableObject ObjectType);
+	void SetActiveObject(EThrowableObjectType ObjectType);
 
 	UFUNCTION(BlueprintCallable)
 	void DeselectObjects();

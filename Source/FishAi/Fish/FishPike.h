@@ -9,6 +9,12 @@
 
 
 class ANoiseReporter;
+
+/*
+ * Pike is patrolling randomly between lake spline points.
+ * When it sees an edible fish it will hunt it for a while.
+ * It gets scared by a rock and a bait.
+ **/
 UCLASS()
 class AFishPike : public AFishBase, public IStimuliSource
 {
@@ -25,36 +31,36 @@ protected: // AI
 	virtual void SetState(EFishState NewState) override;
 
 private:
+	
 	virtual void BeginPlay() override;
 
 	virtual void Init(AWaterManager* InWater) override;
-	
-	virtual void OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, FVector Normal, const FHitResult& HitResult) override;
+
+private: // Hunt
 	
 	int64 lastHuntTime;
 
-
 	bool IsReadyForHunt();
-
-	virtual void OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult) override;
 
 	FTimerHandle EndHuntHandle;
 
 	void EndHunt();
 
 	FTimerHandle RoarHandle;
+
+	// Makes sound in regular period - scares away fishes
 	void Roar();
+
+	virtual void OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult) override;
 
 public:
 
-	
+	// "!" to show that the pike is hunting
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UTextRenderComponent* StateText;
 	
 	UFUNCTION(BlueprintCallable)
 	FVector GetNextPatrolPoint();
-
-//private:
 
 	UPROPERTY(EditAnywhere)
 	int currentPatrolPathIndex;

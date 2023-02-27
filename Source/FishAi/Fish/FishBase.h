@@ -17,6 +17,10 @@ enum class EFishState : uint8;
 class ADataManager;
 class AScoreManager;
 class AWaterManager;
+
+/*
+ * Base class for fishes
+ */
 UCLASS()
 class FISHAI_API AFishBase : public ACharacter
 {
@@ -24,12 +28,10 @@ class FISHAI_API AFishBase : public ACharacter
 
 public:
 	
-	// Sets default values for this character's properties
 	AFishBase();
 
 protected:
 	
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaSeconds) override;
@@ -38,14 +40,7 @@ public:
 
 	virtual void Init(AWaterManager* InWater);
 
-protected:
-
-	UFUNCTION()
-	virtual void OnComponentBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg,
-		const FHitResult& HitResult) {}
-
-	UFUNCTION()
-	virtual void OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, FVector Normal, const FHitResult& HitResult) {}
+protected: // Collisions
 
 	UFUNCTION()
 	virtual void OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult) {}
@@ -53,10 +48,9 @@ protected:
 public:
 
 	UPROPERTY(EditDefaultsOnly)
-	int InWaterBodyOffset;
-
-	UPROPERTY(EditDefaultsOnly)
 	EFish FishType = EFish::None;
+
+public: // Death
 
 	UFUNCTION(BlueprintCallable)
 	void OnKilledByGrenade(FVector ExplosionForce);
@@ -66,14 +60,22 @@ public:
 	void OnEatenByFish();
 
 	void Die(int DestroyDelay = 0);
+	
+	// Torque applied after kill by grenade (for better effect) 
+	// Default value measured by observation
+	UPROPERTY(EditAnywhere)
+	FVector AfterDeathTorque = FVector(3000, 20000, 10000);
 
 protected: // AI
 
+	// The physical body is positioned on the bottom of a water but
+	// eyes have to be on the surface so they can see objects in water
 	virtual void GetActorEyesViewPoint(FVector& OutLocation, FRotator& OutRotation) const override;
 
 	UFUNCTION()
 	virtual void OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
-	
+
+	// Sets NewState and move Target to run away from SourceLocation
 	void RunawayFrom(FVector SourceLocation, int MaxDistance, EFishState NewState);
 
 	virtual void OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus){}
@@ -87,10 +89,12 @@ protected: // AI
 	UPROPERTY()
 	UBlackboardComponent* blackboard;
 
+	TObjectPtr<class UAISenseConfig_Sight> AISenseConfigSight = nullptr;
+	TObjectPtr<class UAISenseConfig_Hearing> AISenseConfigHearing = nullptr;
+
 public:
 
-	UFUNCTION(BlueprintCallable)
-	
+	UFUNCTION(BlueprintCallable)	
 	virtual void SetState(EFishState NewState);
 
 	EFishState GetState();
@@ -103,15 +107,8 @@ protected: // Components
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = AI)
 	class UAIPerceptionComponent* AIPerceptionComponent;
 
-	TObjectPtr<class UAISenseConfig_Sight> AISenseConfigSight = nullptr;
-	TObjectPtr<class UAISenseConfig_Hearing> AISenseConfigHearing = nullptr;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Collision)
 	USphereComponent* MouthCollider;
-
-	// Default value measured by observation
-	UPROPERTY(EditAnywhere)
-	FVector AfterDeathTorque = FVector(3000, 20000, 10000);
 
 	UPROPERTY(EditDefaultsOnly)
 	UFishStateHack* FishStateHack;
@@ -120,8 +117,7 @@ protected:
 	
 	UFishData* Data;
 	
-public: // Variables
-
+public: // Managers
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	AWaterManager* Water;
@@ -131,7 +127,5 @@ public: // Variables
 	ADataManager* DataManager;
 
 	ANoiseReporter* NoiseReporter; 
-
-
 
 };

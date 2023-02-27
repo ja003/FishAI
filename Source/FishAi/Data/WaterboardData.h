@@ -6,9 +6,6 @@
 #include "UObject/Object.h"
 #include "WaterboardData.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class FISHAI_API UWaterboardData : public UDataAsset
 {

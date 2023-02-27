@@ -14,8 +14,6 @@
 
 void AFishCarp::OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,	UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult)
 {
-	//UE_LOG(LogTemp, Log, TEXT("xxx OnMouthBeginOverlap"));
-
 	if(Cast<ABait>(Actor))
 	{
 		Cast<ABait>(Actor)->OnEaten();
@@ -26,15 +24,7 @@ void AFishCarp::OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AAc
 
 void AFishCarp::OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
 {
-	//UE_LOG(LogTemp, Log, TEXT("xxx OnBaitPerceptionUpdated %s"), *Actor->GetName());
-
-	// if (GetState() != EFishState::Idle)
-	// {
-	// 	UE_LOG(LogTemp, Log, TEXT("xxx ignoring bait"));
-	// 	return;
-	// }
-
-	// gold fish ignores bait..to make it simpler
+	// gold fish ignores bait..to make it easier for a player
 	if (FishType == EFish::Gold)
 	{
 		return;
@@ -44,7 +34,6 @@ void AFishCarp::OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimul
 
 	if (blackboard->GetValueAsObject(FishBB_Bait) != nullptr)
 	{
-		//UE_LOG(LogTemp, Log, TEXT("xxx bait already set"));
 		// bait already set
 		return;
 	}
@@ -54,7 +43,6 @@ void AFishCarp::OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimul
 	{
 		blackboard->SetValueAsObject(FishBB_Bait, Actor);
 		blackboard->SetValueAsBool("BaitVision", true);
-		
 	}
 	else
 	{
@@ -67,29 +55,14 @@ void AFishCarp::OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimul
 		
 		Water->UpdateInWaterTarget(target);
 		
-		//blackboard->SetValueAsObject(FishBB_Bait, nullptr);		
 		blackboard->SetValueAsVector(FishBB_Target, target);
 		blackboard->SetValueAsBool("BaitVision", false);
-
 	}
-
 }
 
 void AFishCarp::OnPikePerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus)
 {
-	//UE_LOG(LogTemp, Log, TEXT("xxx OnPikePerceptionUpdated"));
-
 	RunawayFrom(Actor->GetActorLocation(), Cast<UCarpData>(Data)->PikeRunawayDistance, EFishState::Danger);
-
-	// blackboard->SetValueAsEnum(FishBB_State, (int)EFishState::Danger);
-	//
-	//
-	// FVector dirAway = (GetActorLocation() - Actor->GetActorLocation());
-	// dirAway.Normalize();
-	// FVector runawayTarget = GetActorLocation() + dirAway * 400;
-	// DrawDebugSphere(GWorld, runawayTarget, 5, 10, FColor::Blue, false, 5);
-	//
-	// blackboard->SetValueAsVector(FishBB_Target, runawayTarget);
 }
 
 

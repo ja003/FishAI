@@ -27,7 +27,7 @@ void AGrenade::Explode()
 {
 	//UE_LOG(LogTemp, Log, TEXT("xxx explode"));
 
-	Radius = Cast<UGrenadeData>(Data->Throwable[EThrowableObject::Grenade])->Radius;
+	Radius = Cast<UGrenadeData>(Data->Throwable[EThrowableObjectType::Grenade])->Radius;
 	
 	// create a collision sphere
 	FCollisionShape MyColSphere = FCollisionShape::MakeSphere(Radius);

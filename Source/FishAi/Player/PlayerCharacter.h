@@ -6,6 +6,7 @@
 #include "Throwing.h"
 #include "Waterboarding.h"
 #include "Components/SphereComponent.h"
+#include "FishAi/Data/PlayerData.h"
 #include "GameFramework/Character.h"
 #include "PlayerCharacter.generated.h"
 
@@ -67,6 +68,9 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	USceneComponent* ThrowStartGrenade;
+
+	UPROPERTY(EditDefaultsOnly)
+	UPlayerData* Data;
 
 
 	

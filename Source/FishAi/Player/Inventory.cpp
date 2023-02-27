@@ -3,32 +3,35 @@
 
 #include "Inventory.h"
 
+#include "FishAi/Data/PlayerData.h"
 
-// Sets default values for this component's properties
-UInventory::UInventory()
+void UInventory::BeginPlay()
 {
-	Items.Add(EThrowableObject::Rock, 3);
-	Items.Add(EThrowableObject::Bait, 2);
-	Items.Add(EThrowableObject::Grenade, 1);
+	Super::BeginPlay();
+
+	for (auto item : Data->StartingItems)
+	{
+		Items.Add(item.Key, item.Value);
+	}
 }
 
-bool UInventory::HasItem(EThrowableObject ObjectType)
+bool UInventory::HasItem(EThrowableObjectType ObjectType)
 {
 	return Items.Contains(ObjectType) && Items[ObjectType] > 0;
 }
 
-void UInventory::RemoveItem(EThrowableObject Type)
+void UInventory::RemoveItem(EThrowableObjectType Type)
 {
 	if(!bDebug_InfiniteItems)
 		Items[Type]--;
 }
 
-void UInventory::AddItem(EThrowableObject ObjectType)
+void UInventory::AddItem(EThrowableObjectType ObjectType)
 {
 	Items[ObjectType]++;
 }
 
-int UInventory::GetItemCount(EThrowableObject ObjectType)
+int UInventory::GetItemCount(EThrowableObjectType ObjectType)
 {
 	return Items[ObjectType];
 }

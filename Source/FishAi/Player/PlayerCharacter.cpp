@@ -60,8 +60,9 @@ void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//todo: why tf I have to do this?
-	//SetSwimming(false);
+	GetCharacterMovement()->MaxWalkSpeed = Data->WalkSpeed;
+	GetCharacterMovement()->MaxSwimSpeed = Data->SwimSpeed;
+	GetCharacterMovement()->JumpZVelocity = Data->JumpZVelocity;
 }
 
 void APlayerCharacter::SetSwimming(bool IsSwimming)

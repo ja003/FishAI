@@ -9,6 +9,7 @@
 #include "Inventory.generated.h"
 
 
+class UPlayerData;
 class AThrowableObject;
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class FISHAI_API UInventory : public UActorComponent
@@ -16,23 +17,26 @@ class FISHAI_API UInventory : public UActorComponent
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this component's properties
-	UInventory();
 
-	TMap<EThrowableObject, int> Items;
+	virtual void BeginPlay() override;
 
-	bool HasItem(EThrowableObject ObjectType);
+	TMap<EThrowableObjectType, int> Items;
 
-	void RemoveItem(EThrowableObject Type);
+	bool HasItem(EThrowableObjectType ObjectType);
 
-	void AddItem(EThrowableObject ObjectType);
+	void RemoveItem(EThrowableObjectType Type);
+
+	void AddItem(EThrowableObjectType ObjectType);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
-	int GetItemCount(EThrowableObject ObjectType);
+	int GetItemCount(EThrowableObjectType ObjectType);
 
 	UPROPERTY(EditDefaultsOnly)
-	TMap<EThrowableObject, TSubclassOf<AThrowableObject>> ThrowableObjectsBP;
+	TMap<EThrowableObjectType, TSubclassOf<AThrowableObject>> ThrowableObjectsBP;
 
 	UPROPERTY(EditAnywhere)
 	bool bDebug_InfiniteItems;
+
+	UPROPERTY(EditDefaultsOnly)
+	UPlayerData* Data;
 };

@@ -59,6 +59,8 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ANavModifier> NavModifierBP;
+
+	void SetGenerators();
 	
 	void GenerateFishes();
 	void GenerateFishes(EFish FishType);
@@ -116,7 +118,8 @@ public:
 	
 	AFishSpawner* FishSpawner;
 
-	UPROPERTY(EditAnywhere)
+
+private:
 	TArray<AThrowablesGenerator*> Generators;
 	
 };

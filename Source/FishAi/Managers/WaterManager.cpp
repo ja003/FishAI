@@ -66,6 +66,8 @@ void AWaterManager::Init()
 
 	SetPatrolPath();
 
+	SetGenerators();
+
 	// todo: WaterSpline is incomplete type
 	// FVector Location;
 	// FVector Tangent;
@@ -227,6 +229,20 @@ void AWaterManager::GenerateNavmeshModifiers()
 		
 		navMod->GenerateBetweenPoints(WaterBoundsOrig[i], WaterBoundsOrig[(i+1)%WaterBoundsOrig.Num()]);
 	}
+}
+
+void AWaterManager::SetGenerators()
+{
+	TArray<AActor*> generators;
+	UGameplayStatics::GetAllActorsWithTag(GetWorld(), Tags[0], generators);
+
+	for (auto generator : generators)
+	{
+		if (AThrowablesGenerator* throwGen = Cast<AThrowablesGenerator>(generator))
+			Generators.Add(throwGen);
+	}
+
+	UE_LOG(LogTemp, Log, TEXT("xxx found %d Generators"), Generators.Num());
 }
 
 void AWaterManager::GenerateFishes()

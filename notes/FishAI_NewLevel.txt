@@ -8,10 +8,11 @@ create Lake
 - set Overlap to all
 - set Block to WorldStatic
 - create WaterManager
+-- add tag "lakeX"
 -- assign Lake to it 
 -- set shore offset + patrol path offset
 -- create generators
---- assign them to WaterManager
+--- add tag "lakeX"
 -- set PatrolPath ShoreOffset (cca 800)
 -- set ShoreOffset (cca 200)
 

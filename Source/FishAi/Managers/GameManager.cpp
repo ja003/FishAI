@@ -34,6 +34,8 @@ void AGameManager::OnAllFishesDead()
 
 	NextLevelTriggers[currentLevel]->SetActorHiddenInGame(false);
 	NextLevelTriggers[currentLevel]->TriggerArea->OnComponentBeginOverlap.AddDynamic(this, &AGameManager::OnNextLevelTriggerOverlap);
+
+	OnAllFishesDeadBP();
 }
 
 void AGameManager::OnNextLevelTriggerOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,

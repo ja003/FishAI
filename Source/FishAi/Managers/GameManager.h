@@ -19,6 +19,10 @@ class FISHAI_API AGameManager : public AActor
 public:
 	virtual void BeginPlay() override;
 
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAllFishesDeadBP();
+
 private:
 
 	UFUNCTION()

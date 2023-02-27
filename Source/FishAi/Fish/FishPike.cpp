@@ -26,8 +26,6 @@ void AFishPike::OnEdibleFishPerceptionUpdated(AActor* Actor, const FAIStimulus& 
 		SetState(EFishState::Hunt);
 		blackboard->SetValueAsObject(FishBB_Prey, Actor);
 
-		lastHuntTime = FDateTime::Now().ToUnixTimestamp();
-
 		GetWorld()->GetTimerManager().ClearTimer(EndHuntHandle);
 		GetWorld()->GetTimerManager().SetTimer(EndHuntHandle, this, &AFishPike::EndHunt, Cast<UPikeData>(Data)->HuntDuration, false);
 	}
@@ -43,6 +41,12 @@ void AFishPike::OnBaitPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimul
 
 void AFishPike::SetState(EFishState NewState)
 {
+	if (GetState() == EFishState::Hunt)
+	{
+		UE_LOG(LogTemp, Log, TEXT("xxx end hunt"));
+		lastHuntTime = FDateTime::Now().ToUnixTimestamp();
+	}
+	
 	Super::SetState(NewState);
 	StateText->SetVisibility(NewState == EFishState::Hunt);
 }
@@ -86,7 +90,10 @@ void AFishPike::OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AAc
 	if(AFishBase* fish = Cast<AFishBase>(Actor))
 	{
 		if (fish->FishType != EFish::Pike)
+		{
 			fish->OnEatenByFish();
+			SetState(EFishState::Idle);
+		}
 	}
 }
 

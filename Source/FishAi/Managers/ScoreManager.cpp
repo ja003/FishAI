@@ -29,6 +29,5 @@ void AScoreManager::OnFishKilled(AFishBase* Fish)
 	int reward = Data->Fish[Fish->FishType]->Reward;
 	
 	text->SetReward(reward);
-	Score += reward;
-	
+	Score += reward;	
 }

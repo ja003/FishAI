@@ -7,13 +7,17 @@
 #include "RewardText.generated.h"
 
 class UTextRenderComponent;
+
+/**
+ * Representation of reward received for killing a fish
+ */
 UCLASS()
 class FISHAI_API ARewardText : public AActor
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this actor's properties
+
 	ARewardText();
 
 	UPROPERTY(EditDefaultsOnly)
@@ -22,7 +26,7 @@ public:
 	void SetReward(int Reward);
 
 protected:
-	// Called when the game starts or when spawned
+
 	virtual void BeginPlay() override;
 
 };

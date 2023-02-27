@@ -13,7 +13,7 @@ class FISHAI_API ANoiseReporter : public AActor
 
 public:
 
-	/*The function that is going to play the sound and report it to our game*/
+	// Report the noise to the game
 	UFUNCTION(BlueprintImplementableEvent)
 	void ReportNoise(APawn* InInstigator, FVector InLocation, USoundBase* InSoundToPlay = nullptr , float InLoudness = 1, float InMaxRange = 0, FName InTag = FName());
 };

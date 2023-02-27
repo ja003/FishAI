@@ -6,7 +6,6 @@
 #include "Components/TextRenderComponent.h"
 
 
-// Sets default values
 ARewardText::ARewardText()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -24,7 +23,6 @@ void ARewardText::SetReward(int Reward)
 	Text->TextRenderColor = Reward > 0 ? FColor::Green : FColor::Red;
 }
 
-// Called when the game starts or when spawned
 void ARewardText::BeginPlay()
 {
 	Super::BeginPlay();

@@ -23,12 +23,9 @@ void AGameManager::BeginPlay()
 
 void AGameManager::OnAllFishesDead()
 {
-	UE_LOG(LogTemp, Log, TEXT("xxx OnAllFishesDead"));
-	
 	if (NextLevelTriggers.Num() <= currentLevel)
 	{
 		// end game
-		UE_LOG(LogTemp, Log, TEXT("xxx end game"));
 		EndGameBP();
 		return;
 	}
@@ -42,8 +39,6 @@ void AGameManager::OnAllFishesDead()
 void AGameManager::OnNextLevelTriggerOverlap(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,
 	UPrimitiveComponent* PrimitiveComponent1, int I, bool Arg, const FHitResult& HitResult)
 {
-	UE_LOG(LogTemp, Log, TEXT("xxx OnNextLevelTriggerOverlap"));
-	
 	if (Cast<APlayerCharacter>(Actor))
 	{
 		NextLevelTriggers[currentLevel]->SetActorHiddenInGame(true);
@@ -54,7 +49,6 @@ void AGameManager::OnNextLevelTriggerOverlap(UPrimitiveComponent* PrimitiveCompo
 void AGameManager::TriggerNextLevel()
 {
 	currentLevel++;
-	UE_LOG(LogTemp, Log, TEXT("xxx TriggerNextLevel %d"), currentLevel);
 	WaterManagers[currentLevel]->Init();
 	WaterManagers[currentLevel]->OnAllFishesDead.AddDynamic(this, &AGameManager::OnAllFishesDead);
 }

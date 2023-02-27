@@ -8,17 +8,17 @@
 #include "GameFramework/Actor.h"
 #include "NavModifier.generated.h"
 
+/**
+ * Obstacle for navagents generated at lake shores
+ */
 UCLASS()
 class FISHAI_API ANavModifier : public AActor
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this actor's properties
-	ANavModifier();
 
-	// UPROPERTY(EditAnywhere)
-	// UNavModifierComponent* NavModifier;
+	ANavModifier();
 
 	UPROPERTY(EditAnywhere)
 	UBoxComponent* Collider;

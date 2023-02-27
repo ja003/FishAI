@@ -16,6 +16,9 @@ enum class EFish : uint8;
 class AFishBase;
 class ANavModifier;
 
+/**
+ * Manages one water area (lake) and all fishes in it 
+ */
 UCLASS()
 class FISHAI_API AWaterManager : public AActor
 {
@@ -23,9 +26,11 @@ class FISHAI_API AWaterManager : public AActor
 
 public:
 	
-	// Sets default values for this actor's properties
-	AWaterManager();
-	void CalculateCenter();
+	virtual void BeginPlay() override;
+
+	void Init();
+	
+public: // fishes
 	
 	void OnFishDie(AFishBase* Fish);
 
@@ -33,44 +38,49 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FOnAllFishesDead OnAllFishesDead;
 
-	void Init();
+	void GenerateFish(EFish FishType);
 	
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+private:
+	TArray<AFishBase*> Fishes;
 
+		
+	void GenerateFishes();
+	void GenerateFishes(EFish FishType);
+
+protected: // bounds
+
+	// Reads info from spline defining the water
 	UFUNCTION(BlueprintImplementableEvent)
 	void SetWaterBounds();
 
+	void CalculateCenter();
+
+	// Defining spline is much larger than the actual water.
+	// Bounds have to be scaled down so they represent watter a bit better
 	void ScaleDownWaterBounds();
 
 	FVector2D min;
 	FVector2D max;
 	FVector center;
-	FVector2D center2D;
-	
-	TArray<AFishBase*> Fishes;
+	FVector2D center2D;	
 
-	void CalculateBoundsInfo();
+	void CalculateBoundsMinMax();
 
+	// Sets patrol points used by a Pike.
+	// Patrol points are bounds point moved a bit to the center.
 	void SetPatrolPath();
 
+	// Generates obstacles preventing fishes to leave a water 
 	void GenerateNavmeshModifiers();
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ANavModifier> NavModifierBP;
 
+	// Finds generators in scene having the same tag as this object
+	// and assigns them
 	void SetGenerators();
 	
-	void GenerateFishes();
-	void GenerateFishes(EFish FishType);
-
-public:
-	
-	void GenerateFish(EFish FishType);
-	
-	
-public:
+public: // water 
 
 	// this doesnt include waves:(
 	UFUNCTION(BlueprintImplementableEvent)
@@ -87,6 +97,8 @@ public:
 
 	FVector GetClosestPointInWater(FVector Point);
 
+	// Updates target to be at the bottom of a water so navmesh
+	// agents can properly reach it
 	bool UpdateInWaterTarget(FVector& OutTarget);
 
 	UFUNCTION(BlueprintImplementableEvent)
@@ -97,19 +109,24 @@ public:
 	UPROPERTY(EditAnywhere)
 	bool bDebug_SelfInit;
 
+	// Scaled down water bounds (estimated to better match the actual water)
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TArray<FVector2D> WaterBounds;
-	
+
+	// Original water bounds
 	TArray<FVector2D> WaterBoundsOrig;
 
+	// Patrol path used by a pike
 	TArray<FVector> PatrolPath;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	AWaterBody* WaterBody;
 
+	// Offset from a shore to the patrol path
 	UPROPERTY(EditAnywhere)
 	int PatrolPathShoreOffset;
 
+	// Estimated offset from defining water spline to the shore 
 	UPROPERTY(EditAnywhere)
 	int ShoreOffset;
 
@@ -118,8 +135,9 @@ public:
 	
 	AFishSpawner* FishSpawner;
 
-
 private:
+
+	// Throwable generators at this water
 	TArray<AThrowablesGenerator*> Generators;
 	
 };

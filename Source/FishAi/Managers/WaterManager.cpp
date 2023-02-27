@@ -12,11 +12,6 @@
 #include "Kismet/GameplayStatics.h"
 
 
-// Sets default values
-AWaterManager::AWaterManager()
-{
-}
-
 void AWaterManager::CalculateCenter()
 {
 	for (int i = 0; i < WaterBounds.Num(); i++)
@@ -43,7 +38,6 @@ void AWaterManager::OnFishDie(AFishBase* Fish)
 			return;
 	}
 
-	UE_LOG(LogTemp, Log, TEXT("xxx only gold fishes remain"));
 	OnAllFishesDead.Broadcast();
 	
 	for (auto generator : Generators)
@@ -62,16 +56,11 @@ void AWaterManager::Init()
 	
 	ScaleDownWaterBounds();
 	
-	CalculateBoundsInfo();
+	CalculateBoundsMinMax();
 
 	SetPatrolPath();
 
 	SetGenerators();
-
-	// todo: WaterSpline is incomplete type
-	// FVector Location;
-	// FVector Tangent;
-	// WaterBody->GetWaterSpline()->GetLocationAndTangentAtSplinePoint(0, &Location, &Tangent, ESplineCoordinateSpace::World);
 
 	GenerateNavmeshModifiers();
 	
@@ -79,11 +68,9 @@ void AWaterManager::Init()
 	{
 		FTimerHandle UnusedHandle;
 		GetWorld()->GetTimerManager().SetTimer(UnusedHandle, this, &AWaterManager::GenerateFishes, 1, false);
-		//GenerateFishes();
 	}
 }
 
-// Called when the game starts or when spawned
 void AWaterManager::BeginPlay()
 {
 	Super::BeginPlay();
@@ -92,44 +79,33 @@ void AWaterManager::BeginPlay()
 	{
 		Init();
 	}
-
-	
-	
 }
 
 void AWaterManager::ScaleDownWaterBounds()
 {
 	WaterBoundsOrig = WaterBounds;
 	TArray<FVector2D> WaterBoundsCopy = WaterBounds;
-	//DrawDebugSphere(GWorld, center, 50, 10, FColor::Yellow, false, 5);
 
 	for (int i = 0; i < WaterBoundsCopy.Num(); ++i)
 	{
 		FVector p = FVector(WaterBounds[i].X, WaterBounds[i].Y, 0);
-		//DrawDebugSphere(GWorld, p, 50, 10, FColor::Red, true, 5);
 
 		FVector2D prevPoint = WaterBoundsCopy[(WaterBoundsCopy.Num() + i - 1) % WaterBoundsCopy.Num()];
 		FVector2D nextPoint = WaterBoundsCopy[(i + 1) % WaterBoundsCopy.Num()];
 
-		//DrawDebugSphere(GWorld, (prevPoint + nextPoint) / 2, 50, 10, FColor::Yellow, false, 50);
 		FVector2D dirForward = ((prevPoint + nextPoint) / 2) - WaterBoundsCopy[i];		
 		FVector2D dirToCenter = center2D - WaterBoundsCopy[i];
-		//DrawDebugLine(GetWorld(), PatrolPath[i], PatrolPath[i] + dirToCenter, FColor::Purple, false, 50);
-		//DrawDebugLine(GetWorld(), PatrolPath[i], PatrolPath[i] + dirForward, FColor::Yellow, false, 50);
 
 		float Ang1 = FMath::Atan2(dirForward.X, dirForward.Y);
 		float Ang2 = FMath::Atan2(dirToCenter.X, dirToCenter.Y);
 		float Ang = FMath::RadiansToDegrees(Ang1 - Ang2);
 		if(Ang > 180.0f) Ang -= 360.0f; else if(Ang < -180.0f) Ang += 360.0f;
 
-		//UE_LOG(LogTemp, Log, TEXT("xxx Ang = %f"), Ang);
-		
 		FVector2D moveDir = FMath::Abs(Ang) < 90 ? dirForward : -dirForward;
 		
 		moveDir.Normalize();
 		
 		FVector2D movedWaterBound = WaterBoundsCopy[i] + moveDir * ShoreOffset;
-		//UpdateInWaterTarget(movedPatrolPoint);
 
 		WaterBounds[i] = movedWaterBound;
 	}
@@ -137,19 +113,15 @@ void AWaterManager::ScaleDownWaterBounds()
 	for (int i = 0; i < WaterBounds.Num(); i++)
 	{
 		FVector p = FVector(WaterBounds[i].X, WaterBounds[i].Y, 0);
-		//DrawDebugSphere(GWorld, p, 50, 10, FColor::White, true, 5);
 
 		if(i < WaterBounds.Num() - 1)
 		{
 			FVector p2 = FVector(WaterBounds[i+1].X, WaterBounds[i+1].Y, 0);
-			//DrawDebugLine(GetWorld(), p, p2, FColor::White, true, 5);
 		}
-
 	}
-
 }
 
-void AWaterManager::CalculateBoundsInfo()
+void AWaterManager::CalculateBoundsMinMax()
 {
 	for (int i=0; i < WaterBounds.Num(); i++)
 	{
@@ -159,15 +131,6 @@ void AWaterManager::CalculateBoundsInfo()
 		if (point.X > max.X) max.X = point.X;
 		if (point.Y > max.Y) max.Y = point.Y;	
 	}
-
-	// for (int i = 0; i < WaterBounds.Num(); i++)
-	// {
-	// 	FVector patrolPoint = FVector(WaterBounds[i].X, WaterBounds[i].Y, 0);
-	// 	//center += patrolPoint;
-	// 	PatrolPath.Add(patrolPoint);
-	// }
-	//center /= PatrolPath.Num();
-	//center2D = FVector2D(center.X, center.Y);
 }
 
 void AWaterManager::SetPatrolPath()

@@ -8,6 +8,10 @@
 #include "ScoreManager.generated.h"
 
 class AFishBase;
+
+/**
+ * Keeps player score
+ */
 UCLASS()
 class FISHAI_API AScoreManager : public AActor
 {
@@ -26,6 +30,5 @@ public:
 	TSubclassOf<ARewardText> RewardTextBP;
 
 	class ADataManager* Data;
-
 	
 };

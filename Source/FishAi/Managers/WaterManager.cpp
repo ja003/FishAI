@@ -222,18 +222,20 @@ void AWaterManager::GenerateFishes()
 	GenerateFishes(EFish::Gold);
 }
 
-void AWaterManager::GenerateFish(EFish FishType)
+void AWaterManager::GenerateFish(EFish FishType, FVector Location)
 {
-	FVector randomPoint = GetRandomPointInWater();
-	AFishBase* fish = Cast<AFishBase>(FishSpawner->SpawnFish(FishType, randomPoint));
+	AFishBase* fish = Cast<AFishBase>(FishSpawner->SpawnFish(FishType, Location));
 	if (ensureMsgf(fish, TEXT("fish not spawned")))
 	{
 		fish->Init(this);
+		Fishes.Add(fish);
 	}
+}
 
-	//UE_LOG(LogTemp, Log, TEXT("xxx Add fish %d"), (int)FishType);
-	Fishes.Add(fish);
-	//UE_LOG(LogTemp, Log, TEXT("xxx Fishes = %d"), Fishes.Num());
+void AWaterManager::GenerateFish(EFish FishType)
+{
+	FVector randomPoint = GetRandomPointInWater();
+	GenerateFish(FishType, randomPoint);
 }
 
 void AWaterManager::GenerateFishes(EFish FishType)

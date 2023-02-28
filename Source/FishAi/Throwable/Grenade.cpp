@@ -25,8 +25,6 @@ void AGrenade::OnEnteredWater()
 
 void AGrenade::Explode()
 {
-	//UE_LOG(LogTemp, Log, TEXT("xxx explode"));
-
 	Radius = Cast<UGrenadeData>(Data->Throwable[EThrowableObjectType::Grenade])->Radius;
 	
 	// create a collision sphere

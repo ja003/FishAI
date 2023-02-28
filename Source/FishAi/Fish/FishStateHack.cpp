@@ -87,7 +87,9 @@ void UFishStateHack::CheckOnNavmesh()
 		return;
 
 	UE_LOG(LogTemp, Error, TEXT("xxx error: fish not on navmesh -> respawn"));
-	Water->GenerateFish(fish->FishType);
+	FVector location = fish->GetActorLocation();
+	location.Z = 0;
+	Water->GenerateFish(fish->FishType, location);
 	fish->Die();
 }
 

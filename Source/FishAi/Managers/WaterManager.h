@@ -39,10 +39,11 @@ public: // fishes
 	FOnAllFishesDead OnAllFishesDead;
 
 	void GenerateFish(EFish FishType);
+	void GenerateFish(EFish FishType, FVector Location);
 	
 private:
+	
 	TArray<AFishBase*> Fishes;
-
 		
 	void GenerateFishes();
 	void GenerateFishes(EFish FishType);

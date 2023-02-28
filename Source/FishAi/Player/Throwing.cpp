@@ -143,6 +143,8 @@ void UThrowing::DeselectObjects()
 	}
 	
 	Prediction->SetEnabled(false);
+
+	ThrowPower = 1000;
 }
 
 bool UThrowing::CanStartThrowing()

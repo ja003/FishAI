@@ -6,7 +6,6 @@
 #include "Components/BoxComponent.h"
 
 
-// Sets default values
 ANextLevelTrigger::ANextLevelTrigger()
 {
 	TriggerArea = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerArea"));

@@ -8,7 +8,6 @@
 #include "FishAi/Managers/WaterManager.h"
 
 
-// Called when the game starts
 void UFishStateHack::BeginPlay()
 {
 	Super::BeginPlay();

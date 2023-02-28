@@ -6,7 +6,6 @@
 #include "Components/BoxComponent.h"
 
 
-// Sets default values
 AWaterboard::AWaterboard()
 {
 	BoardCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("BoardCollider"));
@@ -29,12 +28,8 @@ void AWaterboard::SetInput(float X, float Y)
 	BoardCollider->SetAllPhysicsLinearVelocity(FVector::ZeroVector);
 	BoardCollider->SetAllPhysicsAngularVelocityInDegrees(FVector::ZeroVector);
 	
-	// UE_LOG(LogTemp, Log, TEXT("xxx SetInput X = %f"), X);
-	// UE_LOG(LogTemp, Log, TEXT("xxx SetInput Y = %f"), Y);
 	FVector forwardVector = GetActorForwardVector();
 	forwardVector.Z = 0;
-	//BoardCollider->AddForce(GetActorForwardVector() * X * ForwardSpeed);
 	SetActorLocation(GetActorLocation() + forwardVector * Y * Data->ForwardSpeed);
-
 	AddActorWorldRotation(FRotator(0, X * Data->TurnSpeed, 0));
 }

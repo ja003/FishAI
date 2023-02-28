@@ -43,7 +43,6 @@ void AFishPike::SetState(EFishState NewState)
 {
 	if (GetState() == EFishState::Hunt)
 	{
-		UE_LOG(LogTemp, Log, TEXT("xxx end hunt"));
 		lastHuntTime = FDateTime::Now().ToUnixTimestamp();
 	}
 	
@@ -81,7 +80,6 @@ void AFishPike::OnMouthBeginOverlap(UPrimitiveComponent* PrimitiveComponent, AAc
 	// them to overlap right away
 	if (GetGameTimeSinceCreation() < 1)
 	{
-		UE_LOG(LogTemp, Log, TEXT("xxx 2 fishes spawned too close to each other"));
 		return;	
 	}
 	
@@ -142,19 +140,9 @@ FVector AFishPike::GetNextPatrolPoint()
 		
 		if (Water->IsPointInWater(randomReachablePoint))
 		{
-			//DrawDebugSphere(GWorld, patrolPoint, radius, 10, FColor::Green, false, 5);
-			//DrawDebugLine(GetWorld(), GetActorLocation(), randomReachablePoint, FColor::Purple, false, 5);
-
-
 			return randomReachablePoint;
 		}
 	}
-	//DrawDebugLine(GetWorld(), GetActorLocation(), patrolPoint, FColor::Purple, false, 5);
-
 	
-	//DrawDebugSphere(GWorld, patrolPoint, radius, 10, FColor::Red, false, 5);
 	return patrolPoint;
-	
-	//DrawDebugSphere(GWorld, result, 50, 10, FColor::White, false, .1f);
-	//UE_LOG(LogTemp, Log, TEXT("xxx currentPatrolPathIndex = %d"), currentPatrolPathIndex);
 }

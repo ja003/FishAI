@@ -9,6 +9,9 @@
 #include "GameFramework/Actor.h"
 #include "Bait.generated.h"
 
+/**
+ * Attracts Carps and scares away other fishes
+ */
 UCLASS()
 class FISHAI_API ABait : public AThrowableObject
 {

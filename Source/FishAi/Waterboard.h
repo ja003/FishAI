@@ -8,13 +8,16 @@
 #include "GameFramework/Actor.h"
 #include "Waterboard.generated.h"
 
+/**
+ * Floating vehicle
+ */
 UCLASS()
 class FISHAI_API AWaterboard : public AActor
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this actor's properties
+
 	AWaterboard();
 
 public:

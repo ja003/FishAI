@@ -8,6 +8,10 @@
 
 class USplineMeshComponent;
 class USplineComponent;
+
+/**
+ * Visual prediction where a thrown object will land
+ */
 UCLASS()
 class FISHAI_API AThrowPrediction : public AActor
 {
@@ -18,7 +22,6 @@ public:
 	
 	AThrowPrediction();
 
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void BeginPlay() override;
@@ -30,6 +33,7 @@ public:
 private:
 
 	void DestroyMeshes();
+	
 	bool CalculateSplinePath();
 
 	void DrawSpline();

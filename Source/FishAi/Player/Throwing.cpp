@@ -20,7 +20,6 @@ void UThrowing::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 		Prediction->UpdateValues(GetThrowStart()->GetComponentLocation(), GetThrowStart()->GetForwardVector() * ThrowPower, ignoredActors);
 }
 
-// Sets default values for this component's properties
 UThrowing::UThrowing()
 {
 	PrimaryComponentTick.bCanEverTick = true;
@@ -39,12 +38,9 @@ USceneComponent* UThrowing::GetThrowStart()
 	return ThrowStartRock;
 }
 
-// Called when the game starts
 void UThrowing::BeginPlay()
 {
 	Super::BeginPlay();
-
-	//Prediction = Cast<AThrowPrediction>(GetWorld()->SpawnActor(AThrowPrediction::StaticClass()));
 	
 	Prediction = Cast<AThrowPrediction>(UGameplayStatics::GetActorOfClass(GetWorld(), AThrowPrediction::StaticClass()));
 
@@ -62,7 +58,6 @@ void UThrowing::RotateCharacterToFaceCamera()
 	FVector playerLoc = GetOwner()->GetActorLocation();
 	float newYaw = UKismetMathLibrary::FindLookAtRotation(playerLoc, playerLoc + Camera->GetForwardVector()).Yaw;
 	Capsule->SetWorldRotation(FRotator(0,newYaw,0));
-	//UE_LOG(LogTemp, Log, TEXT("xxx newYaw = %f"), newYaw);
 }
 
 void UThrowing::SetIsThrowing(bool bValue)
@@ -79,7 +74,7 @@ void UThrowing::Throw()
 {
 	if(SpawnedObject == nullptr)
 	{
-		UE_LOG(LogTemp, Log, TEXT("xxx no spawned object to throw"));
+		UE_LOG(LogTemp, Log, TEXT("xxx error: no spawned object to throw"));
 		return;
 	}
 
@@ -94,11 +89,8 @@ void UThrowing::SetActiveObject(EThrowableObjectType ObjectType)
 {
 	if(bIsThrowing) return;
 	
-	//UE_LOG(LogTemp, Log, TEXT("xxx SetActiveObject = %d"), (int)ObjectType);
-
 	if (!Inventory->HasItem(ObjectType))
 	{
-		UE_LOG(LogTemp, Log, TEXT("xxx item %d not in inventory"), (int)ObjectType);
 		DeselectObjects();
 		return;
 	}
@@ -113,7 +105,6 @@ void UThrowing::SetActiveObject(EThrowableObjectType ObjectType)
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	FTransform spawnTransform = SkeletalMesh->GetSocketTransform(RightHand_SocketName);
-	//spawnTransform.SetRotation(FRotator::MakeFromEuler(Data->Throwable[ObjectType]->SpawnRotation).Quaternion());
 
 	check(Inventory->ThrowableObjectsBP[ObjectType])
 	AActor* spawnActor = GetWorld()->SpawnActor<AActor>(Inventory->ThrowableObjectsBP[ObjectType], spawnTransform, SpawnParams);
@@ -133,8 +124,6 @@ void UThrowing::SetActiveObject(EThrowableObjectType ObjectType)
 void UThrowing::DeselectObjects()
 {
 	if(bIsThrowing) return;
-
-	//UE_LOG(LogTemp, Log, TEXT("xxx DeselectObjects"));
 
 	if(SpawnedObject != nullptr)
 	{

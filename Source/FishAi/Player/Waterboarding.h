@@ -8,6 +8,9 @@
 #include "Waterboarding.generated.h"
 
 
+/**
+ * Player interaction with a waterboard 
+ */
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class FISHAI_API UWaterboarding : public UActorComponent
 {

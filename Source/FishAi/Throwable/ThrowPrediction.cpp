@@ -16,7 +16,6 @@ AThrowPrediction::AThrowPrediction()
 	}
 }
 
-// Called every frame
 void AThrowPrediction::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -53,11 +52,8 @@ bool AThrowPrediction::CalculateSplinePath()
 	params.LaunchVelocity = Velocity;
 	params.ActorsToIgnore = IgnoredActors;
 	params.ProjectileRadius = 25;
-	//params.TraceChannel = ECC_WorldStatic;
 	
-	//params.DrawDebugType = EDrawDebugTrace::ForOneFrame;
 	params.bTraceComplex = false;
-	//params.bTraceWithChannel = true;
 	params.bTraceWithCollision = true; //important
 	
 	params.SimFrequency = 15;
@@ -65,9 +61,6 @@ bool AThrowPrediction::CalculateSplinePath()
 	
 	FPredictProjectilePathResult predictResult;
 	bool bHit = UGameplayStatics::PredictProjectilePath(GetWorld(), params, predictResult);
-
-	// DrawDebugSphere(GWorld, Start, 5, 10, FColor::Blue, false, .1f);
-	// DrawDebugLine(GWorld, Start, Start + Velocity, FColor::Red);
 
 	EndPoint->SetActorHiddenInGame(!bHit);
 	DestroyMeshes();
@@ -119,7 +112,6 @@ void AThrowPrediction::DrawSpline()
 		SplineMesh->SetForwardAxis(ESplineMeshAxis::Z);
 		SplineMesh->SetMaterial(0, SplinePartMaterial);
 
-		//SplineMesh->SetCollisionObjectType(ECollisionChannel::ECC_Pawn);
 		SplineMesh->SetCollisionEnabled(ECollisionEnabled::Type::NoCollision);
 		SplineMesh->SetCastShadow(false);
 

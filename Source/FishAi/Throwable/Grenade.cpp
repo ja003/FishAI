@@ -25,7 +25,7 @@ void AGrenade::OnEnteredWater()
 
 void AGrenade::OnHitGround()
 {
-	//Super::OnHitGround();
+	//Super::OnHitGround(); // special behaviour for a grenade
 	OnEnteredWater();
 }
 
@@ -36,10 +36,6 @@ void AGrenade::Explode()
 	// create a collision sphere
 	FCollisionShape MyColSphere = FCollisionShape::MakeSphere(Radius);
 
-	// draw collision sphere
-	//DrawDebugSphere(GetWorld(), GetActorLocation(), MyColSphere.GetSphereRadius(), 50, FColor::Purple, false, 2);
-	
-	// create tarray for hit results
 	TArray<FHitResult> OutHits;
 	
 	// check if something got hit in the sweep

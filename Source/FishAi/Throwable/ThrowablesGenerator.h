@@ -9,6 +9,10 @@
 #include "ThrowablesGenerator.generated.h"
 
 class UThrowableGeneratorData;
+
+/**
+ * Gives an object to a player on interaction
+ */
 UCLASS()
 class FISHAI_API AThrowablesGenerator : public AActor
 {
@@ -16,9 +20,7 @@ class FISHAI_API AThrowablesGenerator : public AActor
 
 public:
 
-	// Sets default values for this actor's properties
 	AThrowablesGenerator();
-
 
 private:
 	UFUNCTION()

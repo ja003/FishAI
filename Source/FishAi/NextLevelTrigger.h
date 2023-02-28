@@ -7,6 +7,9 @@
 #include "GameFramework/Actor.h"
 #include "NextLevelTrigger.generated.h"
 
+/**
+ * Trigger area to start a next level
+ */
 UCLASS()
 class FISHAI_API ANextLevelTrigger : public AActor
 {
@@ -14,7 +17,6 @@ class FISHAI_API ANextLevelTrigger : public AActor
 
 public:
 	
-	// Sets default values for this actor's properties
 	ANextLevelTrigger();
 
 	UPROPERTY(EditDefaultsOnly)

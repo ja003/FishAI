@@ -9,6 +9,9 @@
 #include "GameFramework/Actor.h"
 #include "Rock.generated.h"
 
+/**
+ * Scares away fishes
+ */
 UCLASS()
 class FISHAI_API ARock : public AThrowableObject
 {

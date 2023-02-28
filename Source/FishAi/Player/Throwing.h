@@ -19,10 +19,12 @@ class FISHAI_API UThrowing : public UActorComponent
 	GENERATED_BODY()
 
 public:
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	
-	// Sets default values for this component's properties
 	UThrowing();
+
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	virtual void BeginPlay() override;
 
 	UPROPERTY()
 	USkeletalMeshComponent* SkeletalMesh;
@@ -36,18 +38,8 @@ public:
 
 	const FName RightHand_SocketName = "RightHandIndex1";
 
-private:
-	
-	EThrowableObjectType LastActiveObject;
-
-	USceneComponent* GetThrowStart();
-
 protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
 
-	AThrowPrediction* Prediction;
-	
 	ADataManager* Data;
 
 	UInventory* Inventory;
@@ -56,9 +48,7 @@ protected:
 	
 	UCameraComponent* Camera;
 
-	void RotateCharacterToFaceCamera();
-	
-public:
+public: 
 
 	UFUNCTION(BlueprintCallable)
 	void SetIsThrowing(bool bValue);
@@ -83,5 +73,15 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
 	float ThrowPower = 1000;
+
+private:
+
+	AThrowPrediction* Prediction;	
+
+	EThrowableObjectType LastActiveObject;
+
+	USceneComponent* GetThrowStart();
+
+	void RotateCharacterToFaceCamera();
 
 };

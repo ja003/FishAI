@@ -14,17 +14,17 @@ class FISHAI_API AExplosion : public AActor
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this actor's properties
+	
 	AExplosion();
 
 protected:
-	// Called when the game starts or when spawned
+	
 	virtual void BeginPlay() override;
 
 public:
 
 	UPROPERTY(EditDefaultsOnly)
-	UParticleSystemComponent * Particles;
+	UParticleSystemComponent* Particles;
 
 	UPROPERTY(EditDefaultsOnly)
 	URadialForceComponent* RadialForce;

@@ -19,7 +19,6 @@ AThrowableObject::AThrowableObject()
 	StimuliSource = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>("StimuliSource");
 	// todo: doesnt work, only when configured in BP
 	StimuliSource->bAutoRegister = false;
-	// StimuliSource->RegisterForSense(TSubclassOf<UAISense_Sight>());
 	
 	SphereCollider = CreateDefaultSubobject<USphereComponent>(TEXT("collider"));
 	RootComponent = SphereCollider;
@@ -55,8 +54,6 @@ AThrowableObject::AThrowableObject()
 	ProjectileMovement =  CreateDefaultSubobject<UProjectileMovementComponent>("ProjectileMovementComponent");
 	ProjectileMovement->bSimulationEnabled = false;
 
-	//Tags.Add(GetTag());
-
 	SphereCollider->OnComponentHit.AddDynamic(this, &AThrowableObject::OnComponentHit);
 
 }
@@ -85,7 +82,6 @@ void AThrowableObject::Tick(float DeltaSeconds)
 
 void AThrowableObject::OnHitGround()
 {
-	//UE_LOG(LogTemp, Log, TEXT("xxx Ground!"));
 	bHasHitGround = true;
 
 	FTimerHandle UnusedHandle;
@@ -116,13 +112,7 @@ void AThrowableObject::Throw(FVector Velocity)
 	
 	SphereCollider->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 
-	//SphereCollider->SetSimulatePhysics(true);
-	//SphereCollider->SetEnableGravity(true);
-
-	//UE_LOG(LogTemp, Log, TEXT("xxx Velocity = %s"), *Velocity.ToString());
 	ProjectileMovement->Velocity = Velocity;
-
-	//StimuliSource->RegisterForSense(TSubclassOf<UAISense_Sight>());
 
 	// spawned object is scaled down. set original scale
 	SetActorRelativeScale3D(FVector::OneVector);
@@ -149,14 +139,10 @@ void AThrowableObject::OnEnteredWater()
 	SphereCollider->SetEnableGravity(true);
 
 	int range = Data->Throwable[GetType()]->NoiseRange;
-	//todo: play sound at water bottom where fishes have ears?
 	NoiseReporter->ReportNoise(nullptr, GetActorLocation(), nullptr, 1, range, GetTag());
-
-	//DrawDebugSphere(GWorld, GetActorLocation(), range, 10, FColor::Yellow, false, .1f);
 
 	StimuliSource->RegisterForSense(TSubclassOf<UAISense_Sight>());
 	StimuliSource->RegisterWithPerceptionSystem();
-
 }
 
 EThrowableObjectType AThrowableObject::GetType()

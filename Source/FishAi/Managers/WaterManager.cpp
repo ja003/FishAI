@@ -209,14 +209,10 @@ void AWaterManager::SetGenerators()
 		if (AThrowablesGenerator* throwGen = Cast<AThrowablesGenerator>(generator))
 			Generators.Add(throwGen);
 	}
-
-	UE_LOG(LogTemp, Log, TEXT("xxx found %d Generators"), Generators.Num());
 }
 
 void AWaterManager::GenerateFishes()
 {
-	//UE_LOG(LogTemp, Log, TEXT("xxx GenerateFishes = %d, %d"), PikeCount, CarpCount);
-
 	GenerateFishes(EFish::Carp);
 	GenerateFishes(EFish::Pike);
 	GenerateFishes(EFish::Gold);
@@ -254,17 +250,12 @@ FVector AWaterManager::GetRandomPointInWater(int Counter)
 	FVector point = FVector(FMath::RandRange(min.X, max.X), FMath::RandRange(min.Y, max.Y), 0);
 	if (IsPointInWater(point))
 	{
-		//FVector dirToCenter = center - point;
-		//dirToCenter.Normalize();
-		//point += dirToCenter * PatrolPathShoreOffset;
-		
-		//UE_LOG(LogTemp, Log, TEXT("xxx GetRandomPointInWater success on %d"), Counter);
 		return point;
 	}
 
 	if(Counter > 100)
 	{
-		UE_LOG(LogTemp, Log, TEXT("xxx too many iterations"));
+		UE_LOG(LogTemp, Log, TEXT("xxx error: too many iterations"));
 		return center;
 	}
 	return GetRandomPointInWater(Counter + 1);
@@ -272,21 +263,7 @@ FVector AWaterManager::GetRandomPointInWater(int Counter)
 
 bool AWaterManager::IsPointInWater(FVector point) const
 {
-	FString log = point.ToString();
-	log += " in ";
-	log += "[";
-	for(int i = 0; i < WaterBounds.Num(); i++)
-	{
-		log += "[" + WaterBounds[i].ToString() + "]";
-	}
-	log += "]";
-	log += " = ";
 	bool result = FGeomTools2D::IsPointInPolygon(FVector2D(point), WaterBounds);
-	log += result ? "TRUE" : "FALSE";
-
-	
-	//UE_LOG(LogTemp, Log, TEXT("xxx %s"), *log);
-
 	return result;
 }
 
@@ -302,7 +279,6 @@ FVector AWaterManager::GetClosestPointInWater(FVector Point)
 		counter++;
 		if (counter > 20)
 		{
-			//UE_LOG(LogTemp, Log, TEXT("xxx GetInWaterPoint too many iterations"));
 			return center;
 		}
 	}

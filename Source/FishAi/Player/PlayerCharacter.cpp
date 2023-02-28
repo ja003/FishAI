@@ -14,10 +14,8 @@
 #include "GameFramework/CharacterMovementComponent.h"
 
 
-// Sets default values
 APlayerCharacter::APlayerCharacter()
 {
-	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	BallsCollider = CreateDefaultSubobject<USphereComponent>("balls");
@@ -29,11 +27,6 @@ APlayerCharacter::APlayerCharacter()
 
 	BallsCollider->OnComponentBeginOverlap.AddDynamic(this, &APlayerCharacter::OnBallsBeginOverlap);
 	BallsCollider->OnComponentEndOverlap.AddDynamic(this, &APlayerCharacter::OnBallsEndOverlap);
-
-	//USpringArmComponent* springArm = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
-	//springArm->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
-	//UCameraComponent* camera = CreateDefaultSubobject<UCameraComponent>("");
-	//camera->AttachToComponent(springArm, FAttachmentTransformRules::KeepRelativeTransform);
 
 	Throwing = CreateDefaultSubobject<UThrowing>("Throwing");
 	Throwing->SkeletalMesh = GetMesh();
@@ -55,7 +48,6 @@ APlayerCharacter::APlayerCharacter()
 	GetCapsuleComponent()->OnComponentEndOverlap.AddDynamic(Waterboarding, &UWaterboarding::OnPlayerEndOverlap);
 }
 
-// Called when the game starts or when spawned
 void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
@@ -67,7 +59,6 @@ void APlayerCharacter::BeginPlay()
 
 void APlayerCharacter::SetSwimming(bool IsSwimming)
 {
-	UE_LOG(LogTemp, Log, TEXT("xxx SetSwimming = %s"), IsSwimming ? TEXT("true"):TEXT("false"));
 	IsInWater = IsSwimming;
 	GetCharacterMovement()->GetPhysicsVolume()->bWaterVolume = IsSwimming;
 	GetCharacterMovement()->SetMovementMode(IsSwimming ? MOVE_Swimming : MOVE_Walking);

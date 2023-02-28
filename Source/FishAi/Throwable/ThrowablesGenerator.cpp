@@ -8,7 +8,6 @@
 #include "FishAi/Player/PlayerCharacter.h"
 
 
-// Sets default values
 AThrowablesGenerator::AThrowablesGenerator()
 {
 	Collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Collider"));
@@ -37,16 +36,12 @@ void AThrowablesGenerator::OnBeginOverlap(UPrimitiveComponent* PrimitiveComponen
 {
 	if (bIsDisabled)
 	{
-		UE_LOG(LogTemp, Log, TEXT("xxx generator is disabled"));
 		return;
 	}
 	
-	//UE_LOG(LogTemp, Log, TEXT("xxx AThrowablesGenerator::OnBeginOverlap = %s"), *Actor->GetName());
-
 	float cooldown = GetRemainingCooldown();
 	if(cooldown > 0)
 	{
-		UE_LOG(LogTemp, Log, TEXT("xxx not rdy yet"));
 		return;
 	}
 	

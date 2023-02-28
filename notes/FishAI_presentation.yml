@@ -1,0 +1,23 @@
+lake with fishes
+
+3 types of fishes 
+- killer - hunts other fishes, roars
+
+goal
+
+3 types of objects
+
+waterboard
+
+problems
+- fishes dont follow waves
+- water plugin related logic works only in BP
+- navmesh is on water bottom
+-- visual on surface
+-- fish target position has to be on water bottom
+- fishes seem to fall through navmesh quite often
+
+most challenging
+- fixing weirdly working navmesh agents
+-- defining movable area
+- calibrating perception

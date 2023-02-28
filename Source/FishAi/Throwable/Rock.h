@@ -24,15 +24,6 @@ public:
 
 	virtual FName GetTag() override { return Tag_Rock; }
 	
-private:
-
-	bool bHasHitGround;
-
-	UFUNCTION()
-	void OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* Actor, UPrimitiveComponent* PrimitiveComponent1, FVector Normal, const FHitResult& HitResult);
-
-	void DestroyRock();
-
 public:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category=Sound)

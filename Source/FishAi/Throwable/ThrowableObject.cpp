@@ -56,6 +56,9 @@ AThrowableObject::AThrowableObject()
 	ProjectileMovement->bSimulationEnabled = false;
 
 	//Tags.Add(GetTag());
+
+	SphereCollider->OnComponentHit.AddDynamic(this, &AThrowableObject::OnComponentHit);
+
 }
 
 void AThrowableObject::BeginPlay()
@@ -78,6 +81,31 @@ void AThrowableObject::Tick(float DeltaSeconds)
 
 	if(ProjectileMovement->bSimulationEnabled)
 		AddActorLocalRotation(Data->Throwable[GetType()]->TickRotation);
+}
+
+void AThrowableObject::OnHitGround()
+{
+	//UE_LOG(LogTemp, Log, TEXT("xxx Ground!"));
+	bHasHitGround = true;
+
+	FTimerHandle UnusedHandle;
+	GetWorld()->GetTimerManager().SetTimer(UnusedHandle, this, &AThrowableObject::DestroyObject, 1, false);
+}
+
+void AThrowableObject::OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,
+	UPrimitiveComponent* PrimitiveComponent1, FVector Normal, const FHitResult& HitResult)
+{
+	if (bHasHitGround) return;
+
+	if(Actor->ActorHasTag(Tag_Ground))
+	{
+		OnHitGround();
+	}
+}
+
+void AThrowableObject::DestroyObject()
+{
+	Destroy();
 }
 
 void AThrowableObject::Throw(FVector Velocity)

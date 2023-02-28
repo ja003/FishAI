@@ -15,6 +15,7 @@ class ADataManager;
 class ANoiseReporter;
 class USphereComponent;
 
+// Objects throwable by player.
 // required:
 //	add Buoyancy component to new object in BP and call OnEnteredWater from
 //	the event
@@ -30,6 +31,16 @@ public:
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaSeconds) override;
+
+	virtual void OnHitGround();
+
+	UFUNCTION()
+	void OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,
+		UPrimitiveComponent* PrimitiveComponent1,
+		FVector Normal, const FHitResult& HitResult);
+	void DestroyObject();
+
+	bool bHasHitGround;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Mesh)
 	UStaticMeshComponent* Mesh;

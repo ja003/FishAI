@@ -13,34 +13,9 @@
 
 ARock::ARock()
 {
-	//SphereCollider->OnComponentBeginOverlap.AddDynamic(this, &ARock::OnComponentBeginOverlap);
-
-	SphereCollider->OnComponentHit.AddDynamic(this, &ARock::OnComponentHit);
-
 	// todo: this doesnt work
 	// StimuliSource->RegisterForSense(TSubclassOf<UAISense_Hearing>());
 	// StimuliSource->bAutoRegister = true;
 
 	Tags.Add(Tag_Rock);
 }
-
-void ARock::OnComponentHit(UPrimitiveComponent* PrimitiveComponent, AActor* Actor,
-	UPrimitiveComponent* PrimitiveComponent1, FVector Normal, const FHitResult& HitResult)
-{
-	if (bHasHitGround) return;
-
-	if(Actor->ActorHasTag(Tag_Ground))
-	{
-		//UE_LOG(LogTemp, Log, TEXT("xxx Ground!"));
-		bHasHitGround = true;
-
-		FTimerHandle UnusedHandle;
-		GetWorld()->GetTimerManager().SetTimer(UnusedHandle, this, &ARock::DestroyRock, 1, false);
-	}
-}
-
-void ARock::DestroyRock()
-{
-	Destroy();
-}
-

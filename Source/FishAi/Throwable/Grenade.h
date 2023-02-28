@@ -10,7 +10,7 @@
 #include "Grenade.generated.h"
 
 /**
- * 
+ * Explodes after hitting ground or watter and kills fishes
  */
 UCLASS()
 class FISHAI_API AGrenade : public AThrowableObject
@@ -21,6 +21,8 @@ class FISHAI_API AGrenade : public AThrowableObject
 
 public:
 	virtual void OnEnteredWater() override;
+
+	virtual void OnHitGround() override;
 
 	virtual EThrowableObjectType GetType() override { return EThrowableObjectType::Grenade; }
 	

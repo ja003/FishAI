@@ -23,6 +23,12 @@ void AGrenade::OnEnteredWater()
 	
 }
 
+void AGrenade::OnHitGround()
+{
+	//Super::OnHitGround();
+	OnEnteredWater();
+}
+
 void AGrenade::Explode()
 {
 	Radius = Cast<UGrenadeData>(Data->Throwable[EThrowableObjectType::Grenade])->Radius;

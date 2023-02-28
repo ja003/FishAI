@@ -1,8 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
-
-
-#include "GameManager.h"
-
+﻿#include "GameManager.h"
 #include "WaterManager.h"
 #include "FishAi/Player/PlayerCharacter.h"
 

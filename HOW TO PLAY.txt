@@ -1,0 +1,5 @@
+WASD - movement
+space - jump
+1,2,3 - select item
+0 - deselect item (right mouse btn)
+T - throw (left mouse btn)
